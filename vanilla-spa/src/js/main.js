@@ -5,24 +5,39 @@ import login from "./views/login.js";
 import register from "./views/register.js";
 
 const routes = {
-    "/": { title: "Home", render: home },
-    "/about": { title: "About", render: about },
-    "/contact": { title: "Contact", render: contact },
-    "/login": { title: "Login", render: login },
-    "/register": { title: "Register", render: register },
+    "/": { title: "Home", render: home, css: "/styles/home.css" },
+    "/about": { title: "About", render: about, css: "/styles/about.css" },
+    "/contact": { title: "Contact", render: contact, css: "/styles/contact.css" },
+    "/login": { title: "Login", render: login, css: "/styles/login.css" },
+    "/register": { title: "Register", render: register, css: "/styles/register.css" },
 };
+
+let currentCSS = null;
+
+function loadCSS(href) {
+    if (currentCSS) {
+        document.head.removeChild(currentCSS);
+    }
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+    currentCSS = link;
+}
 
 function router() {
     let view = routes[location.pathname];
-    console.log(view);
     if (view) {
         document.title = view.title;
         app.innerHTML = view.render();
+        if (view.css) {
+            loadCSS(view.css);
+        }
     } else {
         history.replaceState("", "", "/");
         router();
     }
-};
+}
 
 // Handle navigation
 window.addEventListener("click", e => {
