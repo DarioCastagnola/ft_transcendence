@@ -19,8 +19,14 @@ export default () => /*html*/`
 
                 <div data-mdb-input-init class="form-outline mb-4">
                   <input type="email" id="form2Example11" class="form-control"
-                    placeholder="Phone number or email address" />
-                  <label class="form-label" for="form2Example11">Username</label>
+                    placeholder="Email address" />
+                  <label class="form-label" for="form2Example11">Email</label>
+                </div>
+
+                <div data-mdb-input-init class="form-outline mb-4">
+                <input type="password" id="form2Example22" class="form-control"
+                placeholder="How you'd like to be called" />
+                  <label class="form-label" for="form2Example22">Username</label>
                 </div>
 
                 <div data-mdb-input-init class="form-outline mb-4">
