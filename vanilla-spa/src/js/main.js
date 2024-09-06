@@ -28,7 +28,7 @@ function loadCSS(href) {
     link.type = "text/css"; 
     link.href = href;
     document.head.appendChild(link);
-    console.log(link);
+    //console.log(link);
     currentCSS = link;
 }
 

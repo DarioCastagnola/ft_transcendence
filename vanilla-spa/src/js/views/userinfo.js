@@ -1,5 +1,5 @@
-export default () => {
-	document.body.innerHTML = /*html*/`
+export default function userinfo() {
+  const html = `
 <div class="container">
     <div class="main-body">
           <div class="row gutters-sm">
@@ -102,22 +102,21 @@ export default () => {
 
         </div>
     </div>
-	<script src="userinfo.js">
-	
-	</script>
-	`;
-	// Now the DOM elements are available, run the fetch logic
-	const apiUrl = 'http://127.0.0.1:5500/vanilla-spa/userinfo.json';
-	const usernameElement = document.getElementById("user-username");
-	const emailElement = document.getElementById("user-email");
-	console.log(usernameElement);
-	
-	// Fetch and update the username element
-	fetch(apiUrl)
-	  .then(response => response.json())
-	  .then(data => {
-		usernameElement.textContent = data.username;
-		emailElement.textContent = data.email;
-	  })
-	  .catch(error => console.error('Fetch error:', error));
-  };
+  `;
+
+  setTimeout(() => {
+    const apiUrl = 'http://127.0.0.1:5500/vanilla-spa/userinfo.json';
+    const usernameElement = document.getElementById("user-username");
+    const emailElement = document.getElementById("user-email");
+    
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        usernameElement.textContent = data.username;
+        emailElement.textContent = data.email;
+      })
+      .catch(error => console.error('Fetch error:', error));
+  }, 0);
+
+  return html;
+}
