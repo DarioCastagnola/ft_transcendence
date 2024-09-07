@@ -10,10 +10,8 @@ export default function userinfo() {
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4 id="user-username">ciao</h4>
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <p class="text-muted font-size-sm">Online </p>
+                      <button class="btn btn-primary">Add to friend list</button>
                     </div>
                   </div>
                 </div>
@@ -42,7 +40,7 @@ export default function userinfo() {
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Tournament History</i></h6>
                       <small>Web Design</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
@@ -69,7 +67,7 @@ export default function userinfo() {
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Match History</i></h6>
                       <small>Web Design</small>
                       <div class="progress mb-3" style="height: 5px">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>

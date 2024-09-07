@@ -70,3 +70,7 @@ nav a {
     margin-right: .75em;
     color: var(--accent);
 }
+
+.text-muted {
+    color: rgb(0, 202, 0) !important;
+}
