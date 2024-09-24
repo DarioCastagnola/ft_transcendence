@@ -5,6 +5,7 @@ import login from "./views/login.js";
 import register from "./views/register.js";
 import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
+import pong from "./views/pong.js";
 
 const routes = {
     "/": { title: "Home", render: home, css: "./vanilla-spa/src/css/home.css" },
@@ -14,7 +15,7 @@ const routes = {
     "/register": { title: "Register", render: register, css: "./vanilla-spa/src/css/home.css" },
     "/userinfo": { title: "UserInfo", render: userinfo, css: "./vanilla-spa/src/css/userinfo.css" },
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./vanilla-spa/src/css/userinfo-update.css" },
-
+    "/pong": { title: "pong", render: pong, css: "./vanilla-spa/src/css/pong.css"},
 };
 
 let currentCSS = null;

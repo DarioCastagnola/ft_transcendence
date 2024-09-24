@@ -1,0 +1,109 @@
+:root {
+    --primary: #222831;
+    --secondary: #30475e;
+    --secondary-light: #3a5a7a;
+    --accent: #f05454;
+    --neutral: #eeeeee;
+
+    font-size: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+body {
+    color: var(--neutral);
+    padding: 1rem clamp(1.5rem, 6vw, 3rem);
+    background-color: var(--primary);
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    margin-right: .75em;
+    color: var(--accent);
+}
+
+.board {
+    position: relative;
+    height: 85vh;
+    width: 80vw;
+    background-color: #1a1a1a; /* Dark shade of black */
+    border-radius: 10px;
+    border: 7px solid white; /* Optional: add a border if needed */
+    margin: 0 auto;
+}
+
+.ball {
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top: -35vh;
+    left: 60vh;
+    background-color: white;
+}
+
+.divider-container {
+    top: 5vh;
+    left: 60vh;
+    position: relative;
+}
+
+.divider {
+    height: 25px;
+    width: 8px;
+    position: relative;
+    margin-top: 25px;
+    background-color: rgba(255, 255, 255, 0.391);
+    border: 1px solid black;
+}
+
+.paddle {
+    height: 85px;
+    width: 18px;
+    position: relative;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.paddle_1 {
+    top: -39.5vh;
+    left: 1.4vw;
+}
+
+.paddle_2 {
+    top: -49.4vh;
+    left: 76vw;
+}
+
+.player_1_score {
+    height: 50px;
+    width: 50px;
+    color: chartreuse;
+    position: relative;
+    left: 20vw;
+    margin-top: -93vh;
+}
+
+.player_2_score {
+    height: 50px;
+    width: 50px;
+    color: chartreuse;
+    position: relative;
+    left: 57.5vw;
+    margin-top: -7.88vh;
+}
+
+.message {
+    position: relative;
+    width: 30vw;
+    color: #c9cbff;
+    margin: -9vh auto auto auto;
+}
