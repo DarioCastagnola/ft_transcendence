@@ -1,31 +1,16 @@
 export default function pong() {
     const html = `
-    <div class="board">
-        <div class="divider-container">
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-            <div class="divider"></div>
-        </div>
-        <div class='ball'></div>
-        <div class="paddle_1 paddle"></div>
-        <div class="paddle_2 paddle"></div>
-        <h1 class="player_1_score">0</h1>
-        <h1 class="player_2_score">0</h1>
-        <h1 class="message">
-            Press Enter to Play Pong
-        </h1>
-    </div>
+    <canvas id="myCanvas" justify-content="center" width="1200" height="650" style="border:3px solid #ffffff;">
+	</canvas>
     `;
-    setTimeout(() => {}, 0);
+    setTimeout(() => {
+		const canvas = document.getElementById("myCanvas");
+		const ctx = canvas.getContext("2d");
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, 1200, 650);
+		ctx.fillStyle = "white";
+		ctx.fillRect(30, 280, 10, 65);
+		ctx.fillRect(1165, 280, 10, 65);
+    }, 0);
     return html;
 }
