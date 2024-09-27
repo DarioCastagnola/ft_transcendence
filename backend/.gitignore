@@ -1,0 +1,36 @@
+# Ignora i file di configurazione locali
+.env
+.env_auth
+
+# Ignora i file di log
+*.log
+
+# Ignora i file temporanei di sistema
+.DS_Store
+Thumbs.db
+
+# Ignora le directory dei container Docker
+.docker/
+
+# Ignora le directory e file generati dalle build
+**/node_modules/
+**/build/
+**/dist/
+**/.venv/
+**/.tox/
+
+# Ignora i file di cache di Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignora i file di configurazione dell'IDE
+.vscode/
+.idea/
+
+# Ignora i volumi di Docker
+db_data/
+
+# Ignora i file generati da Docker
+docker-compose.override.yml
