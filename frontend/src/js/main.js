@@ -8,14 +8,14 @@ import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 
 const routes = {
-    "/": { title: "Home", render: home, css: "./vanilla-spa/src/css/home.css" },
-    "/about": { title: "About", render: about, css: "./vanilla-spa/src/css/about.css" },
-    "/contact": { title: "Contact", render: contact, css: "./vanilla-spa/src/css/contact.css" },
-    "/login": { title: "Login", render: login, css: "./vanilla-spa/src/css/home.css" },
-    "/register": { title: "Register", render: register, css: "./vanilla-spa/src/css/home.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./vanilla-spa/src/css/userinfo.css" },
-    "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./vanilla-spa/src/css/userinfo-update.css" },
-    "/pong": { title: "pong", render: pong, css: "./vanilla-spa/src/css/pong.css"},
+    "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
+    "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
+    "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
+    "/login": { title: "Login", render: login, css: "./frontend/src/css/home.css" },
+    "/register": { title: "Register", render: register, css: "./frontend/src/css/home.css" },
+    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userinfo.css" },
+    "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
+    "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
 };
 
 let currentCSS = null;
