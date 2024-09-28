@@ -34,5 +34,6 @@ nav a {
 canvas#myCanvas {
     position: relative;
     left: 25vh;
+    right: 25vh;
     margin: 5vh;
 }

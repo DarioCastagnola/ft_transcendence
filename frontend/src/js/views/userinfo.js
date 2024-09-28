@@ -103,7 +103,7 @@ export default function userinfo() {
   `;
 
   setTimeout(() => {
-    const apiUrl = 'http://127.0.0.1:5500/vanilla-spa/userinfo.json';
+    const apiUrl = 'http://127.0.0.1:5500/frontend/userinfo.json';
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");
     
