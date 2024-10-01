@@ -9,6 +9,7 @@ export default function pong() {
     setTimeout(() => {
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
+		let isBallMoving = false;
 		canvas.width = window.innerWidth * 0.6;
 		canvas.height = window.innerHeight * 0.7;
 
@@ -61,10 +62,23 @@ export default function pong() {
 				this.width = 10;
 				this.x = x;
 				this.y = y;
+				this.dx = 5;
+				this.dy = 4;
 			}
 			ft_draw() {
-				ctx.fillStyle = "white";  // Set the fill color
+				ctx.fillStyle = "white";
 				ctx.fillRect(this.x, this.y, this.width, this.height);
+			}
+
+			// Update the ball's position based on its velocity
+			// Check for collision with the top or bottom walls
+			ft_move() {
+				this.x += this.dx;
+				this.y += this.dy;
+
+				if (this.y < 0 || this.y + this.height > canvas.height) {
+					this.dy = -this.dy;
+ 				}	
 			}
 		}
 		
@@ -93,7 +107,12 @@ export default function pong() {
 		// Handle keydown events
 		// Set key state to true when pressed
 		document.addEventListener("keydown", (event) => {
-			keys[event.key.toLowerCase()] = true;
+			const key = event.key.toLowerCase();
+			keys[key] = true;
+
+			if (key === "enter" && !isBallMoving) {
+				isBallMoving = true;
+			}
 		});
 
 
@@ -125,6 +144,10 @@ export default function pong() {
 			}
 			if (keys["arrowdown"]) {
 				player2.ft_movePaddle(5);
+			}
+
+			if (isBallMoving){
+				ball.ft_move();
 			}
 
 			board.ft_draw();
