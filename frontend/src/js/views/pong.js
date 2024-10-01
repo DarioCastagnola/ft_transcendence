@@ -11,6 +11,8 @@ export default function pong() {
 		const ctx = canvas.getContext("2d");
 		canvas.width = window.innerWidth * 0.6;
 		canvas.height = window.innerHeight * 0.7;
+
+		const keys = {};
 	
 		class Paddle {
 			constructor(user) {
@@ -40,34 +42,13 @@ export default function pong() {
 					this.y = 0;
 				} else if (this.y + this.height > canvas.height) {
 					this.y = canvas.height - this.height;
-				}
+				}	
 			}
 		}
 
 		class Player {
 			constructor(user) {
 				this.paddle = new Paddle(user);
-				this.ft_bindControls();
-			}
-			
-			ft_bindControls() {
-				document.addEventListener('keydown', (event) => {
-					const key = event.key.toLowerCase(); // capture key press
-					if (this.paddle.user === 'user1') {
-						if (key === 'w') {
-							this.ft_movePaddle(-10); // Move up
-						} if (key === 's') {
-							this.ft_movePaddle(10); // Move down
-						}
-					}	
-					if (this.paddle.user === 'user2') {
-						if (key === 'arrowup') {
-							this.ft_movePaddle(-10)
-						} if (key === 'arrowdown') {
-							this.ft_movePaddle(10); // Move down
-						}
-					}
-				});
 			}
 			ft_movePaddle(dy) {
 				this.paddle.ft_move(dy);
@@ -81,7 +62,6 @@ export default function pong() {
 				this.x = x;
 				this.y = y;
 			}
-
 			ft_draw() {
 				ctx.fillStyle = "white";  // Set the fill color
 				ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -101,30 +81,58 @@ export default function pong() {
 				ctx.fillRect(0, 0, this.width, this.height)
 			}
 		}
+
+
 		const board = new Board(canvas.width / 2 ,canvas.height / 2, canvas.width, canvas.height);
 		ctx.fillStyle = "white";
 		const ball = new Ball(canvas.width / 2 ,canvas.height / 2);
 		const player1 = new Player("user1");
 		const player2 = new Player("user2");
-		ctx.font = "50px Arial";
-		ctx.fillText("Pong", 550, 80);
+
+
+		// Handle keydown events
+		// Set key state to true when pressed
+		document.addEventListener("keydown", (event) => {
+			keys[event.key.toLowerCase()] = true;
+		});
+
+
+		// Handle keyup events
+		// Set key state to false when released
+		document.addEventListener("keyup", (event) => {
+			keys[event.key.toLowerCase()] = false;
+		});
+
 
 		// ft Game loop: this will run continuously to update and redraw the game state
 		// 1. Clear the canvas
-		// 2. Draw everything
-		// 3. Optional: You can also add ball movement and collision logic here
-		// 4. Loop the game
+		// 2. Move paddles based on key presses
+		// 3. Draw everything
+		// 4. Optional: You can also add ball movement and collision logic here
+		// 5. Loop the game
 
 		function ft_gameLoop() {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			
+			if (keys["w"]) {
+				player1.ft_movePaddle(-5);
+			}
+			if (keys["s"]) {
+				player1.ft_movePaddle(5);
+			}
+			if (keys["arrowup"]) {
+				player2.ft_movePaddle(-5);
+			}
+			if (keys["arrowdown"]) {
+				player2.ft_movePaddle(5);
+			}
 
-		board.ft_draw();  // Draw the board background
-		ball.ft_draw();   // Draw the ball
-		player1.paddle.ft_draw();  // Draw player1's paddle
-		player2.paddle.ft_draw();  // Draw player2's paddle
+			board.ft_draw();
+			ball.ft_draw();
+			player1.paddle.ft_draw();
+			player2.paddle.ft_draw();
 
-		requestAnimationFrame(ft_gameLoop);
-
+			requestAnimationFrame(ft_gameLoop);
 	}
 	ft_gameLoop();
     }, 0);
