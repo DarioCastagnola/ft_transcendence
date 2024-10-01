@@ -6,7 +6,9 @@ export default function pong() {
 		</div>
 	</div>
     `;
+
     setTimeout(() => {
+
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
 		let isBallMoving = false;
@@ -49,6 +51,7 @@ export default function pong() {
 
 		class Player {
 			constructor(user) {
+				this.score = 0;
 				this.paddle = new Paddle(user);
 			}
 			ft_movePaddle(dy) {
@@ -75,7 +78,7 @@ export default function pong() {
 			// Update the ball's position based on its velocity
 			// Check for collision with the top or bottom walls
 			// Resets position for collision with the lateral walls
-			ft_move() {
+			ft_move(player1, player2) {
 				this.x += this.dx;
 				this.y += this.dy;
 
@@ -86,6 +89,15 @@ export default function pong() {
 					this.x = this.starting_x;
 					this.y = this.starting_y;
 					isBallMoving = false;
+					player1.score += 1;
+					console.log("player1: ", player1.score, "player2: ", player2.score);
+				}
+				if (this.x < 0) {
+					this.x = this.starting_x;
+					this.y = this.starting_y;
+					isBallMoving = false;
+					player2.score += 1;
+					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 			}
 		}
@@ -155,7 +167,7 @@ export default function pong() {
 			}
 
 			if (isBallMoving){
-				ball.ft_move();
+				ball.ft_move(player1, player2);
 			}
 
 			board.ft_draw();
