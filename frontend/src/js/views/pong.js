@@ -64,6 +64,8 @@ export default function pong() {
 				this.y = y;
 				this.dx = 5;
 				this.dy = 4;
+				this.starting_x = x;
+				this.starting_y = y;
 			}
 			ft_draw() {
 				ctx.fillStyle = "white";
@@ -72,13 +74,19 @@ export default function pong() {
 
 			// Update the ball's position based on its velocity
 			// Check for collision with the top or bottom walls
+			// Resets position for collision with the lateral walls
 			ft_move() {
 				this.x += this.dx;
 				this.y += this.dy;
 
 				if (this.y < 0 || this.y + this.height > canvas.height) {
 					this.dy = -this.dy;
- 				}	
+ 				}
+				if (this.x > canvas.width) {
+					this.x = this.starting_x;
+					this.y = this.starting_y;
+					isBallMoving = false;
+				}
 			}
 		}
 		
