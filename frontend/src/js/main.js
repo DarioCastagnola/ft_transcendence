@@ -7,8 +7,10 @@ import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 
+
 const routes = {
     "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
+    "/home": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
     "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
     "/login": { title: "Login", render: login, css: "./frontend/src/css/home.css" },
@@ -26,16 +28,17 @@ function loadCSS(href) {
     }
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.type = "text/css"; 
+    link.type = "text/css";
     link.href = href;
     document.head.appendChild(link);
     //console.log(link);
     currentCSS = link;
 }
 
-function router() {
+export function router() {
     let view = routes[location.pathname];
     if (view) {
+        console.log(view.title);
         document.title = view.title;
         app.innerHTML = view.render();
         if (view.css) {
