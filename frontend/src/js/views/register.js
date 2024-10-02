@@ -74,8 +74,6 @@ export default function register() {
   `;
 
   setTimeout(() => {
-    // Inject the HTML into the page
-    // document.body.innerHTML = html;
 
     // Get form and button elements
     const form = document.getElementById('registerForm');

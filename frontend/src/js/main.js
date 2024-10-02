@@ -36,9 +36,10 @@ function loadCSS(href) {
 }
 
 export function router() {
+    // const app = document.getElementById('app');
     let view = routes[location.pathname];
     if (view) {
-        console.log(view.title);
+        // console.log(view.title);
         document.title = view.title;
         app.innerHTML = view.render();
         if (view.css) {

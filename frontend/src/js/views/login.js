@@ -61,9 +61,6 @@ export default function login() {
   </section>
   `;
 
-  // Inject the HTML into the page
-  document.body.innerHTML = html;
-
   setTimeout(() => {
     const loginForm = document.getElementById('loginForm');
     const loginButton = document.getElementById('loginButton');
