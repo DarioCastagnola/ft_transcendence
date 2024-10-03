@@ -10,10 +10,8 @@ export default function pong() {
     `;
 
 	// Cleanup previous instance
-    if (gameInstance) {
+	    if (gameInstance) {
         cancelAnimationFrame(gameInstance);
-        document.removeEventListener("keydown", handleKeydown);
-        document.removeEventListener("keyup", handleKeyup);
     }
 
     setTimeout(() => {
@@ -61,10 +59,20 @@ export default function pong() {
 		class Player {
 			constructor(user) {
 				this.score = 0;
-				this.paddle = new Paddle(user);
+				this.user = user;
+				this.paddle = new Paddle(this.user);
 			}
 			ft_movePaddle(dy) {
 				this.paddle.ft_move(dy);
+			}
+
+			//TODO!!!
+			ft_drawScore() {
+				ctx.font = "50px Arial";
+				if (this.user === "user1")
+					ctx.fillText("Hello World",canvas.width - 80, canvas.height - 100);
+				if (this.user === "user2")
+					ctx.fillText(this.score, 1000, 200)
 			}
 		}
 
@@ -135,6 +143,7 @@ export default function pong() {
 
 		// Handle keydown events
 		// Set key state to true when pressed
+
 		document.addEventListener("keydown", (event) => {
 			const key = event.key.toLowerCase();
 			keys[key] = true;
@@ -147,6 +156,7 @@ export default function pong() {
 
 		// Handle keyup events
 		// Set key state to false when released
+
 		document.addEventListener("keyup", (event) => {
 			keys[event.key.toLowerCase()] = false;
 		});
@@ -184,7 +194,7 @@ export default function pong() {
 			player1.paddle.ft_draw();
 			player2.paddle.ft_draw();
 
-			requestAnimationFrame(ft_gameLoop);
+			gameInstance = requestAnimationFrame(ft_gameLoop);
 	}
 	ft_gameLoop();
     }, 0);
