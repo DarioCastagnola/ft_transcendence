@@ -1,3 +1,5 @@
+let gameInstance = null;
+
 export default function pong() {
     const html = `
 	<div class="row justify-content-center">
@@ -6,6 +8,13 @@ export default function pong() {
 		</div>
 	</div>
     `;
+
+	// Cleanup previous instance
+    if (gameInstance) {
+        cancelAnimationFrame(gameInstance);
+        document.removeEventListener("keydown", handleKeydown);
+        document.removeEventListener("keyup", handleKeyup);
+    }
 
     setTimeout(() => {
 
@@ -179,5 +188,6 @@ export default function pong() {
 	}
 	ft_gameLoop();
     }, 0);
+
     return html;
 }
