@@ -11,6 +11,8 @@ RUN chmod +x /copy_avatars.sh
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install django-cors-headers
+
 COPY . .
 
 ENV PYTHONUNBUFFERED=1

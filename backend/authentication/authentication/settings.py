@@ -21,10 +21,13 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'corsheaders',
     'users',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -33,6 +36,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5500"
 ]
 
 ROOT_URLCONF = 'authentication.urls'
