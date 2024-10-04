@@ -19,16 +19,16 @@ export default function pong() {
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
 		let isBallMoving = false;
-		canvas.width = window.innerWidth * 0.6;
-		canvas.height = window.innerHeight * 0.7;
+		canvas.width = 1800;
+		canvas.height = 900;
 
 		const keys = {};
 	
 		class Paddle {
 			constructor(user) {
 				this.paddle_distance_from_border = 30;
-				this.height = 65;
-				this.width = 10;
+				this.height = 95;
+				this.width = 12;
 				this.user = user;
 				if (user == "user1")
 				{
@@ -66,13 +66,12 @@ export default function pong() {
 				this.paddle.ft_move(dy);
 			}
 
-			//TODO!!!
 			ft_drawScore() {
-				ctx.font = "50px Arial";
+				ctx.font = "50px Helvetica";
 				if (this.user === "user1")
-					ctx.fillText("Hello World",canvas.width - 80, canvas.height - 100);
+					ctx.fillText(this.score,canvas.width - canvas.width / 2 - canvas.width / 10, canvas.height / 10);
 				if (this.user === "user2")
-					ctx.fillText(this.score, 1000, 200)
+					ctx.fillText(this.score,canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 10)
 			}
 		}
 
@@ -80,11 +79,11 @@ export default function pong() {
 			constructor(x, y) {
 				this.height = 10;
 				this.width = 10;
-				this.x = x;
+				this.x = x - 10;
 				this.y = y;
 				this.dx = 5;
 				this.dy = 4;
-				this.starting_x = x;
+				this.starting_x = x - 10;
 				this.starting_y = y;
 			}
 			ft_draw() {
@@ -129,7 +128,22 @@ export default function pong() {
 
 			ft_draw() {
 				ctx.fillStyle = "Black";
-				ctx.fillRect(0, 0, this.width, this.height)
+				ctx.fillRect(0, 0, this.width, this.height);
+				ctx.fillStyle = "gray";
+				let bottom = 50;
+				while (bottom < this.height) {
+					ctx.fillRect(this.width / 2 - 10, bottom, 15, 45);
+					bottom += 100;
+				}
+				// ctx.fillRect(this.width / 2 - 10, 50, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 60, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 120, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 180, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 240, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 300, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 360, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 420, 10, 30);
+				// ctx.fillRect(this.width / 2 - 10, 50 + 480, 10, 30);
 			}
 		}
 
@@ -189,10 +203,13 @@ export default function pong() {
 				ball.ft_move(player1, player2);
 			}
 
+
 			board.ft_draw();
 			ball.ft_draw();
 			player1.paddle.ft_draw();
+			player1.ft_drawScore();
 			player2.paddle.ft_draw();
+			player2.ft_drawScore();
 
 			gameInstance = requestAnimationFrame(ft_gameLoop);
 	}
