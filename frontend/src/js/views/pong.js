@@ -77,11 +77,11 @@ export default function pong() {
 
 		class Ball {
 			constructor(x, y) {
-				this.height = 10;
-				this.width = 10;
+				this.height = 15;
+				this.width = 15;
 				this.x = x - 10;
 				this.y = y;
-				this.dx = 5;
+				this.dx = 7;
 				this.dy = 4;
 				this.starting_x = x - 10;
 				this.starting_y = y;
@@ -97,7 +97,15 @@ export default function pong() {
 			ft_move(player1, player2) {
 				this.x += this.dx;
 				this.y += this.dy;
+				let realxofball = this.x - this.width;
 
+				console.log("punto di contatto palla ", this.x);
+				console.log("realxofball ", realxofball);
+				console.log("x di player2paddle", player2.paddle.x);
+				if (this.x - player2.paddle.x > this.width) {
+					isBallMoving = false;
+					player1.score += 1
+				}
 				if (this.y < 0 || this.y + this.height > canvas.height) {
 					this.dy = -this.dy;
  				}
@@ -135,24 +143,15 @@ export default function pong() {
 					ctx.fillRect(this.width / 2 - 10, bottom, 15, 45);
 					bottom += 100;
 				}
-				// ctx.fillRect(this.width / 2 - 10, 50, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 60, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 120, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 180, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 240, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 300, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 360, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 420, 10, 30);
-				// ctx.fillRect(this.width / 2 - 10, 50 + 480, 10, 30);
 			}
 		}
 
 
 		const board = new Board(canvas.width / 2 ,canvas.height / 2, canvas.width, canvas.height);
 		ctx.fillStyle = "white";
-		const ball = new Ball(canvas.width / 2 ,canvas.height / 2);
 		const player1 = new Player("user1");
 		const player2 = new Player("user2");
+		const ball = new Ball(canvas.width / 2 ,canvas.height / 2, player1, player2);
 
 
 		// Handle keydown events
@@ -180,23 +179,22 @@ export default function pong() {
 		// 1. Clear the canvas
 		// 2. Move paddles based on key presses
 		// 3. Draw everything
-		// 4. Optional: You can also add ball movement and collision logic here
-		// 5. Loop the game
+		// 4. Loop the game
 
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			
 			if (keys["w"]) {
-				player1.ft_movePaddle(-5);
+				player1.ft_movePaddle(-10);
 			}
 			if (keys["s"]) {
-				player1.ft_movePaddle(5);
+				player1.ft_movePaddle(10);
 			}
 			if (keys["arrowup"]) {
-				player2.ft_movePaddle(-5);
+				player2.ft_movePaddle(-10);
 			}
 			if (keys["arrowdown"]) {
-				player2.ft_movePaddle(5);
+				player2.ft_movePaddle(10);
 			}
 
 			if (isBallMoving){
