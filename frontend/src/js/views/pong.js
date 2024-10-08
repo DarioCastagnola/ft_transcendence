@@ -97,32 +97,35 @@ export default function pong() {
 			ft_move(player1, player2) {
 				this.x += this.dx;
 				this.y += this.dy;
-				let realxofball = this.x - this.width;
 
-				console.log("punto di contatto palla ", this.x);
-				console.log("realxofball ", realxofball);
-				console.log("x di player2paddle", player2.paddle.x);
-				if (this.x - player2.paddle.x > this.width) {
-					isBallMoving = false;
-					player1.score += 1
+				if (this.x + this.width > player2.paddle.x && this.x < player2.paddle.x + player2.paddle.width &&
+					this.y < player2.paddle.y + player2.paddle.height && this.y + this.height > player2.paddle.y) {
+					this.dx = -this.dx;
+				}
+				if (this.x < player1.paddle.x + player1.paddle.width && this.x + this.width > player1.paddle.x &&
+					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y) {
+					this.dx = -this.dx;
 				}
 				if (this.y < 0 || this.y + this.height > canvas.height) {
 					this.dy = -this.dy;
  				}
 				if (this.x > canvas.width) {
-					this.x = this.starting_x;
-					this.y = this.starting_y;
+					this.ft_resetPosition();
 					isBallMoving = false;
 					player1.score += 1;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 				if (this.x < 0) {
-					this.x = this.starting_x;
-					this.y = this.starting_y;
+					this.ft_resetPosition();
 					isBallMoving = false;
 					player2.score += 1;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
+			}
+
+			ft_resetPosition() {
+				this.x = this.starting_x;
+				this.y = this.starting_y;
 			}
 		}
 		
