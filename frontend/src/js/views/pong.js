@@ -18,6 +18,7 @@ export default function pong() {
 
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
+		const speedMultiplier = 1.05;
 		let isBallMoving = false;
 		canvas.width = 1800;
 		canvas.height = 900;
@@ -83,8 +84,11 @@ export default function pong() {
 				this.y = y;
 				this.dx = 7;
 				this.dy = 4;
+				this.starting_dx = 7;
+				this.starting_dy = 4;
 				this.starting_x = x - 10;
 				this.starting_y = y;
+				this.last_touched_by;
 			}
 			ft_draw() {
 				ctx.fillStyle = "white";
@@ -99,12 +103,20 @@ export default function pong() {
 				this.y += this.dy;
 
 				if (this.x + this.width > player2.paddle.x && this.x < player2.paddle.x + player2.paddle.width &&
-					this.y < player2.paddle.y + player2.paddle.height && this.y + this.height > player2.paddle.y) {
+					this.y < player2.paddle.y + player2.paddle.height && this.y + this.height > player2.paddle.y &&
+					this.last_touched_by != player2) {
 					this.dx = -this.dx;
+					this.dx *= speedMultiplier;
+					this.dy *= speedMultiplier;
+					this.last_touched_by = player2;
 				}
 				if (this.x < player1.paddle.x + player1.paddle.width && this.x + this.width > player1.paddle.x &&
-					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y) {
+					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y &&
+					this.last_touched_by != player1) {
 					this.dx = -this.dx;
+					this.dx *= speedMultiplier;
+					this.dy *= speedMultiplier;
+					this.last_touched_by = player1;
 				}
 				if (this.y < 0 || this.y + this.height > canvas.height) {
 					this.dy = -this.dy;
@@ -124,8 +136,11 @@ export default function pong() {
 			}
 
 			ft_resetPosition() {
+				this.dx = this.starting_dx;
+				this.dy = this.starting_dy;
 				this.x = this.starting_x;
 				this.y = this.starting_y;
+				this.last_touched_by = 0;
 			}
 		}
 		
