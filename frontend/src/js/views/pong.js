@@ -70,16 +70,16 @@ export default function pong() {
 			ft_drawScore() {
 				ctx.font = "50px Helvetica";
 				if (this.user === "user1")
-					ctx.fillText(this.score,canvas.width - canvas.width / 2 - canvas.width / 10, canvas.height / 10);
+					ctx.fillText(this.score,canvas.width / 2 - canvas.width / 10 - 100, canvas.height / 10);
 				if (this.user === "user2")
-					ctx.fillText(this.score,canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 10);
+					ctx.fillText(this.score,canvas.width / 2 + canvas.width / 10 + 85, canvas.height / 10);
 				if (this.user === "user1" && this.score === 5) {
 					ctx.fillText("YOU WIN!",canvas.width / 5, canvas.height / 2);
-					ctx.fillText("YOU LOSE",canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 2);
+					ctx.fillText("YOU LOSE",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
 				}
 				if (this.user === "user2" && this.score === 5) {
 					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
-					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 10, canvas.height / 2);
+					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
 				}
 			}
 		}
@@ -87,14 +87,14 @@ export default function pong() {
 		class Ball {
 			constructor(x, y) {
 				this.height = 15;
-				this.width = 15;
-				this.x = x - 10;
+				this.width = 16;
+				this.x = x - 8;
 				this.y = y;
 				this.dx = 7;
 				this.dy = 4;
 				this.starting_dx = 7;
 				this.starting_dy = 4;
-				this.starting_x = x - 10;
+				this.starting_x = x - 8;
 				this.starting_y = y;
 				this.last_touched_by;
 			}
@@ -187,7 +187,7 @@ export default function pong() {
 				ctx.fillStyle = "gray";
 				let bottom = 50;
 				while (bottom < this.height) {
-					ctx.fillRect(this.width / 2 - 10, bottom, 15, 45);
+					ctx.fillRect(this.width / 2 - 8, bottom, 16, 45);
 					bottom += 100;
 				}
 			}
