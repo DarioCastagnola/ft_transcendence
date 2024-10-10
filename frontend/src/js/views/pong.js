@@ -72,7 +72,15 @@ export default function pong() {
 				if (this.user === "user1")
 					ctx.fillText(this.score,canvas.width - canvas.width / 2 - canvas.width / 10, canvas.height / 10);
 				if (this.user === "user2")
-					ctx.fillText(this.score,canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 10)
+					ctx.fillText(this.score,canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 10);
+				if (this.user === "user1" && this.score === 5) {
+					ctx.fillText("YOU WIN!",canvas.width / 5, canvas.height / 2);
+					ctx.fillText("YOU LOSE",canvas.width - canvas.width / 2 + canvas.width / 10, canvas.height / 2);
+				}
+				if (this.user === "user2" && this.score === 5) {
+					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
+					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 10, canvas.height / 2);
+				}
 			}
 		}
 
@@ -96,24 +104,39 @@ export default function pong() {
 			}
 
 			// Update the ball's position based on its velocity
+			// Check for collision with the paddles, if found adjust vertical speed based on where the ball hits the paddle and speeds up the ball
 			// Check for collision with the top or bottom walls
-			// Resets position for collision with the lateral walls
+			// Resets position and updates score for collision with the lateral walls
 			ft_move(player1, player2) {
 				this.x += this.dx;
 				this.y += this.dy;
+
 
 				if (this.x + this.width > player2.paddle.x && this.x < player2.paddle.x + player2.paddle.width &&
 					this.y < player2.paddle.y + player2.paddle.height && this.y + this.height > player2.paddle.y &&
 					this.last_touched_by != player2) {
 					this.dx = -this.dx;
+					const paddleCenter = player2.paddle.y + player2.paddle.height / 2;
+					const ballCenter = this.y + this.height / 2;
+					const distanceFromCenter = ballCenter - paddleCenter;
+					
+					this.dy += distanceFromCenter * 0.1;
+
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
-					this.last_touched_by = player2;
+					this.last_touched_by = player2;	
 				}
 				if (this.x < player1.paddle.x + player1.paddle.width && this.x + this.width > player1.paddle.x &&
 					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y &&
 					this.last_touched_by != player1) {
 					this.dx = -this.dx;
+
+					const paddleCenter = player1.paddle.y + player1.paddle.height / 2;
+					const ballCenter = this.y + this.height / 2;
+					const distanceFromCenter = ballCenter - paddleCenter;
+    
+					this.dy += distanceFromCenter * 0.1;
+					
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
 					this.last_touched_by = player1;
@@ -136,8 +159,14 @@ export default function pong() {
 			}
 
 			ft_resetPosition() {
-				this.dx = this.starting_dx;
-				this.dy = this.starting_dy;
+				if (this.last_touched_by === player1) {
+					this.dx = this.starting_dx;
+					this.dy = this.starting_dy;
+				}
+				else if (this.last_touched_by === player2) {
+					this.dx = -this.starting_dx;
+					this.dy = -this.starting_dy;
+				}
 				this.x = this.starting_x;
 				this.y = this.starting_y;
 				this.last_touched_by = 0;
@@ -197,7 +226,8 @@ export default function pong() {
 		// 1. Clear the canvas
 		// 2. Move paddles based on key presses
 		// 3. Draw everything
-		// 4. Loop the game
+		// 4. Ball's movement
+		// 5. Loop the game
 
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -218,7 +248,6 @@ export default function pong() {
 			if (isBallMoving){
 				ball.ft_move(player1, player2);
 			}
-
 
 			board.ft_draw();
 			ball.ft_draw();
