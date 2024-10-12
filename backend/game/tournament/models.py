@@ -39,23 +39,19 @@ class Player(models.Model):
     user_id = models.IntegerField(null=True, blank=True)
     nickname = models.CharField(max_length=100, blank=False)
     type = models.CharField(max_length=100, choices=PLAYER_TYPES, blank=False)
-    stat = models.OneToOneField('Stat', on_delete=models.CASCADE, blank=True, null=True)
     score = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nickname
     
     def save(self, *args, **kwargs):
-        if self.type == "USER" and not self.stat_id:
-            self.stat, created = Stat.objects.get_or_create()  # Ottieni o crea lo stat
+        if self.type == "USER" and not hasattr(self, 'stat'):
+            stat_instance = Stat.objects.create(player=self)  # Collega l'istanza di Stat al Player
+            self.stat = stat_instance  # Assicurati di avere accesso all'istanza
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        if self.type == "USER" and self.stat:
-            self.stat.delete()
-        super().delete(*args, **kwargs)
-    
 class Stat(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)  # Relazione inversa
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
