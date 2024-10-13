@@ -1,7 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 # Create your models here.
+
+def even_number_validator(value):
+    if value not in [2, 4, 6, 8]:
+        raise ValidationError(
+            ('%(value)s non è un numero valido. Deve essere pari e tra 2 e 8.'),
+            params={'value': value},
+        )
 
 class Tournament(models.Model):
     TOURNAMENT_TYPES = [
@@ -11,7 +19,7 @@ class Tournament(models.Model):
     id_user = models.IntegerField(null=False, blank=False)
     type = models.CharField(max_length=20, choices=TOURNAMENT_TYPES, blank=False)
     max_participants = models.IntegerField(
-        validators=[MinValueValidator(2), MaxValueValidator(8)],
+        validators=[even_number_validator],
         default=2
     )
     closed = models.BooleanField(default=False)
@@ -37,7 +45,7 @@ class Player(models.Model):
     ]
 
     user_id = models.IntegerField(null=True, blank=True)
-    nickname = models.CharField(max_length=100, blank=False)
+    nickname = models.CharField(max_length=100, blank=False, unique=True, null=False)
     type = models.CharField(max_length=100, choices=PLAYER_TYPES, blank=False)
     score = models.IntegerField(default=0)
 
@@ -46,12 +54,12 @@ class Player(models.Model):
     
     def save(self, *args, **kwargs):
         if self.type == "USER" and not hasattr(self, 'stat'):
-            stat_instance = Stat.objects.create(player=self)  # Collega l'istanza di Stat al Player
-            self.stat = stat_instance  # Assicurati di avere accesso all'istanza
+            stat_instance = Stat.objects.create(player=self)  
+            self.stat = stat_instance 
         super().save(*args, **kwargs)
 
 class Stat(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)  # Relazione inversa
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
