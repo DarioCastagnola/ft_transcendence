@@ -1,0 +1,8 @@
+from tournament import TournamentManager
+
+class EliminationTournamentManager(TournamentManager):
+    def start_tournament(self):
+        pass
+    
+    def next_round(self):
+        pass
