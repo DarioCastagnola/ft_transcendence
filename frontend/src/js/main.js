@@ -6,6 +6,7 @@ import register from "./views/register.js";
 import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
+import pong3D from "./views/pong3D.js";
 
 
 const routes = {
@@ -18,6 +19,7 @@ const routes = {
     "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userinfo.css" },
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
+    "/pong3D": { title: "pong3D", render: pong3D, css: "./frontend/src/css/pong3D.css"},
 };
 
 let currentCSS = null;
