@@ -8,17 +8,16 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.contrib.auth import authenticate, login as django_login
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer, OTPSerializer
 from django.http import JsonResponse
 from django.views import View
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
 
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny]
     serializer_class = UserSerializer
 
     def perform_create(self, serializer):
@@ -30,12 +29,17 @@ class RegisterView(generics.CreateAPIView):
         })
 
 class LoginView(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny]
+    serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        username = serializer.validated_data.get('username')
+        password = serializer.validated_data.get('password')
         user = authenticate(username=username, password=password)
+        
         if user:
             device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
             if device:
@@ -50,6 +54,8 @@ class LoginView(APIView):
 
 class VerifyOTPView(APIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = OTPSerializer
+
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -84,12 +90,14 @@ class DeleteUserView(APIView):
         return Response({"message": "User deleted successfully"}, status=204)
     
 
-class OAuth2CallbackView(View):
+
+
+class OAuth2CallbackView(APIView):
     def get(self, request, *args, **kwargs):
         code = request.GET.get('code')
         
         if not code:
-            return JsonResponse({"error": "No code provided"}, status=400)
+            return Response({"error": "No code provided"}, status=400)
         
         token_url = f"{settings.OAUTH2_PROVIDER_URL}/token"
         data = {
@@ -103,15 +111,15 @@ class OAuth2CallbackView(View):
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         try:
             response = requests.post(token_url, data=data, headers=headers)
-            response.raise_for_status()  # Solleva un'eccezione per codici di stato HTTP 4xx/5xx
+            response.raise_for_status() 
         except requests.HTTPError as e:
-            return JsonResponse({"error": f"Failed to obtain access token: {str(e)}"}, status=response.status_code)
+            return Response({"error": f"Failed to obtain access token: {str(e)}"}, status=response.status_code)
         
         tokens = response.json()
         access_token = tokens.get('access_token')
         
         if not access_token:
-            return JsonResponse({"error": "No access token found"}, status=400)
+            return Response({"error": "No access token found"}, status=400)
         
         user_info_url = settings.USER_INFO_URL
         headers = {'Authorization': f'Bearer {access_token}'}
@@ -119,7 +127,7 @@ class OAuth2CallbackView(View):
             user_info_response = requests.get(user_info_url, headers=headers)
             user_info_response.raise_for_status()
         except requests.HTTPError as e:
-            return JsonResponse({"error": f"Failed to obtain user info: {str(e)}"}, status=user_info_response.status_code)
+            return Response({"error": f"Failed to obtain user info: {str(e)}"}, status=user_info_response.status_code)
         
         user_info = user_info_response.json()
         username = user_info.get('login')
@@ -134,8 +142,12 @@ class OAuth2CallbackView(View):
             user.save()
 
         django_login(request, user, backend='oauth2_provider.backends.OAuth2Backend')
-        
-        return JsonResponse({"message": "User authenticated successfully", "user_info": user_info})
+
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
     
 
 class UserInfoView(APIView):

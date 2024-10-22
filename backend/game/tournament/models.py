@@ -2,8 +2,6 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 
-# Create your models here.
-
 def even_number_validator(value):
     if value not in [2, 4, 6, 8]:
         raise ValidationError(
@@ -16,7 +14,7 @@ class Tournament(models.Model):
         ("TOURNAMENT", "Torneo"),
         ("ELIMINATION", "Eliminazione diretta"),
     ]
-    id_user = models.IntegerField(null=False, blank=False)
+    user_id = models.IntegerField(null=False, blank=False)
     type = models.CharField(max_length=20, choices=TOURNAMENT_TYPES, blank=False)
     max_participants = models.IntegerField(
         validators=[even_number_validator],
