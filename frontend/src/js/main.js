@@ -7,7 +7,6 @@ import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 
-
 const routes = {
     "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
     "/home": { title: "Home", render: home, css: "./frontend/src/css/home.css" },

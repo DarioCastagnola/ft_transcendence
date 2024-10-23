@@ -27,9 +27,12 @@ export default function login() {
                     </div>
 
                     <div data-mdb-input-init class="form-outline mb-4">
-                      <input type="password" id="password" class="form-control" required />
+                      <input type="password" id="password" class="form-control"
+                        placeholder="Password" required />
                       <label class="form-label" for="password">Password</label>
                     </div>
+
+                    <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
 
                     <div class="text-center pt-1 mb-5 pb-1">
                       <button id="loginButton" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log in</button>
@@ -62,12 +65,16 @@ export default function login() {
   `;
 
   setTimeout(() => {
-    const loginForm = document.getElementById('loginForm');
     const loginButton = document.getElementById('loginButton');
+    const errorMessage = document.getElementById('errorMessage');
 
     // Add click event listener to the login button
     loginButton.addEventListener('click', async function (event) {
       event.preventDefault();
+
+      // Hide any previous error message
+      errorMessage.classList.add('d-none');
+      errorMessage.textContent = '';
 
       // Get form values
       const username = document.getElementById('username').value;
@@ -106,9 +113,15 @@ export default function login() {
           router();
         } else {
           alert(`Login failed: ${result.message}`);
+          // Display the error message
+          errorMessage.textContent = "Invalid Credentials";
+          errorMessage.classList.remove('d-none');
         }
       } catch (error) {
         console.error('Error:', error);
+        // Display the error message
+        errorMessage.textContent = "Invalid Credentials";
+        errorMessage.classList.remove('d-none');
         alert('An error occurred during login.');
       }
     });
