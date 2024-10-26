@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'profile_data',
     'corsheaders',
     'rest_framework',
-
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +137,7 @@ import os
 
 MEDIA_URL = '/media/'  # URL per accedere ai file multimediali
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Cartella dove saranno salvati i file
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}

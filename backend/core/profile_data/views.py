@@ -5,6 +5,10 @@ import jwt
 from django.views import View
 from django.conf import settings
 import requests
+from rest_framework import status
+from .models import UserProfile
+from .serializers import UserProfileSerializer
+from .utils import get_user_id
 
 AUTH_SERVICE_URL = 'http://authentication:8002/api/auth/user-info/'
 
@@ -53,14 +57,11 @@ class VerifyTokenView(View):
             return JsonResponse({"detail": "Token has expired"}, status=401)
         except jwt.InvalidTokenError:
             return JsonResponse({"detail": "Invalid token"}, status=401)
-        
-
-from rest_framework import status
-from .models import UserProfile
-from .serializers import UserProfileSerializer
-from .utils import get_user_id
+    
 
 class UserProfileUpdate(APIView):
+    serializer_class = UserProfileSerializer
+
     def post(self, request):
         user_id = get_user_id(request)
 
@@ -72,8 +73,7 @@ class UserProfileUpdate(APIView):
             profile = UserProfile.objects.get(user_id=user_id)
             serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         except UserProfile.DoesNotExist:
-            # Se non esiste, crea un nuovo profilo
-            serializer = UserProfileSerializer(data=request.data)
+            serializer = UserProfileSerializer(data=request.data, user_id=user_id)
 
         if serializer.is_valid():
             serializer.save()  # Salva l'avatar nuovo o aggiornato
@@ -81,6 +81,7 @@ class UserProfileUpdate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserProfileDetail(APIView):
+    serializer_class = UserProfileSerializer
     def get(self, request, user_id):
         try:
             profile = UserProfile.objects.get(user_id=user_id)

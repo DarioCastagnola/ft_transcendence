@@ -7,5 +7,5 @@ router = DefaultRouter()
 router.register(r'tournaments', TournamentViewSet)
 
 urlpatterns = [
-    path('tournaments/', include(router.urls)),
+    path('', include(router.urls)),
 ]

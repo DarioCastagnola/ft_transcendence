@@ -4,12 +4,14 @@ from rest_framework import serializers
 class MatchSerializer(serializers.ModelSerializer):
     player1 = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all())
     player2 = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all())
+    player1_score = serializers.IntegerField(required=False)
+    player2_score = serializers.IntegerField(required=False)
     winner = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all(), required=False)
 
     class Meta:
         model = Match
-        fields = ('id', 'tournament', 'player1', 'player2', 'winner', 'draw', 'closed', 'created_at', 'updated_at')
-        extra_kwargs = {'tournament': {'required': True}, 'player1': {'required': True}, 'player2': {'required': True}, 'winner': {'required': False}, 'draw': {'required': False}, 'closed': {'required': False}, 'created_at': {'required': False}, 'updated_at': {'required': False}}
+        fields = ('id', 'tournament', 'player1', 'player2', 'winner', 'draw', 'closed', 'created_at', 'updated_at', 'player1_score', 'player2_score')
+        extra_kwargs = {'tournament': {'required': True}, 'player1': {'required': True}, 'player2': {'required': True}, 'winner': {'required': False}, 'draw': {'required': False}, 'closed': {'required': False}, 'created_at': {'required': False}, 'updated_at': {'required': False}, 'player1_score': {'required': False}, 'player2_score': {'required': False}}
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:

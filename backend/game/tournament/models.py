@@ -69,6 +69,8 @@ class Match(models.Model):
     tournament = models.ForeignKey('Tournament', on_delete=models.CASCADE, blank=False, null=False)
     player1 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player1', blank=True, null=True)
     player2 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player2', blank=True, null=True)
+    player1_score = models.IntegerField(default=0)
+    player2_score = models.IntegerField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='winner', blank=True, null=True)
     draw = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)

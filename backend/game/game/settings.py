@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'tournament',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,18 @@ import os
 
 MEDIA_URL = '/media/'  # URL per accedere ai file multimediali
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Cartella dove saranno salvati i file
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your API Title',
+    'DESCRIPTION': 'Your API Description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'defaultModelsExpandDepth': -1,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+}
