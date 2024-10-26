@@ -93,36 +93,35 @@ export default function login() {
       };
 
       // Send the form data to the API using fetch
-      try {
-        const response = await fetch('http://localhost:8002/api/auth/login/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(loginData),
-        });
+      const response = await fetch('http://localhost:8002/api/auth/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
 
-        // Handle the API response
-        const result = await response.json();
-        if (response.ok) {
-          // alert('Login successful!');
-          console.log('Login result:', result);
-          // Redirect to another page or handle success
-
+      // Handle the API response
+      const result = await response.json();
+      if (response.ok) {
+        // alert('Login successful!');
+        console.log('Login result:', result);
+        // Redirect to another page or handle success
+        if (result.access) {
+          localStorage.setItem("access", result.access)
           window.history.pushState({}, '', '/home');
           router();
         } else {
-          alert(`Login failed: ${result.message}`);
-          // Display the error message
-          errorMessage.textContent = "Invalid Credentials";
-          errorMessage.classList.remove('d-none');
+          localStorage.setItem("username", username)
+          localStorage.setItem("password", password)
+          window.history.pushState({}, '', '/2FA');
+          router();
         }
-      } catch (error) {
-        console.error('Error:', error);
+      } else {
+        alert(`Login failed: ${result.message}`);
         // Display the error message
         errorMessage.textContent = "Invalid Credentials";
         errorMessage.classList.remove('d-none');
-        alert('An error occurred during login.');
       }
     });
   }, 0);
