@@ -6,6 +6,7 @@ import register from "./views/register.js";
 import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
+import twoFA from "./views/twoFA.js";
 
 const routes = {
     "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
@@ -13,6 +14,7 @@ const routes = {
     "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
     "/login": { title: "Login", render: login, css: "./frontend/src/css/home.css" },
+    "/2FA": { title: "2FA", render: twoFA, css: "./frontend/src/css/home.css" },
     "/register": { title: "Register", render: register, css: "./frontend/src/css/home.css" },
     "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userinfo.css" },
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },

@@ -127,31 +127,24 @@ export default function register() {
       });
 
       // Handle the API response
-      const clonedResponse = response.clone();
-      console.log(await clonedResponse.json());
-      if (clonedResponse.ok) {
+      const result = await response.json();
+      if (response.ok) {
         // Redirect to another page or handle success
         history.pushState({}, '', '/login');
         router();
       } else {
-        const errorData = await response.json();
-
-        if (errorData.username && errorData.username.length > 0) {
-            usernameError.textContent = errorData.username[0];
+        if (result.username && result.username.length > 0) {
+            usernameError.textContent = result.username[0];
             usernameError.classList.remove('d-none');
         }
-        if (errorData.email && errorData.email.length > 0) {
-            emailError.textContent = errorData.email[0];
+        if (result.email && result.email.length > 0) {
+            emailError.textContent = result.email[0];
             emailError.classList.remove('d-none');
         }
-        if (errorData.password && errorData.password.length > 0) {
-            passwordError.textContent = errorData.password[0];
+        if (result.password && result.password.length > 0) {
+            passwordError.textContent = result.password[0];
             passwordError.classList.remove('d-none');
         }
-
-        // console.log(errorData.username[0]);
-        // console.log(errorData.email[0]);
-        // console.log(errorData.password[0]);
       }
     });
   }, 0);

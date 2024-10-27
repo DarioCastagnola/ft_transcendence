@@ -39,7 +39,7 @@ class LoginView(APIView):
         username = serializer.validated_data.get('username')
         password = serializer.validated_data.get('password')
         user = authenticate(username=username, password=password)
-        
+
         if user:
             device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
             if device:
@@ -53,7 +53,7 @@ class LoginView(APIView):
         return Response({"error": "Invalid Credentials"}, status=400)
 
 class VerifyOTPView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = OTPSerializer
 
 
@@ -87,17 +87,17 @@ class DeleteUserView(APIView):
         user = request.user
         user.delete()
         return Response({"message": "User deleted successfully"}, status=204)
-    
+
 
 
 
 class OAuth2CallbackView(APIView):
     def get(self, request, *args, **kwargs):
         code = request.GET.get('code')
-        
+
         if not code:
             return Response({"error": "No code provided"}, status=400)
-        
+
         token_url = f"{settings.OAUTH2_PROVIDER_URL}/token"
         data = {
             'grant_type': 'authorization_code',
@@ -106,20 +106,20 @@ class OAuth2CallbackView(APIView):
             'code': code,
             'redirect_uri': settings.OAUTH2_REDIRECT_URI,
         }
-        
+
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         try:
             response = requests.post(token_url, data=data, headers=headers)
-            response.raise_for_status() 
+            response.raise_for_status()
         except requests.HTTPError as e:
             return Response({"error": f"Failed to obtain access token: {str(e)}"}, status=response.status_code)
-        
+
         tokens = response.json()
         access_token = tokens.get('access_token')
-        
+
         if not access_token:
             return Response({"error": "No access token found"}, status=400)
-        
+
         user_info_url = settings.USER_INFO_URL
         headers = {'Authorization': f'Bearer {access_token}'}
         try:
@@ -127,16 +127,16 @@ class OAuth2CallbackView(APIView):
             user_info_response.raise_for_status()
         except requests.HTTPError as e:
             return Response({"error": f"Failed to obtain user info: {str(e)}"}, status=user_info_response.status_code)
-        
+
         user_info = user_info_response.json()
         username = user_info.get('login')
         email = user_info.get('email')
-        
+
         user, created = User.objects.get_or_create(
             username=username,
             defaults={'email': email}
         )
-        
+
         if created:
             user.save()
 
@@ -147,7 +147,7 @@ class OAuth2CallbackView(APIView):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         })
-    
+
 
 class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
