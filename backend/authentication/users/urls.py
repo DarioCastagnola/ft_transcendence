@@ -11,4 +11,5 @@ urlpatterns = [
     # path('delete-user/', DeleteUserView.as_view(), name='delete_user'),
     path('oauth/callback/', OAuth2CallbackView.as_view(), name='oauth_callback'),
     path('user-info/', UserInfoView.as_view(), name='user_info'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

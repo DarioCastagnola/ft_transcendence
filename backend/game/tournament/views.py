@@ -4,6 +4,7 @@ from django.views import View
 import jwt
 from django.conf import settings
 import requests
+from .classicTournament import ClassicTournamentManager
 
 class VerifyTokenView(View):
     def get(self, request):
@@ -45,5 +46,27 @@ def get_user_id(request):
 
     if response.status_code == 200:
         return response.json().get('id') 
+    else:
+        return None 
+
+def get_user_info(request, info):
+    auth_header = request.headers.get('Token')
+    if not auth_header:
+        auth_header = request.headers.get('Authorization')
+    if not auth_header:
+        return None
+    
+    parts = auth_header.split()
+    if len(parts) != 2 or parts[0] != 'Bearer':
+        return None  
+    
+    token = parts[1]
+    url = 'http://authentication:8002/api/auth/user-info/'
+    headers = {'Authorization': f'Bearer {token}'}
+    
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json().get(info) 
     else:
         return None 

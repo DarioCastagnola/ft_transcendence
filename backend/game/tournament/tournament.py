@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from models import Match, Tournament, Stat
+from .models import Match, Tournament, Stat
 
 class TournamentManager(ABC):
     def __init__(self, tournament):
