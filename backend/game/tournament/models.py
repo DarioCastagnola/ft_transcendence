@@ -22,7 +22,7 @@ class Tournament(models.Model):
     )
     closed = models.BooleanField(default=False)
     players = models.ManyToManyField('Player', blank=True)
-    duration = models.IntegerField(null=False, blank=False, default=300, validators=[MinValueValidator(60), MaxValueValidator(3600)])
+    duration = models.IntegerField(null=False, blank=False, default=300, validators=[MinValueValidator(60), MaxValueValidator(600)])
     point_to_win = models.IntegerField(null=False, blank=False, default=3, validators=[MinValueValidator(1), MaxValueValidator(10)])
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,10 +51,11 @@ class Player(models.Model):
         return self.nickname
     
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         if self.type == "USER" and not hasattr(self, 'stat'):
             stat_instance = Stat.objects.create(player=self)  
             self.stat = stat_instance 
-        super().save(*args, **kwargs)
+
 
 class Stat(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
@@ -69,6 +70,8 @@ class Match(models.Model):
     tournament = models.ForeignKey('Tournament', on_delete=models.CASCADE, blank=False, null=False)
     player1 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player1', blank=True, null=True)
     player2 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player2', blank=True, null=True)
+    player1_score = models.IntegerField(default=0)
+    player2_score = models.IntegerField(default=0)
     winner = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='winner', blank=True, null=True)
     draw = models.BooleanField(default=False)
     closed = models.BooleanField(default=False)

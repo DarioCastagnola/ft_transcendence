@@ -59,8 +59,7 @@ class VerifyOTPView(APIView):
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(username=username, password=password)
+        user = User.objects.get(username=username)
         otp_code = request.data.get('otp')
         device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
 

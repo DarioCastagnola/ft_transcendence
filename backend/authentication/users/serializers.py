@@ -33,5 +33,4 @@ class LoginSerializer(serializers.Serializer):
 
 class OTPSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField()
     otp = serializers.CharField()

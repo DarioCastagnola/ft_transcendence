@@ -1,5 +1,5 @@
-from tournament import TournamentManager
-from game.tournament.models import Match
+from .tournament import TournamentManager
+from .models import Match
 
 class ClassicTournamentManager(TournamentManager):
     
@@ -25,3 +25,5 @@ class ClassicTournamentManager(TournamentManager):
         for i in range(len(players) - 1):
             for j in range(i + 1, len(players)): 
                 match = Match.objects.create(tournament=self.tournament, player1=players[i], player2=players[j])
+                match.save()
+        return "Matches created"
