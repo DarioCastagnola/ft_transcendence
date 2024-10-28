@@ -109,11 +109,11 @@ export default function login() {
         // Redirect to another page or handle success
         if (result.access) {
           localStorage.setItem("access", result.access)
+          localStorage.setItem("refresh", result.refresh)
           window.history.pushState({}, '', '/home');
           router();
         } else {
           localStorage.setItem("username", username)
-          localStorage.setItem("password", password)
           window.history.pushState({}, '', '/2FA');
           router();
         }

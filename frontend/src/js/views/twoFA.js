@@ -53,13 +53,11 @@ export default function TwoFA() {
 
       // Get form values
       const username = localStorage.getItem("username")
-      const password = localStorage.getItem("password")
       const otp = document.getElementById('otp').value;
 
       // Create the data object to send
       const TwoFAData = {
         username,
-        password,
         otp
       };
 
@@ -79,8 +77,8 @@ export default function TwoFA() {
         // console.log('TwoFA result:', result);
         // Redirect to another page or handle success
         localStorage.removeItem("username")
-        localStorage.removeItem("password")
         localStorage.setItem("access", result.access)
+        localStorage.setItem("refresh", result.refresh)
         window.history.pushState({}, '', '/home');
         router();
       } else {
