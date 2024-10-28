@@ -1,4 +1,5 @@
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function userinfo() {
   const html = `
@@ -14,6 +15,7 @@ export default function userinfo() {
                         <h4 id="user-username">ciao</h4>
                         <p class="text-muted font-size-sm">Online</p>
                         <button class="btn btn-primary">Add to friend list</button>
+                        <button id="logoutButton" class="btn btn-warning mt-2">Logout</button>
                         <button id="enable2faButton" class="btn btn-warning mt-2">Enable 2FA</button>
                         <div id="qrCodeContainer" class="mt-3"></div> <!-- Container for the QR code -->
                       </div>
@@ -46,58 +48,54 @@ export default function userinfo() {
   `;
 
   setTimeout(() => {
-    const apiUrl = 'http://localhost:8002/api/auth/user-info/';
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");
     const accessToken = localStorage.getItem("access");
     const enable2faButton = document.getElementById("enable2faButton");
+    const logoutButton = document.getElementById("logoutButton");
     const qrCodeContainer = document.getElementById("qrCodeContainer");
 
-    // Fetch user info
-    fetch(apiUrl, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          window.history.pushState({}, '', '/home');
-          router();
-        }
-        return response.json();
-      })
-      .then(data => {
+
+    async function fetchUserInfo() {
+      const apiUrl = 'http://localhost:8002/api/auth/user-info/';
+      const response = await apiFetch(apiUrl);
+
+      if (response.ok) {
+        const data = await response.json();
         usernameElement.textContent = data.username;
         emailElement.textContent = data.email;
-      })
-      .catch(error => console.error("Error fetching user info:", error));
+      } else {
+        console.error("Failed to fetch user info", response.status);
+      }
+    }
+
+    fetchUserInfo();
 
     // Enable 2FA button click handler
     enable2faButton.addEventListener('click', () => {
-      const enable2faUrl = 'http://localhost:8002/api/auth/enable-2fa/';
 
-      fetch(enable2faUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
+      async function enable2FAFetch() {
+        const enable2faUrl = 'http://localhost:8002/api/auth/enable-2fa/';
+        const response = await apiFetch(enable2faUrl);
+
+        if (response.ok) {
+          const data = await response.json();
+          const otpUri = encodeURIComponent(data.otp_uri);
+          const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${otpUri}&size=150x150`;
+          qrCodeContainer.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code for 2FA" width="150">`;
+        } else {
+          console.error("Failed to fetch user info", response.status);
         }
-      })
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to enable 2FA.');
-        return response.json();
-      })
-      .then(data => {
-        const otpUri = encodeURIComponent(data.otp_uri);
-        const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${otpUri}&size=150x150`;
-        // Display the QR code image
-        qrCodeContainer.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code for 2FA" width="150">`;
-      })
-      .catch(error => {
-        console.error("Error enabling 2FA:", error);
-        alert("An error occurred while enabling 2FA. Please try again.");
-      });
+      }
+
+      enable2FAFetch()
+    });
+
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem("access")
+      localStorage.removeItem("refresh")
+      window.history.pushState({}, '', '/login');
+      router();
     });
   }, 0);
 
