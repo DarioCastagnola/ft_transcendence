@@ -62,7 +62,7 @@ export default function TwoFA() {
       };
 
       // Send the form data to the API using fetch
-	  const response = await fetch('http://localhost:8002/api/auth/verify-otp/', {
+	  const response = await fetch('http://localhost/api/auth/verify-otp/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

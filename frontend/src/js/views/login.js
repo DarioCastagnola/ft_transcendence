@@ -93,7 +93,7 @@ export default function login() {
       };
 
       // Send the form data to the API using fetch
-      const response = await fetch('http://localhost:8002/api/auth/login/', {
+      const response = await fetch('http://localhost/api/auth/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

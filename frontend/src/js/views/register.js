@@ -118,7 +118,7 @@ export default function register() {
 
       // Send the form data to the API using fetch
       // console.log(JSON.stringify(formData))
-      const response = await fetch('http://localhost:8002/api/auth/register/', {
+      const response = await fetch('http://localhost/api/auth/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
