@@ -1,3 +1,5 @@
+
+import welcome from ".views/welcome.js";
 import home from "./views/home.js";
 import about from "./views/about.js";
 import contact from "./views/contact.js";
@@ -9,16 +11,18 @@ import pong from "./views/pong.js";
 import twoFA from "./views/twoFA.js";
 
 const routes = {
-    "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
+
+    "/": { title: "Welcome", render: home, css: "./frontend/src/css/welcome.css" },
     "/home": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
     "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
-    "/login": { title: "Login", render: login, css: "./frontend/src/css/home.css" },
+    "/login": { title: "Login", render: login, css: "./frontend/src/css/signIn.css" },
     "/2FA": { title: "2FA", render: twoFA, css: "./frontend/src/css/home.css" },
     "/register": { title: "Register", render: register, css: "./frontend/src/css/home.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userinfo.css" },
+    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userInfo.css" },
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
+
 };
 
 let currentCSS = null;
