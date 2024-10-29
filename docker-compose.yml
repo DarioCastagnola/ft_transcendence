@@ -10,135 +10,149 @@ services:
   #   ports:
   #     - 8080:8080
 
-  nginx:
+  # nginx:
+      # image: nginx:latest
+      # container_name: nginx_container
+      # depends_on:
+      # - authentication
+      # - core
+      # - game
+      # ports:
+      #   - "80:80"
+      #   - "443:443"
+      # volumes:
+      #   - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      #   - ./backend/nginx/ssl:/etc/nginx/ssl:ro
+      #   - media:/media
+      # networks:
+      #   - internal_network
+      #   - external
+
+  nginx_front:
       image: nginx:latest
-      container_name: nginx_container
-      depends_on:
-      - authentication
-      - core
-      - game
+      container_name: nginx_front
+      # depends_on:
       ports:
-        - "80:80"
         - "443:443"
       volumes:
-        - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./backend/nginx/ssl:/etc/nginx/ssl:ro
-        - media:/media
-      networks:
-        - internal_network
-        - external
+        - ./frontend/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./frontend/nginx/ssl:/etc/nginx/ssl:ro
+        - ./frontend/static_content:/var/www/ft_trascendence:ro
+      # networks:
+      #   - internal_network
+      #   - external
 
-  authentication:
-    container_name: authentication
-    build:
-      context: ./backend/authentication
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/authentication:/authentication
-      - ./backend/wait_for_db.sh:/wait_for_db.sh
-    depends_on:
-      - db_auth
-    networks:
-      - external
-      - internal_network
-      - auth
-    #command: sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    command: sh -c "./wait_for_db.sh db_auth python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    environment:
-      - debug=1
-    ports:
-      - 8002:8002
+  # authentication:
+  #   container_name: authentication
+  #   build:
+  #     context: ./backend/authentication
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./backend/authentication:/authentication
+  #     - ./backend/wait_for_db.sh:/wait_for_db.sh
+  #   depends_on:
+  #     - db_auth
+  #   networks:
+  #     - external
+  #     - internal_network
+  #     - auth
+  #   #command: sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
+  #   command: sh -c "./wait_for_db.sh db_auth python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
+  #   environment:
+  #     - debug=1
+  #   ports:
+  #     - 8002:8002
 
-  db_auth:
-    image: postgres
-    container_name: db_auth
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
-    volumes:
-      - db_data_auth:/var/lib/postgresql/data
-    networks:
-      - auth
-      - external
-    ports:
-      - 5432:5432
+  # db_auth:
+  #   image: postgres
+  #   container_name: db_auth
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: mydatabase
+  #   volumes:
+  #     - db_data_auth:/var/lib/postgresql/data
+  #   networks:
+  #     - auth
+  #     - external
+  #   ports:
+  #     - 5432:5432
 
-  core:
-    container_name: core
-    build:
-      context: ./backend/core
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/core:/core
-      - media:/core/media
-    depends_on:
-      - db_core
-    networks:
-      - internal_network
-      - core
-    command:  sh -c "/copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"
-    ports:
-      - 8003:8003
+  # core:
+  #   container_name: core
+  #   build:
+  #     context: ./backend/core
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./backend/core:/core
+  #     - media:/core/media
+  #   depends_on:
+  #     - db_core
+  #   networks:
+  #     - internal_network
+  #     - core
+  #   command:  sh -c "/copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"
+  #   ports:
+  #     - 8003:8003
 
-  db_core:
-    image: postgres
-    container_name: db_core
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
-    volumes:
-      - db_data_core:/var/lib/postgresql/data_core
-    networks:
-      - core
-    ports:
-      - 5432:5432
+  # db_core:
+  #   image: postgres
+  #   container_name: db_core
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: mydatabase
+  #   volumes:
+  #     - db_data_core:/var/lib/postgresql/data_core
+  #   networks:
+  #     - core
+  #   ports:
+  #     - 5432:5432
 
-  game:
-    container_name: game
-    build:
-      context: ./backend/game
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/game:/game
-      - media:/game/media
-    depends_on:
-      - db_game
-    networks:
-      - internal_network
-      - game
-    command:  sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8004 game.wsgi:application"
-    ports:
-      - 8004:8004
+  # game:
+  #   container_name: game
+  #   build:
+  #     context: ./backend/game
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./backend/game:/game
+  #     - media:/game/media
+  #   depends_on:
+  #     - db_game
+  #   networks:
+  #     - internal_network
+  #     - game
+  #   command:  sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8004 game.wsgi:application"
+  #   ports:
+  #     - 8004:8004
 
-  db_game:
-    image: postgres
-    container_name: db_game
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
-    volumes:
-      - db_data_game:/var/lib/postgresql/data_game
-    networks:
-      - game
-    ports:
-      - 5432:5432
+  # db_game:
+  #   image: postgres
+  #   container_name: db_game
+  #   environment:
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: mydatabase
+  #   volumes:
+  #     - db_data_game:/var/lib/postgresql/data_game
+  #   networks:
+  #     - game
+  #   ports:
+  #     - 5432:5432
 
-networks:
-  external:
-  internal_network:
-    internal: true
-  auth:
-    internal: true
-  core:
-    internal: true
-  game:
-    internal: true
+# networks:
+#   external:
+#   internal_network:
+#     internal: true
+#   auth:
+#     internal: true
+#   core:
+#     internal: true
+#   game:
+#     internal: true
 
-volumes:
-  db_data_auth:
-  db_data_core:
-  db_data_game:
-  media:
+# volumes:
+#   db_data_auth:
+#   db_data_core:
+#   db_data_game:
+#   media:

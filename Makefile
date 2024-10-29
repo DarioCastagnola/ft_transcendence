@@ -57,4 +57,4 @@ prune:
 	docker container prune
 
 ssl:
-	@keytool -genkey -alias well4you -keyalg RSA -keystore well4you.jks -storepass password -validity 365 -keysize 2048 -dname "CN=Bravo Team, OU=42, O=42, L=Rome, ST=Italy, C=IT" -keypass password
+	@keytool -genkey -alias ft_trascendence -keyalg RSA -keystore ft_trascendence.jks -storepass password -validity 365 -keysize 2048 -dname "CN=42, OU=42, O=42, L=Rome, ST=Italy, C=IT" -keypass password
