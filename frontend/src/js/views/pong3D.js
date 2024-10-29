@@ -17,6 +17,8 @@ export default function pong3D() {
 
     setTimeout(() => {
         const canvasContainer = document.getElementById("threejs-canvas");
+
+		const keys = {};
         
         // Scene setup
         const scene = new THREE.Scene();
@@ -46,47 +48,89 @@ export default function pong3D() {
 		const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 		const Ball = new THREE.Mesh(ballGeometry, ballMaterial);
 
-        // Paddle (3D Rectangle) Geometry
-        const boxWidth = 80;
-        const boxHeight = 50;
-        const boxDepth = 10;
-        const boxGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+        class Player {
+			constructor(user) {
+				this.user = user;
+				this.paddle = new Paddle(this.user);
+				this.score = 0;
+			}
 
-        // Box Material
+			ft_move_paddle(x) {
+				this.paddle.ft_move(x);
+			}
+		}
 		
 		class Paddle {
 			constructor(user) {
-				this.paddleWidth = 80;
+				this.paddleWidth = 60;
 				this.paddleHeight = 50;
 				this.paddleDepth = 10;
 				this.user = user;
-				this.paddleGeometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+				this.paddleGeometry = new THREE.BoxGeometry(this.paddleWidth, this.paddleHeight, this.paddleDepth);
 				this.paddleMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 				this.paddle = new THREE.Mesh(this.paddleGeometry, this.paddleMaterial);
+				this.x = 0;
+			}
+
+			getPaddleHeight() {
+				return this.paddleHeight;
 			}
 
 			ft_addPaddleToScene() {
 				if (this.user == "user1")
-					this.paddle.position.set(0, boxHeight / 2, 200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, 200);
 				else if (this.user == "user2")
-					this.paddle.position.set(0, boxHeight / 2, -200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, -200);
 				scene.add(this.paddle);
+			}
+
+			ft_move(x) {
+				this.x += x;
+				if (this.x < -170)
+					this.x = -170;
+				else if (this.x > 170)
+					this.x = 170;
+				if (this.user == "user1")
+					this.paddle.position.set(this.x, this.paddleHeight / 2, 200);
+				else if (this.user == "user2")
+					this.paddle.position.set(this.x, this.paddleHeight / 2, -200);
 			}
 		}
 
         // Box Mesh
-        const Paddle1 = new Paddle("user1");
-		const Paddle2 = new Paddle("user2");
+        const Player1 = new Player("user1");
+		const Player2 = new Player("user2");
 
-		Ball.position.set(0, boxHeight / 2, 0);
-		Paddle1.ft_addPaddleToScene();
-		Paddle2.ft_addPaddleToScene();
+		Ball.position.set(0, Player1.paddle.getPaddleHeight() / 2, 0);
+		Player1.paddle.ft_addPaddleToScene();
+		Player2.paddle.ft_addPaddleToScene();
 		scene.add(Ball);
+
+		document.addEventListener("keydown", (event) => {
+			const key = event.key.toLowerCase();
+			keys[key] = true;
+		});
+
+		document.addEventListener("keyup", (event) => {
+			keys[event.key.toLowerCase()] = false;
+		});
         
 
         // Game loop
         function gameLoop() {
             renderer.render(scene, camera);
+			if (keys["w"]) {
+				Player1.ft_move_paddle(-10);
+			}
+			if (keys["s"]) {
+				Player1.ft_move_paddle(10);
+			}
+			if (keys["arrowup"]) {
+				Player2.ft_move_paddle(-10);
+			}
+			if (keys["arrowdown"]) {
+				Player2.ft_move_paddle(10);
+			}
             gameInstance = requestAnimationFrame(gameLoop);
         }
 
