@@ -17,8 +17,8 @@ export default function home() {
 					<li class="nav-item">
 						<a class="nav-link" href="/userinfo" data-link>My profile</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Logout</a>
+                    <li class="nav-item">
+						<a class="nav-link" href="/welcome" data-link>Logout</a>
 					</li>
 					
 				</ul>

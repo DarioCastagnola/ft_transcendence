@@ -301,17 +301,18 @@ export default function userinfo() {
 			<!-- GRAFICO -->
 			<div class="chart-container">
 				<canvas id="myChart" width="300" height="300"></canvas>
-				<button class="button2">MATCH HISTORY</button>
+				<a href="/matchHistory" data-link class="button2">MATCH HISTORY</a>
 			</div>
 			
 			
-		</div>
-	</section>
-	
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="myProfile.js"></script>
-  `;
-
+			</div>
+			</section>
+			
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<script src="myProfile.js"></script>
+			`;
+			
+  
   setTimeout(() => {
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");

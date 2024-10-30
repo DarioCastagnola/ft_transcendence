@@ -1,31 +1,10 @@
-import "../components/counter.js";
+import { router } from "../main.js";
 
-export default function welcome() {
-    const html = `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <div class="container">
-		<a class="navbar-brand" href="#">Transcendence</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/signIn" data-link>Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signUp" data-link>Sign up</a>
-                </li>
-				<li class="nav-item">
-                    <a class="nav-link" href="/home" data-link>HOME</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+export default function login() {
+  const html = `
+  <section>
 
-<section>
-    <span></span>
+		<span></span>
 		<span></span>
 		<span></span>
 		<span></span>
@@ -286,25 +265,93 @@ export default function welcome() {
 		<span></span>
 		<span></span>
 
-		<section class="image-section">
-			<div class="cellPong">
-				<div class="content">
-					<div class="loading">
-						<div class="loading-box">
-							<div class="WH color l1"></div>
-							<div class="ball color"></div>
-							<div class="WH color l2"></div>
-						</div>
+		<div class="signin">
+			<div class="content">
+				<h2>Sign In</h2>
+				<div id="signInForm" class="form">
+					<div class="inputBox">
+						<input type="email" id="username" required>
+						<i>Username</i>
+					</div>
+					<div class="inputBox">
+						<input type="password" id="password" required>
+						<i>Password</i>
+					</div>
+					<div class="links">
+						<a href="/signUp" data-link>Sign Up</a>
+					</div>
+					<div class="inputBox">
+						<input type="submit" onclick="submitForm()" value="Sign In">
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 
-</section>
+	</section>
+  `;
 
-<footer class="custom-footer text-white text-center py-3">
-    <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
-</footer>
-        `;
-    return html;
+  setTimeout(() => {
+    const loginButton = document.getElementById('loginButton');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Add click event listener to the login button
+    loginButton.addEventListener('click', async function (event) {
+      event.preventDefault();
+
+      // Hide any previous error message
+      errorMessage.classList.add('d-none');
+      errorMessage.textContent = '';
+
+      // Get form values
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Basic validation (You can extend this as needed)
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+      }
+
+      // Create the data object to send
+      const loginData = {
+        username,
+        password,
+      };
+
+      // Send the form data to the API using fetch
+      const response = await fetch('http://localhost:8002/api/auth/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+
+      // Handle the API response
+      const result = await response.json();
+      if (response.ok) {
+        // alert('Login successful!');
+        console.log('Login result:', result);
+        // Redirect to another page or handle success
+        if (result.access) {
+          localStorage.setItem("access", result.access)
+          localStorage.setItem("refresh", result.refresh)
+          window.history.pushState({}, '', '/home');
+          router();
+        } else {
+          localStorage.setItem("username", username)
+          window.history.pushState({}, '', '/2FA');
+          router();
+        }
+      } else {
+        alert(`Login failed: ${result.message}`);
+        // Display the error message
+        errorMessage.textContent = "Invalid Credentials";
+        errorMessage.classList.remove('d-none');
+      }
+    });
+  }, 0);
+
+  return html;
 }
+

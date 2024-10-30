@@ -1,0 +1,451 @@
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Quicksand', sans-serif;
+}
+
+body 
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #000;
+}
+
+section 
+{
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+/* Colore sfumatura */
+section::before 
+{
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(#000000,rgb(255, 123, 0),#000000);
+	animation: animate 5s linear infinite;
+}
+
+/* Animazione sfondo sfumatura */
+@keyframes animate 
+{
+	0%
+	{
+		transform: translateY(-100%);
+	}
+	100%
+	{
+		transform: translateY(100%);
+	}
+}
+
+section span 
+{
+	position: relative;
+	display: block;
+	width: calc(6.25vw - 2px);
+	height: calc(6.25vw - 2px);
+	background: #181818;
+	z-index: 2;
+	transition: 1.5s;
+}
+
+section span:hover 
+{
+	background: rgb(255, 123, 0);
+	transition: 0s;
+}
+
+section .signin
+{
+	position: absolute;
+	width: 600px;
+	height: 800px;
+  	background: #222;  
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	flex-direction: column; /* Disposizione verticale */
+	align-items: center; 
+	padding: 40px;
+	border-radius: 4px;
+	box-shadow: 0 15px 35px rgba(0,0,0,9);
+}
+section .signin .content 
+{
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 40px;
+}
+
+/* Scritta (Signup) */
+section .signin .content h2 
+{
+	font-size: 2em;
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+}
+
+section .signin .content .form 
+{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+section .signin .content .form .inputBox
+{
+	position: relative;
+	width: 100%;
+}
+
+section .signin .content .form .inputBox input 
+{
+	position: relative;
+	width: 100%;
+	background: #333;
+	border: none;
+	outline: none;
+	padding: 25px 10px 7.5px;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 500;
+	font-size: 1em;
+}
+
+section .signin .content .form .inputBox i 
+{
+	position: absolute;
+	left: 0;
+	padding: 15px 10px;
+	font-style: normal;
+	color: #aaa;
+	transition: 0.5s;
+	pointer-events: none;
+}
+
+.signin .content .form .inputBox input:focus ~ i,
+.signin .content .form .inputBox input:valid ~ i
+{
+	transform: translateY(-7.5px);
+	font-size: 0.8em;
+	color: #fff;
+}
+
+.signin .content .form .links 
+{
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.signin .content .form .links a 
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+.signin .content .form .links a:nth-child(2)
+{
+	color: rgb(255, 255, 255);
+	font-weight: 600;
+}
+
+/* Subscribe for input*/
+.signin .content .form .inputBox input[type="submit"]
+{
+	padding: 10px;
+	background: rgb(255, 255, 255);
+	color: #000;
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+
+input[type="submit"]:active
+{
+	opacity: 0.6;
+}
+
+/* Subscribe for button*/
+.signin .content .form .inputBox button[type="submit"]
+{
+	padding: 10px;
+	background: rgb(255, 255, 255);
+	color: #000;
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+
+button[type="submit"]:active
+{
+	opacity: 0.6;
+}
+
+
+/* adattare */
+@media (max-width: 900px)
+{
+	section span 
+	{
+		width: calc(10vw - 2px);
+		height: calc(10vw - 2px);
+	}
+}
+
+@media (max-width: 600px)
+{
+	section span 
+	{
+		width: calc(20vw - 2px);
+		height: calc(20vw - 2px);
+	}
+}
+
+
+
+
+
+/* MATCH CARD */
+
+.card * {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+.card-container {
+    width: 100%; 
+    max-height: 720px; 
+    overflow-y: auto;
+	overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    padding-right: 10px; 
+}
+
+.card .teams {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.card .teams > div {
+	flex: 1;
+	text-align: center;
+	position: relative;
+	font-size: 13px;
+	text-wrap: nowrap;
+}
+
+.card .teams .team-name-info {
+	text-wrap: nowrap;
+	color: #ffffff;
+	max-width: 210px;
+	text-overflow: ellipsis;
+	font-weight: 600;
+	overflow: hidden;
+	display: block;
+}
+
+.card .teams div.progress-dots {
+	height: 3px;
+	position: relative;
+	width: 60px;
+	display: block;
+	overflow: hidden;
+	margin: 0;
+	border-radius: 10px;
+}
+
+.card .teams div.progress-dots .load {
+	background: linear-gradient(90deg, #3a3dff, #ff2929);
+	display: block;
+	height: 1.5px;
+	width: 3px;
+	bottom: 0;
+	position: absolute;
+	transform: translateX(0px);
+	animation: loading_dots 7.5s ease both infinite;
+}
+
+@keyframes loading_dots {
+0% {
+	width: 3px;
+	transform: translateX(0px);
+}
+40% {
+	width: 3px;
+	transform: translateX(57px);
+}
+75% {
+	width: 100%;
+	transform: translateX(0px);
+}
+100% {
+	width: 3px;
+	transform: translateX(0px);
+}
+}
+
+.card .teams .team-home,
+.card .teams .team-away {
+	padding: 15px 37px;
+	position: relative;
+	overflow: hidden;
+}
+
+.card .teams .team-away {
+	transform: skew(-41deg, 0deg);
+	border-radius: 10px 10px 30px 10px;
+}
+
+.card .teams .team-home {
+	border-radius: 10px 10px 10px 30px;
+	transform: skew(41deg, 0deg);
+}
+
+.card .teams .team-home::after {
+	position: absolute;
+	top: -3px;
+	background: #00caff;
+	content: "";
+	height: 23px;
+	border-radius: 27px;
+	left: -20px;
+	filter: blur(2px);
+	transform: rotate(208deg);
+	width: 20px;
+	box-shadow: 0px 0px 32px #00ffed;
+}
+
+.card .teams .team-home::before {
+	position: absolute;
+	bottom: -15px;
+	background: #0048ff;
+	content: "";
+	height: 17px;
+	border-radius: 80px;
+	right: 0;
+	filter: blur(1px);
+	transform: translate(-50%, 0%);
+	width: 80%;
+	box-shadow: 0px 0px 32px #0026ff;
+}
+
+.card .teams .team-away::after {
+	position: absolute;
+	top: -3px;
+	background: #cc9d00;
+	content: "";
+	height: 23px;
+	border-radius: 27px;
+	right: -20px;
+	filter: blur(2px);
+	transform: rotate(208deg);
+	width: 20px;
+	box-shadow: 0px 0px 32px #cc3700;
+}
+
+.card .teams .team-away::before {
+	position: absolute;
+	bottom: -15px;
+	background: #ff0000;
+	content: "";
+	height: 17px;
+	border-radius: 80px;
+	left: 0;
+	filter: blur(1px);
+	transform: translate(50%, 0%);
+	width: 80%;
+	box-shadow: 0px 0px 32px #d50000;
+}
+
+.card .teams .team-home .team-name-info {
+	transform: skew(-41deg, 0);
+}
+
+.card .teams .team-away .team-name-info {
+	transform: skew(41deg, 0);
+}
+
+.event-info-banner .info-heading {
+	position: absolute;
+	right: 12px;
+	bottom: 5px;
+	color: rgba(255, 255, 255, 0.2);
+	margin: 0;
+}
+
+.card .event-scoreboard .event-score-container {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 10px;
+	border-radius: 10px;
+	width: fit-content;
+	background: linear-gradient(#1e1e1e 0%, #0c0c0c8e 4%, #1a1419);
+	box-shadow: inset 0 0 1px 0 #2c2c2c, 0 0 20px 0 #1313139c;
+	margin: 10px 0;
+}
+
+.card .event-scoreboard .event-score-container .score-container {
+	font-size: 24px;
+	background: linear-gradient(90deg, #3a3dff, #ff2929);
+	-webkit-background-clip: text;
+	width: 100%;
+	-webkit-text-fill-color: transparent;
+	display: flex; 
+    justify-content: center; 
+}
+
+.card .event-scoreboard .event-score-container .current-time-container {
+	font-size: 12px;
+	margin-bottom: 8px;
+	width: 100%;
+	font-family: "SegoeUI";
+	color: #a1a1a1;
+	justify-content: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 5px;
+}
+
+.card .event-scoreboard .event-score-container .current-time-container .event-clock {
+	font-weight: 500;
+	color: #eee;
+	margin-right: 10px;
+	}
+  
+.card .event-scoreboard .event-score-container .score-container .score-home,
+.card .event-scoreboard .event-score-container .score-away {
+	padding: 0 10px;
+}
