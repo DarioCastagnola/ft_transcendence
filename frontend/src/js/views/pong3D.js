@@ -19,15 +19,18 @@ export default function pong3D() {
         const canvasContainer = document.getElementById("threejs-canvas");
 
 		const keys = {};
+		let isBallMoving = false;
         
         // Scene setup
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x000000);
 
         // Camera
+		// const camerax = 0;
+		// const cameray = 300;
+		// const cameraz = 300;
         const camera = new THREE.PerspectiveCamera(75, (window.innerWidth / 2) / (window.innerHeight / 2), 2, 1000);
-        camera.position.z = 300;
-        camera.position.set(200, 300, 400);
+        camera.position.set(0, 300, 300);		
         camera.lookAt(scene.position);
 
 
@@ -39,15 +42,64 @@ export default function pong3D() {
         canvasContainer.appendChild(renderer.domElement);
 
         // Grid
-        const gridHelper = new THREE.GridHelper(400, 10, 0x888888, 0x444444);
+		const gridSize = 500;
+        const gridHelper = new THREE.GridHelper(gridSize, 10, 0x888888, 0x444444);
         scene.add(gridHelper);
-
+		const borderWidth = gridSize;
+		const borderHeight = 50;
+		const borderDepth = 10;
+		const borderGeometry = new THREE.BoxGeometry( borderWidth,  borderHeight,  borderDepth);
+		const borderMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+		const rightBorder = new THREE.Mesh( borderGeometry,  borderMaterial);
+		const collisionBorder = new THREE.Box3().setFromObject(rightBorder);
+		rightBorder.position.set(gridSize / 2 + borderDepth, borderHeight / 2, 0);
+		rightBorder.rotation.y = Math.PI / 2;
+		const leftBorder = rightBorder.clone();
+		leftBorder.position.set(-(gridSize / 2 + borderDepth), borderHeight / 2, 0);
+		scene.add(rightBorder);
+		scene.add(leftBorder);
+		
 		// Ball (3D Sphere) Geometry
-		const ballRadius = 8;
-		const ballGeometry = new THREE.SphereGeometry(ballRadius);
-		const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-		const Ball = new THREE.Mesh(ballGeometry, ballMaterial);
-
+		// const ballRadius = 8;
+		// const ballGeometry = new THREE.SphereGeometry(ballRadius);
+		// const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+		// const Ball = new THREE.Mesh(ballGeometry, ballMaterial);
+		
+		class Ball {
+			constructor(y) {
+				this.ballRadius = 8;
+				this.ballGeometry = new THREE.SphereGeometry(this.ballRadius);
+				this.ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+				this.Ball = new THREE.Mesh(this.ballGeometry, this.ballMaterial);
+				this.collisionBall = new THREE.Sphere().setFromObject(this.Ball);
+				console.log(this.collisionBall);
+				this.y = y;
+				this.x = 0;
+				this.z = 0;
+				//s stands for starting values
+				this.sy = y;
+				this.sx = 0;
+				this.sz = 0;
+				//d stands for directional values
+				this.dx = 7;
+				this.dz = 4;
+			}
+			
+			ft_addBallToScene() {
+				this.Ball.position.set(this.sx, this.sy, this.sz);
+				scene.add(this.Ball);
+			}
+			
+			ft_move() {
+				this.z += this.dz;
+				this.x += this.dx;
+				this.Ball.position.set(this.x, this.y, this.z);
+				if (this.collisionBall.intersectsBox(collisionBorder)) {
+					console.log("Collision detected!");
+				}
+			}
+		}
+		
         class Player {
 			constructor(user) {
 				this.user = user;
@@ -78,37 +130,43 @@ export default function pong3D() {
 
 			ft_addPaddleToScene() {
 				if (this.user == "user1")
-					this.paddle.position.set(this.x, this.paddleHeight / 2, 200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, (gridSize / 2));
 				else if (this.user == "user2")
-					this.paddle.position.set(this.x, this.paddleHeight / 2, -200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, -(gridSize / 2));
 				scene.add(this.paddle);
 			}
 
 			ft_move(x) {
 				this.x += x;
-				if (this.x < -170)
-					this.x = -170;
-				else if (this.x > 170)
-					this.x = 170;
+				if (this.x < -((gridSize / 2) - (this.paddleWidth / 2)))
+					this.x = -((gridSize / 2) - (this.paddleWidth / 2));
+				else if (this.x > (gridSize / 2) - (this.paddleWidth / 2))
+					this.x = (gridSize / 2) - (this.paddleWidth / 2);
 				if (this.user == "user1")
-					this.paddle.position.set(this.x, this.paddleHeight / 2, 200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, (gridSize / 2));
 				else if (this.user == "user2")
-					this.paddle.position.set(this.x, this.paddleHeight / 2, -200);
+					this.paddle.position.set(this.x, this.paddleHeight / 2, -(gridSize / 2));
 			}
 		}
 
         // Box Mesh
         const Player1 = new Player("user1");
 		const Player2 = new Player("user2");
+		const BallOBJ = new Ball(Player1.paddle.getPaddleHeight() / 2);
 
-		Ball.position.set(0, Player1.paddle.getPaddleHeight() / 2, 0);
+		// Ball.position.set(0, Player1.paddle.getPaddleHeight() / 2, 0);
+		BallOBJ.ft_addBallToScene();
 		Player1.paddle.ft_addPaddleToScene();
 		Player2.paddle.ft_addPaddleToScene();
-		scene.add(Ball);
+
+		// scene.add(Ball);
 
 		document.addEventListener("keydown", (event) => {
 			const key = event.key.toLowerCase();
 			keys[key] = true;
+			if (key === "enter" && !isBallMoving) {
+				isBallMoving = true;
+			}
 		});
 
 		document.addEventListener("keyup", (event) => {
@@ -119,17 +177,21 @@ export default function pong3D() {
         // Game loop
         function gameLoop() {
             renderer.render(scene, camera);
-			if (keys["w"]) {
+			if (keys["a"]) {
 				Player1.ft_move_paddle(-10);
 			}
-			if (keys["s"]) {
+			if (keys["d"]) {
 				Player1.ft_move_paddle(10);
 			}
-			if (keys["arrowup"]) {
+			if (keys["arrowleft"]) {
 				Player2.ft_move_paddle(-10);
 			}
-			if (keys["arrowdown"]) {
+			if (keys["arrowright"]) {
 				Player2.ft_move_paddle(10);
+			}
+
+			if (isBallMoving){
+				BallOBJ.ft_move();
 			}
             gameInstance = requestAnimationFrame(gameLoop);
         }

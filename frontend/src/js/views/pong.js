@@ -88,13 +88,13 @@ export default function pong() {
 			constructor(x, y) {
 				this.height = 15;
 				this.width = 16;
-				this.x = x - 8;
+				this.x = x - (this.width / 2);
 				this.y = y;
 				this.dx = 7;
 				this.dy = 4;
 				this.starting_dx = 7;
 				this.starting_dy = 4;
-				this.starting_x = x - 8;
+				this.starting_x = x - (this.width / 2);
 				this.starting_y = y;
 				this.last_touched_by;
 			}
