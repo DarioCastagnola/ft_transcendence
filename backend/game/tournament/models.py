@@ -43,7 +43,7 @@ class Player(models.Model):
     ]
 
     user_id = models.IntegerField(null=True, blank=True)
-    nickname = models.CharField(max_length=100, blank=False, unique=True, null=False)
+    nickname = models.CharField(max_length=100, blank=False, null=False)
     type = models.CharField(max_length=100, choices=PLAYER_TYPES, blank=False)
     score = models.IntegerField(default=0)
 
@@ -58,7 +58,7 @@ class Player(models.Model):
 
 
 class Stat(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    player = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='stat')
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
