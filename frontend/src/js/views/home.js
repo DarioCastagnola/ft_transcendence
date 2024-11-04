@@ -292,20 +292,24 @@ export default function home() {
         <section class="image-section">
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-5">
-                    <button class="cellPong" onclick="location.href="#">
+                <a class="nav-link" href="/userinfo" data-link>
+                    <button class="cellPong" onclick="console.log(prova)">
                         <div class="content">
                             <img src="/frontend/src/resources/pong2D.jpg">
                         </div>
                         <img src="/frontend/src/resources/pong-2d_scritta.png" class="overlay-image">
                     </button>
+                </a>
                 </div>
                 <div class="col-md-5">
+                <a class="nav-link" href="/userinfo" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
                             <img src="/frontend/src/resources/pong3D.jpg">
                         </div>
                         <img src="/frontend/src/resources/pong-3d_scritta.png" class="overlay-image">
                     </button>
+                </a>
                 </div>
             </div>
         </section>
