@@ -5,7 +5,7 @@ export default function home() {
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
 		<div class="container">
 
-			<a class="navbar-brand" href="/" data-link>Transcendence</a>
+			<a class="navbar-brand" href="/home" data-link>Transcendence</a>
 
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -289,32 +289,28 @@ export default function home() {
         <span></span>
         <span></span>
 
-
         <section class="image-section">
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-5">
-                    <button class="cellPong" onclick="location.href='#';">
+                    <button class="cellPong" onclick="location.href="#">
                         <div class="content">
-                            <img src="../../resources/pong2D.jpg" alt="Pong2D">
+                            <img src="/frontend/src/resources/pong2D.jpg">
                         </div>
-                        <img src="../../resources/pong-2d_scritta.png" alt="Overlay 2" class="overlay-image">
+                        <img src="/frontend/src/resources/pong-2d_scritta.png" class="overlay-image">
                     </button>
                 </div>
                 <div class="col-md-5">
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
-                            <img src="../../resources/pong3D.jpg" alt="Pong3D">
+                            <img src="/frontend/src/resources/pong3D.jpg">
                         </div>
-                        <img src="../../resources/pong-3d_scritta.png" alt="Overlay 1" class="overlay-image">
+                        <img src="/frontend/src/resources/pong-3d_scritta.png" class="overlay-image">
                     </button>
                 </div>
             </div>
         </section>
         
-        
     </section>
-
-
 
     <footer class="custom-footer text-white text-center py-3">
         <p>© 2024 Transcendence. Lde-mich, Dcastagn, Mlongo, Dfiliag.</p>

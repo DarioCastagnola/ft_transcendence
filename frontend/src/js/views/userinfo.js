@@ -308,8 +308,6 @@ export default function userinfo() {
 			</div>
 			</section>
 			
-			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-			<script src="myProfile.js"></script>
 			`;
 			
   
