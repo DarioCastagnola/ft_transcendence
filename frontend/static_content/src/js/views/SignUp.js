@@ -1,6 +1,6 @@
 import { router } from "../main.js";
 
-export default function register() {
+export default function signUp() {
   const html = `
     <section>
 
