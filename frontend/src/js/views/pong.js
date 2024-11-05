@@ -8,7 +8,7 @@ export default function pong() {
 		</div>
 	</div>
     `;
-
+	
 	// Cleanup previous instance
 	    if (gameInstance) {
         cancelAnimationFrame(gameInstance);
