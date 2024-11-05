@@ -141,11 +141,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Cartella dove saranno salvati i 
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'tournament.customError.custom_exception_handler',
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your API Title',
-    'DESCRIPTION': 'Your API Description',
+    'TITLE': 'API Documentation for your game',
+    'DESCRIPTION': 'This is the API documentation for your game',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SWAGGER_UI_SETTINGS': {

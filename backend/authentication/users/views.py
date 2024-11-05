@@ -59,12 +59,14 @@ class VerifyOTPView(APIView):
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username).first()
+        if not user or user == None:
+            return Response({"error": "User not found"}, status=400)
         otp_code = request.data.get('otp')
         device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
 
         if device and device.verify_token(otp_code):
-            refresh = RefreshToken.for_user(request.user)
+            refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
@@ -87,8 +89,6 @@ class DeleteUserView(APIView):
         user = request.user
         user.delete()
         return Response({"message": "User deleted successfully"}, status=204)
-
-
 
 
 class OAuth2CallbackView(APIView):
