@@ -9,6 +9,7 @@ import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
+import pong3D from "./views/pong3D.js";
 import twoFA from "./views/twoFA.js";
 
 
@@ -25,7 +26,7 @@ const routes = {
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
     "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./frontend/src/css/matchHistory.css" }
-
+    "/pong3D": { title: "pong3D", render: pong3D, css: "./frontend/src/css/pong3D.css"},
 };
 
 let currentCSS = null;
