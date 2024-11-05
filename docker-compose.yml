@@ -76,7 +76,7 @@ services:
       - auth
       - external
     ports:
-      - 5432:5432
+      - 5431:5432
 
   core:
     container_name: core
