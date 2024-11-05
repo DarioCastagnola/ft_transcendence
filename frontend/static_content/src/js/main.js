@@ -9,24 +9,24 @@ import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
-import pong3D from "./views/pong3D.js";
 import twoFA from "./views/twoFA.js";
+import pong3D from "./views/pong3D.js"
 
 
 const routes = {
 
-    "/": { title: "Welcome", render: welcome, css: "./frontend/src/css/welcome.css" },
-    "/home": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
-    "/signUp": { title: "SignUp", render: signUp, css: "./frontend/src/css/signUp.css" },
-    "/signIn": { title: "SignIn", render: signIn, css: "./frontend/src/css/signIn.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userInfo.css" },
-    "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
-    "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
-    "/2FA": { title: "2FA", render: twoFA, css: "./frontend/src/css/home.css" },
-    "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
-    "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
-    "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./frontend/src/css/matchHistory.css" }
-    "/pong3D": { title: "pong3D", render: pong3D, css: "./frontend/src/css/pong3D.css"},
+    "/": { title: "Welcome", render: welcome, css: "./src/css/welcome.css" },
+    "/home": { title: "Home", render: home, css: "./src/css/home.css" },
+    "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },    
+    "/signIn": { title: "SignIn", render: signIn, css: "./src/css/signIn.css" },
+    "/userinfo": { title: "UserInfo", render: userinfo, css: "./src/css/userInfo.css" },
+    "/about": { title: "About", render: about, css: "./src/css/about.css" },
+    "/contact": { title: "Contact", render: contact, css: "./src/css/contact.css" },
+    "/2FA": { title: "2FA", render: twoFA, css: "./src/css/home.css" },
+    "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./src/css/userinfo-update.css" },
+    "/pong": { title: "pong", render: pong, css: "./src/css/pong.css"},
+    "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./src/css/matchHistory.css" },
+    "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"}
 };
 
 let currentCSS = null;
@@ -75,7 +75,7 @@ async function handleOAuthCallback() {
 }
 
 export function router() {
-    // const app = document.getElementById('app');
+    const app = document.getElementById('app');
     let view = routes[location.pathname];
     if (view) {
         // console.log(view.title);

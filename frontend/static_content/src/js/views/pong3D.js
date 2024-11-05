@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 let gameInstance = null;
 
@@ -20,7 +20,7 @@ export default function pong3D() {
 
 		const keys = {};
 		let isBallMoving = false;
-        
+
         // Scene setup
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x000000);
@@ -30,7 +30,7 @@ export default function pong3D() {
 		// const cameray = 300;
 		// const cameraz = 300;
         const camera = new THREE.PerspectiveCamera(75, (window.innerWidth / 2) / (window.innerHeight / 2), 2, 1000);
-        camera.position.set(0, 300, 300);		
+        camera.position.set(0, 300, 300);
         camera.lookAt(scene.position);
 
 
@@ -58,13 +58,13 @@ export default function pong3D() {
 		leftBorder.position.set(-(gridSize / 2 + borderDepth), borderHeight / 2, 0);
 		scene.add(rightBorder);
 		scene.add(leftBorder);
-		
+
 		// Ball (3D Sphere) Geometry
 		// const ballRadius = 8;
 		// const ballGeometry = new THREE.SphereGeometry(ballRadius);
 		// const ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 		// const Ball = new THREE.Mesh(ballGeometry, ballMaterial);
-		
+
 		class Ball {
 			constructor(y) {
 				this.ballRadius = 8;
@@ -84,12 +84,12 @@ export default function pong3D() {
 				this.dx = 7;
 				this.dz = 4;
 			}
-			
+
 			ft_addBallToScene() {
 				this.Ball.position.set(this.sx, this.sy, this.sz);
 				scene.add(this.Ball);
 			}
-			
+
 			ft_move() {
 				this.z += this.dz;
 				this.x += this.dx;
@@ -99,7 +99,7 @@ export default function pong3D() {
 				}
 			}
 		}
-		
+
         class Player {
 			constructor(user) {
 				this.user = user;
@@ -111,7 +111,7 @@ export default function pong3D() {
 				this.paddle.ft_move(x);
 			}
 		}
-		
+
 		class Paddle {
 			constructor(user) {
 				this.paddleWidth = 60;
@@ -172,7 +172,7 @@ export default function pong3D() {
 		document.addEventListener("keyup", (event) => {
 			keys[event.key.toLowerCase()] = false;
 		});
-        
+
 
         // Game loop
         function gameLoop() {
