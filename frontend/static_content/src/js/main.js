@@ -1,24 +1,32 @@
+
+import welcome from "./views/welcome.js";
 import home from "./views/home.js";
+import signIn from "./views/signIn.js";
+import signUp from "./views/SignUp.js";
 import about from "./views/about.js";
 import contact from "./views/contact.js";
-import login from "./views/login.js";
-import register from "./views/register.js";
 import userinfo from "./views/userinfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
+import matchHistory from "./views/matchHistory.js";
+import pong3D from "./views/pong3D.js";
 import twoFA from "./views/twoFA.js";
 
+
 const routes = {
-    "/": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
+
+    "/": { title: "Welcome", render: welcome, css: "./frontend/src/css/welcome.css" },
     "/home": { title: "Home", render: home, css: "./frontend/src/css/home.css" },
+    "/signUp": { title: "SignUp", render: signUp, css: "./frontend/src/css/signUp.css" },
+    "/signIn": { title: "SignIn", render: signIn, css: "./frontend/src/css/signIn.css" },
+    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userInfo.css" },
     "/about": { title: "About", render: about, css: "./frontend/src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./frontend/src/css/contact.css" },
-    "/login": { title: "Login", render: login, css: "./frontend/src/css/home.css" },
     "/2FA": { title: "2FA", render: twoFA, css: "./frontend/src/css/home.css" },
-    "/register": { title: "Register", render: register, css: "./frontend/src/css/home.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./frontend/src/css/userinfo.css" },
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./frontend/src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./frontend/src/css/pong.css"},
+    "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./frontend/src/css/matchHistory.css" }
+    "/pong3D": { title: "pong3D", render: pong3D, css: "./frontend/src/css/pong3D.css"},
 };
 
 let currentCSS = null;

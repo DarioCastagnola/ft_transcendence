@@ -1,0 +1,382 @@
+
+body, html {
+	background-color: #000000;
+	overflow: hidden; /* Nasconde la scrollbar */
+	margin: 0; /* Rimuove il margine di default */
+	padding: 0; /* Rimuove il padding di default */
+	height: 100%; /* Assicura che il body prenda tutta l'altezza */
+}
+
+
+
+/* barra primaria */
+header
+{
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+
+
+
+/*FOOTER-----------------------------------------------------*/
+
+.custom-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9999;
+	height: 50px;
+}
+
+/*-----------------------------------------------------------*/
+
+
+
+
+
+/*NAVBAR-----------------------------------------------------*/
+
+.navbar {
+    background-color: #333 !important; /* Colore di sfondo della navbar */
+}
+
+/* Stile per i link della navbar */
+.navbar-nav .nav-link {
+    color: #ffffff; /* Colore del testo */
+    padding: 10px 15px; /* Spazio attorno ai link */
+}
+
+/* Effetto hover per i link */
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+/* Stile per il dropdown */
+.navbar-nav .dropdown-menu {
+    background-color: #343a40; /* Colore di sfondo per il menu a discesa */
+}
+
+.navbar-nav .dropdown-item {
+    color: #ffffff; /* Colore del testo per gli elementi del dropdown */
+}
+
+/* Effetto hover per gli elementi del dropdown */
+.navbar-nav .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+.navbar-brand {
+    font-size: 2.5rem; /* Dimensione del font */
+    font-family: 'Audiowide', cursive; /* Un font ispirato ai giochi retro (inserisci il tuo font preferito) */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombra del testo per un effetto tridimensionale */
+    color: rgb(0, 0, 255); /* Colore del testo */
+    transition: transform 0.3s; /* Transizione per un effetto al passaggio del mouse */
+}
+
+.navbar-brand:hover {
+    transform: scale(1.1); /* Ingrandisce il testo al passaggio del mouse */
+}
+
+/* -----------------------------------------------------*/
+
+
+
+
+
+/*SFONDO ANIMATO----------------------------------------*/
+
+/* margini */
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Quicksand', sans-serif;
+}
+
+section 
+{
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+/* Colore sfumatura */
+section::before 
+{
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(#000000,rgb(0, 0, 255),#000000);
+	animation: animate 5s linear infinite;
+}
+
+/* Animazione sfondo sfumatura */
+@keyframes animate 
+{
+	0%
+	{
+		transform: translateY(-100%);
+	}
+	100%
+	{
+		transform: translateY(100%);
+	}
+}
+
+section span 
+{
+	position: relative;
+	display: block;
+	width: calc(6.25vw - 2px);
+	height: calc(6.25vw - 2px);
+	background: #181818;
+	z-index: 2;
+	transition: 1.5s;
+}
+
+section span:hover 
+{
+	background: rgb(0, 0, 255);
+	transition: 0s;
+}
+
+/* adattare */
+@media (max-width: 900px)
+{
+	section span 
+	{
+		width: calc(10vw - 2px);
+		height: calc(10vw - 2px);
+	}
+}
+
+@media (max-width: 600px)
+{
+	section span 
+	{
+		width: calc(20vw - 2px);
+		height: calc(20vw - 2px);
+	}
+}
+
+/*------------------------------------------------------*/
+
+
+
+
+
+/*CELLE FOTO PONG---------------------------------------*/
+
+.image-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    padding: 100px; 
+}
+
+.cellPong {
+	background: none;
+	border: none;
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	position: relative;
+	background: #222;
+	padding: 10px;
+	border-radius: 4px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+	text-align: center;
+	height: 65vh;
+	width: 100vh;
+	overflow: visible;
+	z-index: 1000;
+	bottom: 70px;
+}
+
+.cellPong:hover {
+    transform: scale(1.05); /* Ingrandisce il bottone del 5% quando passato sopra con il mouse */
+}
+
+.col-md-5 {
+    margin: 0 20px; /* Margine laterale per allontanare dai bordi dello schermo */
+}
+
+/*-------------------------------------------------------*/
+
+
+
+
+/* PONG 2D */
+
+.loading {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.loading-box {
+	width: 500px;
+	height: 100px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	position: relative;
+}
+
+.color {
+	background-color: #3395ff;
+}
+.WH {
+	width: 10px;
+	height: 70px;
+	position: absolute;
+}
+
+.l1 {
+	left: 0;
+	animation: l1 4s infinite linear;
+}
+.l2 {
+	right: 0;
+	animation: l2 4s infinite linear;
+}
+.ball {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	position: absolute;
+	animation: ball 4s infinite linear; 
+}
+
+@keyframes l1 {
+	0% {
+		top: 0%;
+	}
+	10% {
+		top: -20%;
+	}
+	20% {
+		top: 0%;
+	}
+	30% {
+		top: 40%;
+	}
+	40% {
+		top: 0%;
+	}
+	50% {
+		top: 30%;
+	}
+	60% {
+		top: 40%;
+	}
+	70% {
+		top: 60%;
+	}
+	80% {
+		top: -10%;
+	}
+	90% {
+		top: 10%;
+	}
+	100% {
+		top: 0%;
+	}
+}
+@keyframes l2 {
+	0% {
+		bottom: 0%;
+	}
+	10% {
+		bottom: -20%;
+	}
+	20% {
+		bottom: 40%;
+	}
+	30% {
+		bottom: 60%;
+	}
+	40% {
+		bottom: 20%;
+	}
+	50% {
+		bottom: 30%;
+	}
+	60% {
+		bottom: 40%;
+	}
+	70% {
+		bottom: 60%;
+	}
+	80% {
+		bottom: -10%;
+	}
+	90% {
+		bottom: 10%;
+	}
+	100% {
+		bottom: 0%;
+	}
+}
+@keyframes ball {
+	0% {
+		top: 80%;
+		left: 96%;
+	}
+	10% {
+		top: 10%;
+		left: 3%;
+	}
+	20% {
+		top: 10%;
+		left: 90%;
+	}
+	30% {
+		top: 60%;
+		left: 3%;
+	}
+	40% {
+		top: 10%;
+		left: 90%;
+	}
+	50% {
+		top: 50%;
+		left: 3%;
+	}
+	60% {
+		top: 10%;
+		left: 90%;
+	}
+	70% {
+		top: 93%;
+		left: 3%;
+	}
+	80% {
+		top: 83%;
+		left: 90%;
+	}
+	90% {
+		top: 10%;
+		left: 3%;
+	}
+	100% {
+		top: 80%;
+		left: 90%;
+	}
+}
