@@ -1,37 +1,55 @@
 services:
 
-  admin:
-    container_name: adminer
-    image: adminer
-    restart: always
-    networks:
-      - auth
-      - external
-    ports:
-      - 8080:8080
+  # admin:
+  #   container_name: adminer
+  #   image: adminer
+  #   restart: always
+  #   networks:
+  #     - auth
+  #     - external
+  #   ports:
+  #     - 8080:8080
 
   nginx:
       image: nginx:latest
       container_name: nginx_container
+      depends_on:
+      - authentication
+      - core
+      - game
       ports:
         - "9002:80"
         - "9001:443"
       volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./nginx/ssl:/etc/nginx/ssl:ro
+        - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./backend/nginx/ssl:/etc/nginx/ssl:ro
         - media:/media
       networks:
         - internal_network
         - external
 
+  nginx_front:
+      image: nginx:latest
+      container_name: nginx_front
+      # depends_on:
+      ports:
+        - "4433:4433"
+      volumes:
+        - ./frontend/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./frontend/nginx/ssl:/etc/nginx/ssl:ro
+        - ./frontend/static_content:/var/www/ft_trascendence:ro
+      # networks:
+      #   - internal_network
+      #   - external
+
   authentication:
     container_name: authentication
     build:
-      context: ./authentication
+      context: ./backend/authentication
       dockerfile: Dockerfile
     volumes:
-      - ./authentication:/authentication
-      - ./wait_for_db.sh:/wait_for_db.sh
+      - ./backend/authentication:/authentication
+      - ./backend/wait_for_db.sh:/wait_for_db.sh
     depends_on:
       - db_auth
     networks:
@@ -63,10 +81,10 @@ services:
   core:
     container_name: core
     build:
-      context: ./core
+      context: ./backend/core
       dockerfile: Dockerfile
     volumes:
-      - ./core:/core
+      - ./backend/core:/core
       - media:/core/media
     depends_on:
       - db_core
@@ -94,10 +112,10 @@ services:
   game:
     container_name: game
     build:
-      context: ./game
+      context: ./backend/game
       dockerfile: Dockerfile
     volumes:
-      - ./game:/game
+      - ./backend/game:/game
       - media:/game/media
     depends_on:
       - db_game

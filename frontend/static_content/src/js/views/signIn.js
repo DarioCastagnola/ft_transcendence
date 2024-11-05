@@ -1,8 +1,8 @@
 import { router } from "../main.js";
 
-export default function register() {
+export default function login() {
   const html = `
-    <section>
+  <section>
 
 		<span></span>
 		<span></span>
@@ -267,29 +267,21 @@ export default function register() {
 
 		<div class="signin">
 			<div class="content">
-				<h2>Sign up</h2>
-				<div id="signupForm" class="form">
+				<h2>Sign In</h2>
+				<div id="signInForm" class="form">
 					<div class="inputBox">
-						<input type="text" id="username" required>
+						<input type="email" id="username" required>
 						<i>Username</i>
-					</div>
-					<div class="inputBox">
-						<input type="email" id="email" required>
-						<i>Email</i>
 					</div>
 					<div class="inputBox">
 						<input type="password" id="password" required>
 						<i>Password</i>
 					</div>
-          <div class="inputBox">
-						<input type="password" id="repeatPassword" required>
-						<i>Reapet your password</i>
-					</div>
 					<div class="links">
-						<a href="/signIn" data-link>Sign in</a>
+						<a href="/signUp" data-link>Sign Up</a>
 					</div>
 					<div class="inputBox">
-						<input type="submit" onclick="submitForm()" value="Sign up">
+						<input type="submit" onclick="submitForm()" value="Sign In">
 					</div>
 				</div>
 			</div>
@@ -299,76 +291,63 @@ export default function register() {
   `;
 
   setTimeout(() => {
+    const loginButton = document.getElementById('loginButton');
+    const errorMessage = document.getElementById('errorMessage');
 
-      // Get form and button elements
-      const form = document.getElementById('registerForm');
-      const registerButton = document.getElementById('registerButton');
-      const usernameError = document.getElementById('usernameError');
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
-
-      // Add click event listener to the register button
-      registerButton.addEventListener('click', async function(event) {
-
-        // Prevent default behavior (like page refresh)
+    // Add click event listener to the login button
+    loginButton.addEventListener('click', async function (event) {
       event.preventDefault();
 
       // Hide any previous error message
-      usernameError.classList.add('d-none');
-      usernameError.textContent = '';
-      emailError.classList.add('d-none');
-      emailError.textContent = '';
-      passwordError.classList.add('d-none');
-      passwordError.textContent = '';
+      errorMessage.classList.add('d-none');
+      errorMessage.textContent = '';
 
       // Get form values
       const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const repeatPassword = document.getElementById('repeatPassword').value;
 
-      // Basic validation
-      if (password !== repeatPassword) {
-        alert('Passwords do not match.');
+      // Basic validation (You can extend this as needed)
+      if (!username || !password) {
+        alert('Please enter both username and password.');
         return;
       }
 
       // Create the data object to send
-      const formData = {
+      const loginData = {
         username,
-        email,
-        password
+        password,
       };
 
       // Send the form data to the API using fetch
-      // console.log(JSON.stringify(formData))
-      const response = await fetch('http://localhost:8002/api/auth/register/', {
+      const response = await fetch('http://localhost/api/auth/login/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(loginData),
       });
 
       // Handle the API response
       const result = await response.json();
       if (response.ok) {
+        // alert('Login successful!');
+        console.log('Login result:', result);
         // Redirect to another page or handle success
-        history.pushState({}, '', '/login');
-        router();
+        if (result.access) {
+          localStorage.setItem("access", result.access)
+          localStorage.setItem("refresh", result.refresh)
+          window.history.pushState({}, '', '/home');
+          router();
+        } else {
+          localStorage.setItem("username", username)
+          window.history.pushState({}, '', '/2FA');
+          router();
+        }
       } else {
-        if (result.username && result.username.length > 0) {
-            usernameError.textContent = result.username[0];
-            usernameError.classList.remove('d-none');
-        }
-        if (result.email && result.email.length > 0) {
-            emailError.textContent = result.email[0];
-            emailError.classList.remove('d-none');
-        }
-        if (result.password && result.password.length > 0) {
-            passwordError.textContent = result.password[0];
-            passwordError.classList.remove('d-none');
-        }
+        alert(`Login failed: ${result.message}`);
+        // Display the error message
+        errorMessage.textContent = "Invalid Credentials";
+        errorMessage.classList.remove('d-none');
       }
     });
   }, 0);

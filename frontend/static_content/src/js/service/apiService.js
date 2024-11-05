@@ -18,7 +18,7 @@ function setTokens(accessToken, refreshToken) {
 
 // Function to refresh the access token
 async function refreshAccessToken() {
-  const refreshUrl = 'http://localhost:8002/api/auth/token/refresh/';
+  const refreshUrl = 'http://localhost/api/auth/token/refresh/';
 
   const refreshToken = getRefreshToken();
   if (!refreshToken) {

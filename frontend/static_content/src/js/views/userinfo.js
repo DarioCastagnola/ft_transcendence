@@ -321,7 +321,7 @@ export default function userinfo() {
 
 
     async function fetchUserInfo() {
-      const apiUrl = 'http://localhost:8002/api/auth/user-info/';
+      const apiUrl = 'http://localhost/api/auth/user-info/';
       const response = await apiFetch(apiUrl);
 
       if (response.ok) {
@@ -339,7 +339,7 @@ export default function userinfo() {
     enable2faButton.addEventListener('click', () => {
 
       async function enable2FAFetch() {
-        const enable2faUrl = 'http://localhost:8002/api/auth/enable-2fa/';
+        const enable2faUrl = 'http://localhost/api/auth/enable-2fa/';
         const response = await apiFetch(enable2faUrl);
 
         if (response.ok) {

@@ -101,7 +101,7 @@ header
 	font-family: 'Quicksand', sans-serif;
 }
 
-section 
+section
 {
 	position: absolute;
 	width: 100vw;
@@ -115,7 +115,7 @@ section
 }
 
 /* Colore sfumatura */
-section::before 
+section::before
 {
 	content: '';
 	position: absolute;
@@ -126,7 +126,7 @@ section::before
 }
 
 /* Animazione sfondo sfumatura */
-@keyframes animate 
+@keyframes animate
 {
 	0%
 	{
@@ -138,7 +138,7 @@ section::before
 	}
 }
 
-section span 
+section span
 {
 	position: relative;
 	display: block;
@@ -149,7 +149,7 @@ section span
 	transition: 1.5s;
 }
 
-section span:hover 
+section span:hover
 {
 	background: rgb(255, 0, 0);
 	transition: 0s;
@@ -158,7 +158,7 @@ section span:hover
 /* adattare */
 @media (max-width: 900px)
 {
-	section span 
+	section span
 	{
 		width: calc(10vw - 2px);
 		height: calc(10vw - 2px);
@@ -167,7 +167,7 @@ section span:hover
 
 @media (max-width: 600px)
 {
-	section span 
+	section span
 	{
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
@@ -186,8 +186,8 @@ section span:hover
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
-    padding: 100px; 
+    height: 100vh;
+    padding: 100px;
 }
 
 .cellPong {
