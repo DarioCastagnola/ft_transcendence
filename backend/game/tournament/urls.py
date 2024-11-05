@@ -1,7 +1,11 @@
-from django.urls import path
-from .views import hello_world, VerifyTokenView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .tournamentViewSet import TournamentViewSet
+
+router = DefaultRouter()
+
+router.register(r'tournaments', TournamentViewSet)
 
 urlpatterns = [
-    path('hello_world/', hello_world, name='hello_world'),
-    path('verify-token/', VerifyTokenView.as_view(), name='verify-token'),
+    path('', include(router.urls)),
 ]

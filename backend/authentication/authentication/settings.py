@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_totp',
     'corsheaders',
     'users',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -39,7 +40,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5500"
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
 ]
 
 ROOT_URLCONF = 'authentication.urls'
@@ -99,11 +101,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
@@ -123,7 +131,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 OAUTH2_CLIENT_ID = 'u-s4t2ud-ad73af585dfdd1ff90139ee7a9030635a0f9f563b584c7a3b92dd0dda112b3cd'
-OAUTH2_CLIENT_SECRET = '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'
+OAUTH2_CLIENT_SECRET = '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'
 OAUTH2_REDIRECT_URI = 'http://localhost/api/auth/oauth/callback/'
 OAUTH2_PROVIDER_URL = 'https://api.intra.42.fr/oauth'
 USER_INFO_URL = 'https://api.intra.42.fr/v2/me'

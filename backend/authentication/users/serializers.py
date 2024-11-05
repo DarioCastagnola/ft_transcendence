@@ -26,3 +26,11 @@ class UserSerializer(serializers.ModelSerializer):
             user.set_password(password)
             user.save()
         return user
+    
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+class OTPSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    otp = serializers.CharField()

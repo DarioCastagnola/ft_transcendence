@@ -22,6 +22,8 @@ export default function register() {
                         </div>
                       </div>
 
+                    <div id="usernameError" class="alert alert-danger d-none" role="alert"></div>
+
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                         <div data-mdb-input-init class="form-outline flex-fill mb-0">
@@ -29,6 +31,8 @@ export default function register() {
                           <label class="form-label" for="email">Your Email</label>
                         </div>
                       </div>
+
+                    <div id="emailError" class="alert alert-danger d-none" role="alert"></div>
 
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
@@ -38,6 +42,8 @@ export default function register() {
                         </div>
                       </div>
 
+                    <div id="passwordError" class="alert alert-danger d-none" role="alert"></div>
+
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                         <div data-mdb-input-init class="form-outline flex-fill mb-0">
@@ -46,12 +52,7 @@ export default function register() {
                         </div>
                       </div>
 
-                      <div class="form-check d-flex justify-content-center mb-5">
-                        <input class="form-check-input me-2" type="checkbox" id="termsCheckbox" />
-                        <label class="form-check-label" for="termsCheckbox">
-                          I agree to all statements in <a href="#!">Terms of service</a>
-                        </label>
-                      </div>
+                    <div id="repeatPasswordError" class="alert alert-danger d-none" role="alert"></div>
 
                       <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button id="registerButton" type="button" class="btn btn-primary btn-lg">Register</button>
@@ -75,27 +76,34 @@ export default function register() {
 
   setTimeout(() => {
 
-    // Get form and button elements
-    const form = document.getElementById('registerForm');
-    const registerButton = document.getElementById('registerButton');
+      // Get form and button elements
+      const form = document.getElementById('registerForm');
+      const registerButton = document.getElementById('registerButton');
+      const usernameError = document.getElementById('usernameError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
 
-    // Add click event listener to the register button
-    registerButton.addEventListener('click', async function(event) {
-      // Prevent default behavior (like page refresh)
+      // Add click event listener to the register button
+      registerButton.addEventListener('click', async function(event) {
+
+        // Prevent default behavior (like page refresh)
       event.preventDefault();
+
+      // Hide any previous error message
+      usernameError.classList.add('d-none');
+      usernameError.textContent = '';
+      emailError.classList.add('d-none');
+      emailError.textContent = '';
+      passwordError.classList.add('d-none');
+      passwordError.textContent = '';
 
       // Get form values
       const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const repeatPassword = document.getElementById('repeatPassword').value;
-      const termsChecked = document.getElementById('termsCheckbox').checked;
 
       // Basic validation
-      if (!termsChecked) {
-        alert('You must agree to the terms of service.');
-        return;
-      }
       if (password !== repeatPassword) {
         alert('Passwords do not match.');
         return;
@@ -109,30 +117,34 @@ export default function register() {
       };
 
       // Send the form data to the API using fetch
-      console.log(JSON.stringify(formData))
-      try {
-        const response = await fetch('http://localhost:8002/api/auth/register/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
+      // console.log(JSON.stringify(formData))
+      const response = await fetch('http://localhost:8002/api/auth/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
 
-        // Handle the API response
-        const result = await response.json();
-        if (response.ok) {
-          // alert('Registration successful!');
-          console.log('Registration result:', result);
-          // Redirect to another page or handle success
-          history.pushState({}, '', '/login');
-          router();
-        } else {
-          alert(`Registration failed: ${result.message}`);
+      // Handle the API response
+      const result = await response.json();
+      if (response.ok) {
+        // Redirect to another page or handle success
+        history.pushState({}, '', '/login');
+        router();
+      } else {
+        if (result.username && result.username.length > 0) {
+            usernameError.textContent = result.username[0];
+            usernameError.classList.remove('d-none');
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred during registration.');
+        if (result.email && result.email.length > 0) {
+            emailError.textContent = result.email[0];
+            emailError.classList.remove('d-none');
+        }
+        if (result.password && result.password.length > 0) {
+            passwordError.textContent = result.password[0];
+            passwordError.classList.remove('d-none');
+        }
       }
     });
   }, 0);
