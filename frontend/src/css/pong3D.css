@@ -1,0 +1,33 @@
+:root {
+    --primary: #222831;
+    --secondary: #30475e;
+    --secondary-light: #3a5a7a;
+    --accent: #f05454;
+    --neutral: #eeeeee;
+
+    font-size: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+body {
+    color: var(--neutral);
+    padding: 1rem clamp(1.5rem, 6vw, 3rem);
+    background-color: var(--primary);
+}
+
+nav {
+    display: flex;
+}
+
+nav a {
+    margin-right: .75em;
+    color: var(--accent);
+}
+
