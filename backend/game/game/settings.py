@@ -58,7 +58,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
+    "https://localhost:4433",
+    "https://127.0.0.1:4433"
 ]
 
 ROOT_URLCONF = 'game.urls'

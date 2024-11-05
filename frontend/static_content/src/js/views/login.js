@@ -32,6 +32,7 @@ export default function login() {
                       <label class="form-label" for="password">Password</label>
                     </div>
 
+
                     <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
 
                     <div class="text-center pt-1 mb-5 pb-1">
@@ -45,6 +46,8 @@ export default function login() {
                     </div>
 
                   </form>
+
+                  <button id="loginWith42" class="login-button">Login with 42</button>
 
                 </div>
               </div>
@@ -123,6 +126,15 @@ export default function login() {
         errorMessage.textContent = "Invalid Credentials";
         errorMessage.classList.remove('d-none');
       }
+    });
+
+    document.getElementById("loginWith42").addEventListener("click", () => {
+      const clientId = 'u-s4t2ud-66d1325a205f85bce9bb8f729e8ee9fde0051355dbaf775183489f2c9faa4167';
+      const redirectUri = 'https%3A%2F%2Flocalhost%3A4433%2Fcallback';
+
+      const authorizationUrl = `https://api.intra.42.fr/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+
+      window.location.href = authorizationUrl;
     });
   }, 0);
 

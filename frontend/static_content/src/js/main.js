@@ -36,6 +36,36 @@ function loadCSS(href) {
     currentCSS = link;
 }
 
+async function handleOAuthCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const authCode = urlParams.get('code');
+
+    if (authCode) {
+      const response = await fetch(`http://localhost/api/auth/oauth/callback/?code=${authCode}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      // Handle the API response
+      const result = await response.json();
+      if (response.ok) {
+        localStorage.setItem("access", result.access)
+        localStorage.setItem("refresh", result.refresh)
+        history.pushState({}, '', '/home');
+        router();
+      } else {
+        history.pushState({}, '', '/login');
+        router();
+      }
+    } else {
+        // console.error('Authorization code missing from callback URL');
+        history.pushState({}, '', '/login');
+        router();
+    }
+}
+
 export function router() {
     // const app = document.getElementById('app');
     let view = routes[location.pathname];
@@ -46,6 +76,8 @@ export function router() {
         if (view.css) {
             loadCSS(view.css);
         }
+    } else if (location.pathname === '/callback') {
+        handleOAuthCallback();
     } else {
         history.replaceState("", "", "/");
         router();

@@ -41,7 +41,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
+    "https://localhost:4433",
+    "https://127.0.0.1:4433"
 ]
 
 ROOT_URLCONF = 'authentication.urls'
@@ -130,8 +132,10 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-OAUTH2_CLIENT_ID = 'u-s4t2ud-ad73af585dfdd1ff90139ee7a9030635a0f9f563b584c7a3b92dd0dda112b3cd'
-OAUTH2_CLIENT_SECRET = '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'
-OAUTH2_REDIRECT_URI = 'http://localhost/api/auth/oauth/callback/'
+# OAUTH2_CLIENT_ID = 'u-s4t2ud-ad73af585dfdd1ff90139ee7a9030635a0f9f563b584c7a3b92dd0dda112b3cd'
+# OAUTH2_CLIENT_SECRET = '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'
+OAUTH2_CLIENT_ID = 'u-s4t2ud-66d1325a205f85bce9bb8f729e8ee9fde0051355dbaf775183489f2c9faa4167'
+OAUTH2_CLIENT_SECRET = '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'
+OAUTH2_REDIRECT_URI = 'https://localhost:4433/callback'
 OAUTH2_PROVIDER_URL = 'https://api.intra.42.fr/oauth'
 USER_INFO_URL = 'https://api.intra.42.fr/v2/me'
