@@ -1,10 +1,18 @@
-import { router } from "../main.js";
 
-export default function signIn() {
-  const html = `
-  <section>
 
-		<span></span>
+export default function pong2DMenu() {
+    const html = `
+        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <div class="container">
+		<a class="navbar-brand" href="#">Transcendence</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<section>
+    <span></span>
 		<span></span>
 		<span></span>
 		<span></span>
@@ -265,104 +273,23 @@ export default function signIn() {
 		<span></span>
 		<span></span>
 
-		<div class="signin">
-			<div class="content">
-				<h2>Sign In</h2>
-				<div id="signInForm" class="form">
-					<div class="inputBox">
-						<input type="email" id="username" required>
-						<i>Username</i>
-					</div>
-					<div class="inputBox">
-						<input type="password" id="password" required>
-						<i>Password</i>
-					</div>
-					<div class="links">
-						<a href="/signUp" data-link>Sign Up</a>
-						<button id="loginWith42" class="login-button">Login with 42</button>
-					</div>
-					<div class="inputBox">
-						<input type="submit" onclick="submitForm()" value="Sign In">
-					</div>
-				</div>
+		<section>
+			<div class="cellPong">
+                <a class="navbar-brand">Partita rapida</a>
 			</div>
-		</div>
+            <div class="cellPong">
+                <a class="navbar-brand">Torneo</a>
+			</div>
 
-	</section>
-  `;
+            <div class="imagePong">
+			</div>
+		</section>
 
-  setTimeout(() => {
-    const loginButton = document.getElementById('loginButton');
-    const errorMessage = document.getElementById('errorMessage');
+</section>
 
-    // Add click event listener to the login button
-    loginButton.addEventListener('click', async function (event) {
-      event.preventDefault();
-
-      // Hide any previous error message
-      errorMessage.classList.add('d-none');
-      errorMessage.textContent = '';
-
-      // Get form values
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      // Basic validation (You can extend this as needed)
-      if (!username || !password) {
-        alert('Please enter both username and password.');
-        return;
-      }
-
-      // Create the data object to send
-      const loginData = {
-        username,
-        password,
-      };
-
-      // Send the form data to the API using fetch
-      const response = await fetch('http://localhost/api/auth/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-
-      // Handle the API response
-      const result = await response.json();
-      if (response.ok) {
-        // alert('Login successful!');
-        console.log('Login result:', result);
-        // Redirect to another page or handle success
-        if (result.access) {
-          localStorage.setItem("access", result.access)
-          localStorage.setItem("refresh", result.refresh)
-          window.history.pushState({}, '', '/home');
-          router();
-        } else {
-          localStorage.setItem("username", username)
-          window.history.pushState({}, '', '/2FA');
-          router();
-        }
-      } else {
-        alert(`Login failed: ${result.message}`);
-        // Display the error message
-        errorMessage.textContent = "Invalid Credentials";
-        errorMessage.classList.remove('d-none');
-      }
-    });
-
-	document.getElementById("loginWith42").addEventListener("click", () => {
-		const clientId = 'u-s4t2ud-66d1325a205f85bce9bb8f729e8ee9fde0051355dbaf775183489f2c9faa4167';
-		const redirectUri = 'https%3A%2F%2Flocalhost%3A4433%2Fcallback';
-  
-		const authorizationUrl = `https://api.intra.42.fr/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
-  
-		window.location.href = authorizationUrl;
-	  });
-	  
-  }, 0);
-
-  return html;
+<footer class="custom-footer text-white text-center py-3">
+    <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
+</footer>
+        `;
+    return html;
 }
-
