@@ -11,6 +11,8 @@ export default function pong3D() {
     </div>
     `;
 
+	// const html = `<div id="threejs-canvas"></div>`
+
     if (gameInstance) {
         cancelAnimationFrame(gameInstance);
     }
@@ -38,32 +40,55 @@ export default function pong3D() {
         const renderer = new THREE.WebGLRenderer();
         canvasContainer.innerHTML = ""; // Clear previous canvases if any
 
-        renderer.setSize(window.innerWidth / 2, window.innerHeight / 2);
+        renderer.setSize(window.innerWidth / 1.5, window.innerHeight / 1.25);
         canvasContainer.appendChild(renderer.domElement);
 
         // Grid
-		const gridSize = 500;
-        const gridHelper = new THREE.GridHelper(gridSize, 10, 0x888888, 0x444444);
-        scene.add(gridHelper);
-		const borderWidth = gridSize;
+		const gridSize = 500; // Width of the grid
+		const gridSizeY = 700; // Height of the grid
+		const divisions = 10; // Number of divisions
+		const gridHelper = new THREE.GridHelper(gridSize, divisions, 0x888888, 0x444444);
+		gridHelper.scale.set(1, 1, gridSizeY / gridSize); // Scale Z to make a rectangle
+		// scene.add(gridHelper);
+
+
+		const borderWidth = gridSizeY;
 		const borderHeight = 50;
-		const borderDepth = 10;
+		const borderDepth = 1;
 		const borderGeometry = new THREE.BoxGeometry( borderWidth,  borderHeight,  borderDepth);
 		const borderMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 		
 		
 		const rightBorder = new THREE.Mesh( borderGeometry,  borderMaterial);
-		rightBorder.position.set(gridSize / 2 + borderDepth, borderHeight / 2, 0);
+		rightBorder.position.set(gridSize / 2 + borderDepth / 2, borderHeight / 2, 0);
 		rightBorder.rotation.y = Math.PI / 2;
 		scene.add(rightBorder);
 
 
 		const leftBorder = rightBorder.clone();
-		leftBorder.position.set(-(gridSize / 2 + borderDepth), borderHeight / 2, 0);
+		leftBorder.position.set(-(gridSize / 2 + borderDepth / 2), borderHeight / 2, 0);
 		scene.add(leftBorder);
+
+
+		const goalWidth = gridSize;
+		const goalHeight = 50;
+		const goalDepth = 1;
+		const goalGeometry = new THREE.BoxGeometry( goalWidth,  goalHeight,  goalDepth);
+		const goalMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+
+		const rightGoal = new THREE.Mesh(goalGeometry, goalMaterial);
+		rightGoal.position.set(0, borderHeight / 2, gridSizeY / 2 + goalDepth / 2);
+		scene.add(rightGoal);
+
+		
+		const leftGoal = rightGoal.clone();
+		leftGoal.position.set(0, borderHeight / 2, -(gridSizeY / 2 + goalDepth / 2))
+		scene.add(leftGoal);
 
 		const rightBorderBox = new THREE.Box3().setFromObject(rightBorder);
 		const leftBorderBox = new THREE.Box3().setFromObject(leftBorder);
+
 
 
 		class Ball {
@@ -72,7 +97,7 @@ export default function pong3D() {
 				this.Player2 = Player2;
 				this.ballRadius = 8;
 				this.ballGeometry = new THREE.SphereGeometry(this.ballRadius);
-				this.ballMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+				this.ballMaterial = new THREE.MeshBasicMaterial({ color: 0xdbdbdb });
 				this.Ball = new THREE.Mesh(this.ballGeometry, this.ballMaterial);
 				this.y = y;
 				this.x = 0;
@@ -98,6 +123,12 @@ export default function pong3D() {
 				this.x += this.dx;
 				this.Ball.position.set(this.x, this.y, this.z);
 				this.collisionBall.setFromObject(this.Ball);
+
+				if (this.z > (gridSizeY / 2) || this.z < -(gridSizeY / 2)) {
+					console.log("GOOOL");
+					scene.remove(this.Ball);
+					this.ft_addBallToScene();
+				}
 
 				// Check for collisions with the borders and bounce
 				if (this.collisionBall.intersectsBox(leftBorderBox) || this.collisionBall.intersectsBox(rightBorderBox)) {
@@ -130,7 +161,7 @@ export default function pong3D() {
 				this.paddleDepth = 10;
 				this.user = user;
 				this.paddleGeometry = new THREE.BoxGeometry(this.paddleWidth, this.paddleHeight, this.paddleDepth);
-				this.paddleMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+				this.paddleMaterial = new THREE.MeshBasicMaterial({ color: 0xdbdbdb });
 				this.paddle = new THREE.Mesh(this.paddleGeometry, this.paddleMaterial);
 				this.paddleHitBox = new THREE.Box3().setFromObject(this.paddle);
 
