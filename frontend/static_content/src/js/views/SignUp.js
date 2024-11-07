@@ -355,7 +355,7 @@ setTimeout(() => {
     const result = await response.json();
     if (response.ok) {
       // Redirect to the login page on success
-      history.pushState({}, '', '/login');
+      history.pushState({}, '', '/signIn');
       router();
     } else {
       // Display any validation errors from the server

@@ -362,7 +362,7 @@ export default function userinfo() {
     logoutButton.addEventListener('click', () => {
       localStorage.removeItem("access")
       localStorage.removeItem("refresh")
-      window.history.pushState({}, '', '/login');
+      window.history.pushState({}, '', '/signIn');
       router();
     });
 

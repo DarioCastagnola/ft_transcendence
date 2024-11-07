@@ -16,7 +16,6 @@ import pong3DMenu from "./views/pong3DMenu.js";
 
 
 const routes = {
-
     "/": { title: "Welcome", render: welcome, css: "./src/css/welcome.css" },
     "/home": { title: "Home", render: home, css: "./src/css/home.css" },
     "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },
@@ -32,6 +31,18 @@ const routes = {
     "/pong2DMenu": { title: "pong2DMenu", render: pong2DMenu, css: "./src/css/pong2DMenu.css"},
     "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"}
 };
+
+const protected_routes = [
+    "/home",
+    "/userinfo",
+    "/2FA",
+    "/userinfo-update",
+    "/pong",
+    "/matchHistory",
+    "/pong3D",
+    "/pong2DMenu",
+    "/pong3DMenu"
+];
 
 let currentCSS = null;
 
@@ -67,12 +78,12 @@ async function handleOAuthCallback() {
         history.pushState({}, '', '/home');
         router();
       } else {
-        history.pushState({}, '', '/login');
+        history.pushState({}, '', '/signIn');
         router();
       }
     } else {
         // console.error('Authorization code missing from callback URL');
-        history.pushState({}, '', '/login');
+        history.pushState({}, '', '/signIn');
         router();
     }
 }
@@ -82,7 +93,13 @@ export function router() {
     let view = routes[location.pathname];
     // console.log(view)
     if (view) {
+        if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
+            window.history.pushState({}, '', '/');
+            router();
+            return ;
+        }
         // console.log(view.title);
+        // alert("wait")
         document.title = view.title;
         app.innerHTML = view.render();
         if (view.css) {
