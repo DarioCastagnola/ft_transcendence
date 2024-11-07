@@ -1,6 +1,6 @@
 
 
-export default function pong2DMenu() {
+export default function pong3DMenu() {
     const html = `
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <div class="container">
@@ -276,10 +276,10 @@ export default function pong2DMenu() {
 
 	<section>
 		<div class="cellPong">
-			<a class="menuTesto" href="/pong" data-link>Partita rapida</a>
+			<a class="menuTesto" href="/pong3D" data-link>Partita rapida</a>
 		</div>
 		<div class="cellPong">
-			<a class="menuTesto"href="/pong" data-link>Torneo</a>
+			<a class="menuTesto"href="/pong3D" data-link>Torneo</a>
 		</div>
 	</section>
 

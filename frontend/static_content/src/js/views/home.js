@@ -302,7 +302,7 @@ export default function home() {
                 </a>
                 </div>
                 <div class="col-md-5">
-                <a class="nav-link" href="/pong3D" data-link>
+                <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
                             <img src="/src/resources/pong3D.jpg">
