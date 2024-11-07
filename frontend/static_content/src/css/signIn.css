@@ -1,3 +1,10 @@
+.error-message {
+    color: red;                /* Make text red */
+    font-weight: bold;         /* Bold text */
+    margin-top: 5px;           /* Space above error */
+    font-size: 0.9em;          /* Slightly smaller font */
+}
+
 *
 {
 	margin: 0;
@@ -6,7 +13,7 @@
 	font-family: 'Quicksand', sans-serif;
 }
 
-body 
+body
 {
 	justify-content: center;
 	align-items: center;
@@ -14,7 +21,7 @@ body
 	background: #000;
 }
 
-section 
+section
 {
 	position: absolute;
 	width: 100vw;
@@ -28,7 +35,7 @@ section
 }
 
 /* Colore sfumatura */
-section::before 
+section::before
 {
 	content: '';
 	position: absolute;
@@ -39,7 +46,7 @@ section::before
 }
 
 /* Animazione sfondo sfumatura */
-@keyframes animate 
+@keyframes animate
 {
 	0%
 	{
@@ -51,7 +58,7 @@ section::before
 	}
 }
 
-section span 
+section span
 {
 	position: relative;
 	display: block;
@@ -62,7 +69,7 @@ section span
 	transition: 1.5s;
 }
 
-section span:hover 
+section span:hover
 {
 	background: rgb(0, 255, 0);
 	transition: 0s;
@@ -72,7 +79,7 @@ section .signin
 {
 	position: absolute;
 	width: 400px;
-  	background: #222;  
+  	background: #222;
 	z-index: 1000;
 	display: flex;
 	justify-content: center;
@@ -81,7 +88,7 @@ section .signin
 	border-radius: 4px;
 	box-shadow: 0 15px 35px rgba(0,0,0,9);
 }
-section .signin .content 
+section .signin .content
 {
 	position: relative;
 	width: 100%;
@@ -93,14 +100,14 @@ section .signin .content
 }
 
 /* Scritta (Signup) */
-section .signin .content h2 
+section .signin .content h2
 {
 	font-size: 2em;
 	color: rgb(0, 255, 0);
 	text-transform: uppercase;
 }
 
-section .signin .content .form 
+section .signin .content .form
 {
 	width: 100%;
 	display: flex;
@@ -114,7 +121,7 @@ section .signin .content .form .inputBox
 	width: 100%;
 }
 
-section .signin .content .form .inputBox input 
+section .signin .content .form .inputBox input
 {
 	position: relative;
 	width: 100%;
@@ -128,7 +135,7 @@ section .signin .content .form .inputBox input
 	font-size: 1em;
 }
 
-section .signin .content .form .inputBox i 
+section .signin .content .form .inputBox i
 {
 	position: absolute;
 	left: 0;
@@ -147,7 +154,7 @@ section .signin .content .form .inputBox i
 	color: #fff;
 }
 
-.signin .content .form .links 
+.signin .content .form .links
 {
 	position: relative;
 	width: 100%;
@@ -155,7 +162,7 @@ section .signin .content .form .inputBox i
 	justify-content: space-between;
 }
 
-.signin .content .form .links a 
+.signin .content .form .links a
 {
 	color: #fff;
 	text-decoration: none;
@@ -205,7 +212,7 @@ button[type="submit"]:active
 /* adattare */
 @media (max-width: 900px)
 {
-	section span 
+	section span
 	{
 		width: calc(10vw - 2px);
 		height: calc(10vw - 2px);
@@ -214,7 +221,7 @@ button[type="submit"]:active
 
 @media (max-width: 600px)
 {
-	section span 
+	section span
 	{
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);

@@ -1,6 +1,6 @@
 import { router } from "../main.js";
 
-export default function signIn() {
+export default function login() {
   const html = `
   <section>
 
@@ -277,14 +277,18 @@ export default function signIn() {
 						<input type="password" id="password" required>
 						<i>Password</i>
 					</div>
-					<div class="links">
+						<div class="links">
 						<a href="/signUp" data-link>Sign Up</a>
 						<button id="loginWith42" class="login-button">Login with 42</button>
 					</div>
 					<div class="inputBox">
-						<input type="submit" onclick="submitForm()" value="Sign In">
+						<!-- Updated with id="loginButton" -->
+						<input type="submit" id="loginButton" value="Sign In">
 					</div>
 				</div>
+				<!-- Error message element -->
+                <div id="errorMessage" class="error-message d-none"></div>
+
 			</div>
 		</div>
 
@@ -345,7 +349,7 @@ export default function signIn() {
           router();
         }
       } else {
-        alert(`Login failed: ${result.message}`);
+        // alert(`Login failed: ${result.message}`);
         // Display the error message
         errorMessage.textContent = "Invalid Credentials";
         errorMessage.classList.remove('d-none');
