@@ -62,7 +62,6 @@ services:
   #     - debug=1
   #   ports:
   #     - 8002:8002
-
   # db_auth:
   #   image: postgres
   #   container_name: db_auth

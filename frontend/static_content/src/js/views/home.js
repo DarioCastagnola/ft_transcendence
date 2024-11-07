@@ -293,6 +293,7 @@ export default function home() {
         <section class="image-section">
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-5">
+
                 <a class="nav-link" href="/pong2DMenu" data-link>
                     <button class="cellPong" onclick="#">
                         <div class="content">
@@ -303,6 +304,8 @@ export default function home() {
                 </a>
                 </div>
                 <div class="col-md-5">
+
+
                 <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
