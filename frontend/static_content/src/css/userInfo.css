@@ -79,7 +79,7 @@ section .signin
 {
 	position: absolute;
 	width: 800px;
-	height: 700px;
+	height: 800px;
   	background: #222;  
 	z-index: 1000;
 	display: flex;
@@ -280,7 +280,7 @@ button[type="submit"]:active
 
 
 
-/* BUTTON 2FA */
+/* BUTTON 2FA/LOGOUT */
 .button {
 	height: 50px;
 	margin: 5px;
@@ -308,19 +308,28 @@ button[type="submit"]:active
 	color: #d6d6d6;
 }
 
+.button-group {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start; /* Allinea i bottoni a sinistra */
+    width: 100%; /* Assicura che il contenitore prenda tutta la larghezza disponibile */
+	flex-direction: column; /* Dispone i bottoni verticalmente */
+}
+
+
+
 
 
 
 /* BUTTON MATCH HISTORY */
 .button2 {
-	padding: 10px;
+	padding: 10px 40px;
 	font-size: 18px;
 	background-color: #333;
 	color: rgb(217, 255, 0);
 	text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
-	text-align: center;
-	display: block;
-	margin: 20px auto; 
+	display: block; /* Cambiato da inline-flex a block */
+	margin: 20px auto; /* Margin per centrare e distanziare */
 	align-items: center;
 	justify-content: center;
 	position: relative;

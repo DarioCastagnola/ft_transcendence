@@ -272,7 +272,7 @@ export default function userinfo() {
 
 				<!-- IMMAGINE -->
 				<div class="profile-picture">
-					<img src="https://via.placeholder.com/100" alt="Profile Image">
+					<img src="https://via.placeholder.com/100">
 					<label for="profile-image" class="upload-icon">📷</label>
 					<input type="file" id="profile-image" accept="image/*">
 				</div>
@@ -292,12 +292,13 @@ export default function userinfo() {
 					</div>
 				</div>
 
-				<button id="logoutButton" class="button">Logout</button>
+				<!-- BOTTONI 2FA/LOGOUT -->
+				<div class="button-group">
+					<button id="enable2faButton" class="button">Enable 2FA</button>
+					<button id="logoutButton" class="button">Logout</button>
+				</div>
 
-				<!-- BOTTONE 2FA -->
-				<button id="enable2faButton" class="button">Enable 2FA</button>
 				<div id="qrCodeContainer" class="mt-3"></div> <!-- Container for the QR code -->
-
 			</div>
 
 			<div style="width: 0; height: 300px; border: 1px solid #333; margin: 25px; "></div>
@@ -307,7 +308,6 @@ export default function userinfo() {
 				<canvas id="myChart" width="300" height="300"></canvas>
 				<a href="/matchHistory" data-link class="button2">MATCH HISTORY</a>
 			</div>
-
 
 			</div>
 			</section>
@@ -365,6 +365,42 @@ export default function userinfo() {
       window.history.pushState({}, '', '/login');
       router();
     });
+
+	
+	//GRAFICO
+
+	const vittorie = 65; // percentuale vittoria
+	const sconfitte = 35; // percentuale sconfitta
+
+	const ctx = document.getElementById('myChart').getContext('2d');
+	const myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: [`${vittorie}% Vittorie`, `${sconfitte}% Sconfitte`],
+			datasets: [{
+				data: [vittorie, sconfitte],
+				backgroundColor: [
+					'rgba(75, 192, 192, 0.6)', // Vittorie - blu
+					'rgba(255, 99, 132, 0.6)' // Sconfitte - rosso
+				],
+				borderColor: [
+					'rgba(75, 192, 192, 1)',
+					'rgba(255, 99, 132, 1)'
+				],
+				borderWidth: 3
+			}]
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					position: 'bottom',
+				}
+			},
+			cutout: '60%'
+		}
+	});
   }, 0);
 
   return html;
