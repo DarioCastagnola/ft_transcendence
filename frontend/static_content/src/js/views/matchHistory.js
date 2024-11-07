@@ -297,7 +297,7 @@ export default function matchHistory() {
 				let teamB = partita.teamB;
 		
 				const cardHTML = `
-					<div class="card">
+					<div class="cardMatch">
 						<div data-status="inprogress" class="teams">
 							<div class="team-info team-home">
 								<div class="team-info-container">

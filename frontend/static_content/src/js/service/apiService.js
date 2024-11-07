@@ -60,7 +60,7 @@ export async function apiFetch(url, options = {}) {
       response = await fetch(url, options); // Retry the original request with new token
     } catch (refreshError) {
       console.error("Failed to refresh token", refreshError);
-      window.history.pushState({}, '', '/login');
+      window.history.pushState({}, '', '/signIn');
       router();
       return;
     }

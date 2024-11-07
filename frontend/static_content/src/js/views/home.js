@@ -1,4 +1,5 @@
 import "../components/counter.js";
+import { router } from "../main.js";
 
 export default function home() {
     const html = `
@@ -18,9 +19,9 @@ export default function home() {
 						<a class="nav-link" href="/userinfo" data-link>My profile</a>
 					</li>
                     <li class="nav-item">
-						<a class="nav-link" href="/welcome" data-link>Logout</a>
+                        <button id="logoutButton" class="nav-link">Logout</button>
 					</li>
-					
+
 				</ul>
 			</div>
 
@@ -292,33 +293,48 @@ export default function home() {
         <section class="image-section">
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-5">
-                <a class="nav-link" href="/pong" data-link>
+
+                <a class="nav-link" href="/pong2DMenu" data-link>
                     <button class="cellPong" onclick="#">
                         <div class="content">
-                            <img src="/frontend/src/resources/pong2D.jpg">
+                            <img src="/src/resources/pong2D.jpg">
                         </div>
-                        <img src="/frontend/src/resources/pong-2d_scritta.png" class="overlay-image">
+                        <img src="/src/resources/pong-2d_scritta.png" class="overlay-image">
                     </button>
                 </a>
                 </div>
                 <div class="col-md-5">
-                <a class="nav-link" href="/pong3D" data-link>
+
+
+                <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
-                            <img src="/frontend/src/resources/pong3D.jpg">
+                            <img src="/src/resources/pong3D.jpg">
                         </div>
-                        <img src="/frontend/src/resources/pong-3d_scritta.png" class="overlay-image">
+                        <img src="/src/resources/pong-3d_scritta.png" class="overlay-image">
                     </button>
                 </a>
                 </div>
             </div>
         </section>
-        
+
     </section>
 
     <footer class="custom-footer text-white text-center py-3">
         <p>© 2024 Transcendence. Lde-mich, Dcastagn, Mlongo, Dfiliag.</p>
     </footer>
         `;
-    return html;
+
+  setTimeout(() => {
+    const logoutButton = document.getElementById("logoutButton");
+
+    logoutButton.addEventListener('click', () => {
+      localStorage.removeItem("access")
+      localStorage.removeItem("refresh")
+      window.history.pushState({}, '', '/login');
+      router();
+    });
+  }, 0);
+
+  return html;
 }
