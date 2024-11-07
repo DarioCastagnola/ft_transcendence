@@ -276,10 +276,10 @@ export default function pong2DMenu() {
 
 	<section>
 		<div class="cellPong">
-			<a class="menuTesto" href="/pong" data-link>Partita rapida</a>
+			<a class="menuTesto" href="/pong" data-link>Partita rapida 2D</a>
 		</div>
 		<div class="cellPong">
-			<a class="menuTesto"href="/pong" data-link>Torneo</a>
+			<a class="menuTesto"href="/pong" data-link>Torneo 2D</a>
 		</div>
 	</section>
 

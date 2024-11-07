@@ -16,7 +16,7 @@ export default function home() {
 				<ul class="navbar-nav ms-auto">
 
 					<li class="nav-item">
-						<a class="nav-link" href="/userinfo" data-link>My profile</a>
+						<a class="nav-link" href="/userInfo" data-link>My profile</a>
 					</li>
                     <li class="nav-item">
                         <button id="logoutButton" class="nav-link">Logout</button>

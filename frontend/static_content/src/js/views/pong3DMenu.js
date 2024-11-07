@@ -276,10 +276,10 @@ export default function pong3DMenu() {
 
 	<section>
 		<div class="cellPong">
-			<a class="menuTesto" href="/pong3D" data-link>Partita rapida</a>
+			<a class="menuTesto" href="/pong3D" data-link>Partita rapida 3D</a>
 		</div>
 		<div class="cellPong">
-			<a class="menuTesto"href="/pong3D" data-link>Torneo</a>
+			<a class="menuTesto"href="/pong3D" data-link>Torneo 3D</a>
 		</div>
 	</section>
 

@@ -5,7 +5,7 @@ import signIn from "./views/signIn.js";
 import signUp from "./views/SignUp.js";
 import about from "./views/about.js";
 import contact from "./views/contact.js";
-import userinfo from "./views/userinfo.js";
+import userInfo from "./views/userInfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
@@ -20,7 +20,7 @@ const routes = {
     "/home": { title: "Home", render: home, css: "./src/css/home.css" },
     "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },
     "/signIn": { title: "SignIn", render: signIn, css: "./src/css/signIn.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./src/css/userInfo.css" },
+    "/userInfo": { title: "userInfo", render: userInfo, css: "./src/css/userInfo.css" },
     "/about": { title: "About", render: about, css: "./src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./src/css/contact.css" },
     "/2FA": { title: "2FA", render: twoFA, css: "./src/css/twoFA.css" },
@@ -92,14 +92,17 @@ export function router() {
     const app = document.getElementById('app');
     let view = routes[location.pathname];
     // console.log(view)
+    // console.log(location.pathname);
+    // alert("primo wait");
     if (view) {
-        if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
-            window.history.pushState({}, '', '/');
-            router();
-            return ;
-        }
+        // INFAME
+        // if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
+        //     window.history.pushState({}, '', '/');
+        //     router();
+        //     return ;
+        // }
         // console.log(view.title);
-        // alert("wait")
+        // alert("wait");
         document.title = view.title;
         app.innerHTML = view.render();
         if (view.css) {

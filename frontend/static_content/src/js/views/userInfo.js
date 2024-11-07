@@ -1,7 +1,7 @@
 import { router } from "../main.js";
 import { apiFetch } from "../service/apiService.js";
 
-export default function userinfo() {
+export default function userInfo() {
   const html = `
   <section>
 
@@ -294,13 +294,13 @@ export default function userinfo() {
 
 				<!-- BOTTONI 2FA/LOGOUT -->
 				<div class="button-group">
-					<button id="enable2faButton" class="button">Enable 2FA</button>
-					<button id="logoutButton" class="button">Logout</button>
-				</div>
-
+				<button id="enable2faButton" class="button">Enable 2FA</button>
+				<button id="logoutButton" class="button">Logout</button>
 				<div id="qrCodeContainer" class="mt-3"></div> <!-- Container for the QR code -->
-			</div>
-
+				</div>
+				
+				</div>
+				
 			<div style="width: 0; height: 300px; border: 1px solid #333; margin: 25px; "></div>
 
 			<!-- GRAFICO -->
@@ -316,13 +316,16 @@ export default function userinfo() {
 
 
   setTimeout(() => {
-    const usernameElement = document.getElementById("user-username");
-    const emailElement = document.getElementById("user-email");
-    const accessToken = localStorage.getItem("access");
-    const enable2faButton = document.getElementById("enable2faButton");
-    const logoutButton = document.getElementById("logoutButton");
-    const qrCodeContainer = document.getElementById("qrCodeContainer");
-
+	  
+	  const usernameElement = document.getElementById("user-username");
+	  const emailElement = document.getElementById("user-email");
+	  const accessToken = localStorage.getItem("access");
+	  const enable2faButton = document.getElementById("enable2faButton");
+	  const logoutButton = document.getElementById("logoutButton");
+	  const qrCodeContainer = document.getElementById("qrCodeContainer");
+	  
+	  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=ciao&size=150x150`;
+	  qrCodeContainer.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code for 2FA" width="150">`;
 
     async function fetchUserInfo() {
       const apiUrl = 'http://localhost/api/auth/user-info/';
