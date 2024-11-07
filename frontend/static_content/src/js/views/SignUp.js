@@ -281,12 +281,13 @@ export default function signUp() {
 						<input type="password" id="password" required>
 						<i>Password</i>
 					</div>
-          <div class="inputBox">
+          			<div class="inputBox">
 						<input type="password" id="repeatPassword" required>
 						<i>Reapet your password</i>
 					</div>
 					<div class="links">
 						<a href="/signIn" data-link>Sign in</a>
+						<button id="loginWith42" class="login-button">Login with 42</button>
 					</div>
 					<div class="inputBox">
 						<input type="submit" onclick="submitForm()" value="Sign up">

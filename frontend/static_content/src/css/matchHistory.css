@@ -229,18 +229,18 @@ button[type="submit"]:active
 
 /* MATCH CARD */
 
-.card * {
+.cardMatch * {
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.card {
+.cardMatch {
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 20px;
 }
 
-.card-container {
+.cardMatch-container {
     width: 100%; 
-    max-height: 720px; 
+    max-height: 500px;
     overflow-y: auto;
 	overflow-x: hidden;
     display: flex;
@@ -249,14 +249,14 @@ button[type="submit"]:active
     padding-right: 10px; 
 }
 
-.card .teams {
+.cardMatch .teams {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
 }
 
-.card .teams > div {
+.cardMatch .teams > div {
 	flex: 1;
 	text-align: center;
 	position: relative;
@@ -264,7 +264,7 @@ button[type="submit"]:active
 	text-wrap: nowrap;
 }
 
-.card .teams .team-name-info {
+.cardMatch .teams .team-name-info {
 	text-wrap: nowrap;
 	color: #ffffff;
 	max-width: 210px;
@@ -274,7 +274,7 @@ button[type="submit"]:active
 	display: block;
 }
 
-.card .teams div.progress-dots {
+.cardMatch .teams div.progress-dots {
 	height: 3px;
 	position: relative;
 	width: 60px;
@@ -284,7 +284,7 @@ button[type="submit"]:active
 	border-radius: 10px;
 }
 
-.card .teams div.progress-dots .load {
+.cardMatch .teams div.progress-dots .load {
 	background: linear-gradient(90deg, #3a3dff, #ff2929);
 	display: block;
 	height: 1.5px;
@@ -314,24 +314,24 @@ button[type="submit"]:active
 }
 }
 
-.card .teams .team-home,
-.card .teams .team-away {
+.cardMatch .teams .team-home,
+.cardMatch .teams .team-away {
 	padding: 15px 37px;
 	position: relative;
 	overflow: hidden;
 }
 
-.card .teams .team-away {
+.cardMatch .teams .team-away {
 	transform: skew(-41deg, 0deg);
 	border-radius: 10px 10px 30px 10px;
 }
 
-.card .teams .team-home {
+.cardMatch .teams .team-home {
 	border-radius: 10px 10px 10px 30px;
 	transform: skew(41deg, 0deg);
 }
 
-.card .teams .team-home::after {
+.cardMatch .teams .team-home::after {
 	position: absolute;
 	top: -3px;
 	background: #00caff;
@@ -345,7 +345,7 @@ button[type="submit"]:active
 	box-shadow: 0px 0px 32px #00ffed;
 }
 
-.card .teams .team-home::before {
+.cardMatch .teams .team-home::before {
 	position: absolute;
 	bottom: -15px;
 	background: #0048ff;
@@ -359,7 +359,7 @@ button[type="submit"]:active
 	box-shadow: 0px 0px 32px #0026ff;
 }
 
-.card .teams .team-away::after {
+.cardMatch .teams .team-away::after {
 	position: absolute;
 	top: -3px;
 	background: #cc9d00;
@@ -373,7 +373,7 @@ button[type="submit"]:active
 	box-shadow: 0px 0px 32px #cc3700;
 }
 
-.card .teams .team-away::before {
+.cardMatch .teams .team-away::before {
 	position: absolute;
 	bottom: -15px;
 	background: #ff0000;
@@ -387,11 +387,11 @@ button[type="submit"]:active
 	box-shadow: 0px 0px 32px #d50000;
 }
 
-.card .teams .team-home .team-name-info {
+.cardMatch .teams .team-home .team-name-info {
 	transform: skew(-41deg, 0);
 }
 
-.card .teams .team-away .team-name-info {
+.cardMatch .teams .team-away .team-name-info {
 	transform: skew(41deg, 0);
 }
 
@@ -403,7 +403,7 @@ button[type="submit"]:active
 	margin: 0;
 }
 
-.card .event-scoreboard .event-score-container {
+.cardMatch .event-scoreboard .event-score-container {
 	display: flex;
 	flex-wrap: wrap;
 	padding: 10px;
@@ -414,7 +414,7 @@ button[type="submit"]:active
 	margin: 10px 0;
 }
 
-.card .event-scoreboard .event-score-container .score-container {
+.cardMatch .event-scoreboard .event-score-container .score-container {
 	font-size: 24px;
 	background: linear-gradient(90deg, #3a3dff, #ff2929);
 	-webkit-background-clip: text;
@@ -424,7 +424,7 @@ button[type="submit"]:active
     justify-content: center; 
 }
 
-.card .event-scoreboard .event-score-container .current-time-container {
+.cardMatch .event-scoreboard .event-score-container .current-time-container {
 	font-size: 12px;
 	margin-bottom: 8px;
 	width: 100%;
@@ -438,13 +438,13 @@ button[type="submit"]:active
 	row-gap: 5px;
 }
 
-.card .event-scoreboard .event-score-container .current-time-container .event-clock {
+.cardMatch .event-scoreboard .event-score-container .current-time-container .event-clock {
 	font-weight: 500;
 	color: #eee;
 	margin-right: 10px;
 	}
   
-.card .event-scoreboard .event-score-container .score-container .score-home,
-.card .event-scoreboard .event-score-container .score-away {
+.cardMatch .event-scoreboard .event-score-container .score-container .score-home,
+.cardMatch .event-scoreboard .event-score-container .score-away {
 	padding: 0 10px;
 }
