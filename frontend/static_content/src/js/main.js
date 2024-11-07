@@ -78,12 +78,12 @@ async function handleOAuthCallback() {
         history.pushState({}, '', '/home');
         router();
       } else {
-        history.pushState({}, '', '/login');
+        history.pushState({}, '', '/signIn');
         router();
       }
     } else {
         // console.error('Authorization code missing from callback URL');
-        history.pushState({}, '', '/login');
+        history.pushState({}, '', '/signIn');
         router();
     }
 }
@@ -99,6 +99,7 @@ export function router() {
             return ;
         }
         // console.log(view.title);
+        // alert("wait")
         document.title = view.title;
         app.innerHTML = view.render();
         if (view.css) {
