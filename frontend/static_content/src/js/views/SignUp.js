@@ -296,6 +296,7 @@ export default function signUp() {
 
       <div class="links">
         <a href="/signIn" data-link>Sign in</a>
+        <button id="loginWith42" class="login-button">Login with 42</button>
       </div>
 
       <div class="inputBox">

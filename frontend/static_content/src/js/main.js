@@ -11,6 +11,7 @@ import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
 import twoFA from "./views/twoFA.js";
 import pong3D from "./views/pong3D.js"
+import pong2DMenu from "./views/pong2DMenu.js"
 
 
 const routes = {
@@ -26,7 +27,8 @@ const routes = {
     "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./src/css/pong.css"},
     "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./src/css/matchHistory.css" },
-    "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"}
+    "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"},
+    "/pong2DMenu": { title: "pong2DMenu", render: pong2DMenu, css: "./src/css/pong2DMenu.css"}
 };
 
 let currentCSS = null;
