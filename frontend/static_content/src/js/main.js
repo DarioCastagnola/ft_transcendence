@@ -19,7 +19,7 @@ const routes = {
 
     "/": { title: "Welcome", render: welcome, css: "./src/css/welcome.css" },
     "/home": { title: "Home", render: home, css: "./src/css/home.css" },
-    "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },    
+    "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },
     "/signIn": { title: "SignIn", render: signIn, css: "./src/css/signIn.css" },
     "/userinfo": { title: "UserInfo", render: userinfo, css: "./src/css/userInfo.css" },
     "/about": { title: "About", render: about, css: "./src/css/about.css" },
@@ -80,6 +80,7 @@ async function handleOAuthCallback() {
 export function router() {
     const app = document.getElementById('app');
     let view = routes[location.pathname];
+    // console.log(view)
     if (view) {
         // console.log(view.title);
         document.title = view.title;
