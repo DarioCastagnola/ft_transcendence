@@ -373,6 +373,15 @@ setTimeout(() => {
       }
     }
   });
+
+  document.getElementById("loginWith42").addEventListener("click", () => {
+	const clientId = 'u-s4t2ud-66d1325a205f85bce9bb8f729e8ee9fde0051355dbaf775183489f2c9faa4167';
+	const redirectUri = 'https%3A%2F%2Flocalhost%3A4433%2Fcallback';
+
+	const authorizationUrl = `https://api.intra.42.fr/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+
+	window.location.href = authorizationUrl;
+  });
 }, 0);
 
   return html;
