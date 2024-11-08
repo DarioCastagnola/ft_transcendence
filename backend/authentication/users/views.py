@@ -53,7 +53,6 @@ class LoginView(APIView):
         return Response({"error": "Invalid Credentials"}, status=400)
 
 class VerifyOTPView(APIView):
-    # permission_classes = [IsAuthenticated]
     serializer_class = OTPSerializer
 
 
