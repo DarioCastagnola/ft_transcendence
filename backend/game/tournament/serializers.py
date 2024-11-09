@@ -52,3 +52,27 @@ class SetMatchWinnerSerializer(serializers.Serializer):
     draw = serializers.BooleanField(required=False)
     player1_score = serializers.IntegerField(required=False)
     player2_score = serializers.IntegerField(required=False)
+
+class RapidMatchSerializer(serializers.ModelSerializer):
+    player1_score = serializers.IntegerField(required=True)
+    player2_score = serializers.IntegerField(required=True)
+    draw = serializers.BooleanField(required=False, read_only=True)
+    closed = serializers.BooleanField(required=False, read_only=True)
+    winner = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Match
+        fields = ('id', 'tournament', 'player1', 'player2', 'winner', 'draw', 'closed', 'created_at', 'updated_at', 'player1_score', 'player2_score')
+        extra_kwargs = {
+            'tournament': {'required': False},  
+            'player1': {'required': False},
+            'player2': {'required': False},
+            'winner': {'required': False},
+            'draw': {'required': False},
+            'closed': {'required': False},
+            'created_at': {'required': False},
+            'updated_at': {'required': False},
+        }
+
+    def create(self, validated_data):
+        return Match.objects.create(**validated_data)

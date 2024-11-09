@@ -67,7 +67,7 @@ class Stat(models.Model):
         return f"{self.wins} vittorie, {self.losses} sconfitte, {self.draws} pareggi"
     
 class Match(models.Model):
-    tournament = models.ForeignKey('Tournament', on_delete=models.CASCADE, blank=False, null=False)
+    tournament = models.ForeignKey('Tournament', on_delete=models.CASCADE, blank=False, null=True)
     player1 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player1', blank=True, null=True)
     player2 = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='player2', blank=True, null=True)
     player1_score = models.IntegerField(default=0)

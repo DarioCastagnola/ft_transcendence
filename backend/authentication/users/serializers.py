@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,3 +35,10 @@ class LoginSerializer(serializers.Serializer):
 class OTPSerializer(serializers.Serializer):
     username = serializers.CharField()
     otp = serializers.CharField()
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['oauth2'] = False
+        return token
