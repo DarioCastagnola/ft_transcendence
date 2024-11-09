@@ -1,17 +1,18 @@
 import requests
 from django.conf import settings
-from django.contrib.auth import get_user_model, login, authenticate
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django_otp.plugins.otp_totp.models import TOTPDevice
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, get_user_model, login as django_login
 from .serializers import UserSerializer, LoginSerializer, OTPSerializer
-from django.http import JsonResponse
 from django.views import View
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import AccessToken
+from .serializers import CustomTokenObtainPairSerializer
+from rest_framework.exceptions import AuthenticationFailed
 
 User = get_user_model()
 
@@ -45,7 +46,8 @@ class LoginView(APIView):
             if device:
                 return Response({"message": "2FA enabled, enter OTP"}, status=200)
             else:
-                refresh = RefreshToken.for_user(user)
+                refresh = CustomTokenObtainPairSerializer.get_token(user)
+                refresh['oauth2'] = False
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
@@ -76,6 +78,20 @@ class Enable2FAView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        auth_header = request.headers.get('Authorization')
+
+        if auth_header:
+            try:
+
+                token_str = auth_header.split()[1]
+                token = AccessToken(token_str)
+
+                if token.get('oauth2') is True:
+                    return Response({"error": "2FA can only be enabled for local users"}, status=400)
+
+            except Exception as e:
+                raise AuthenticationFailed('Invalid or expired token')
+
         user = request.user
         device, created = TOTPDevice.objects.get_or_create(user=user, name='default')
         otp_uri = device.config_url
