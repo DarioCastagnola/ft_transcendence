@@ -297,7 +297,7 @@ export default function home() {
                 <a class="nav-link" href="/pong2DMenu" data-link>
                     <button class="cellPong" onclick="#">
                         <div class="content">
-                            <img src="/src/resources/pong2D.jpg">
+                            <img src="/src/resources/pong2D.png">
                         </div>
                         <img src="/src/resources/pong-2d_scritta.png" class="overlay-image">
                     </button>
@@ -309,7 +309,7 @@ export default function home() {
                 <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
-                            <img src="/src/resources/pong3D.jpg">
+                            <img src="/src/resources/pong3D.png">
                         </div>
                         <img src="/src/resources/pong-3d_scritta.png" class="overlay-image">
                     </button>

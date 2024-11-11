@@ -93,11 +93,11 @@ export function router() {
     let view = routes[location.pathname];
     // console.log(view)
     if (view) {
-        if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
-            window.history.pushState({}, '', '/');
-            router();
-            return ;
-        }
+        // if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
+        //     window.history.pushState({}, '', '/');
+        //     router();
+        //     return ;
+        // }
         // console.log(view.title);
         // alert("wait")
         document.title = view.title;
