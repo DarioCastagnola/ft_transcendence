@@ -69,14 +69,13 @@ class UserProfileUpdate(APIView):
             return Response({'error': 'User ID not found'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Prova a trovare un profilo esistente per l'utente
             profile = UserProfile.objects.get(user_id=user_id)
             serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         except UserProfile.DoesNotExist:
             serializer = UserProfileSerializer(data=request.data, user_id=user_id)
 
         if serializer.is_valid():
-            serializer.save()  # Salva l'avatar nuovo o aggiornato
+            serializer.save() 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

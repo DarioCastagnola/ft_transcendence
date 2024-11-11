@@ -32,9 +32,6 @@ class MatchCreateView(CreateAPIView):
     serializer_class = RapidMatchSerializer
     
     @extend_schema(
-        parameters=[
-            OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-        ],
         request=RapidMatchSerializer,
         responses={
             status.HTTP_201_CREATED: MatchSerializer,
@@ -96,9 +93,7 @@ class MatchCreateView(CreateAPIView):
 
 @extend_schema_view(
     get=extend_schema(
-        parameters=[
-            OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-        ],
+
         responses={
             status.HTTP_200_OK: MatchSerializer(many=True),
             status.HTTP_401_UNAUTHORIZED: OpenApiResponse(
