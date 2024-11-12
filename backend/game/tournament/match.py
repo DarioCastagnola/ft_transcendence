@@ -5,7 +5,7 @@ from .serializers import MatchSerializer, RapidMatchSerializer
 from .models import Match, Player, Stat
 from .views import get_user_id, get_user_info
 from rest_framework.exceptions import ValidationError
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, extend_schema_view
+from drf_spectacular.utils import extend_schema, OpenApiResponse, extend_schema_view
 from .errorResponseSerializer import ErrorResponseSerializer
 
 

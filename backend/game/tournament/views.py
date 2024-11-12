@@ -56,7 +56,6 @@ def get_user_id(request):
     
     url = 'http://authentication:8002/api/auth/user-info/'
     
-    # Invia il cookie nella richiesta
     cookies = {'access_token': access_token}
     
     response = requests.get(url, cookies=cookies)
@@ -67,14 +66,12 @@ def get_user_id(request):
         return None
 
 def get_user_info(request, info):
-    # Ottieni il token dal cookie invece che dagli header
     access_token = request.COOKIES.get('access_token')
     if not access_token:
         return None  
     
     url = 'http://authentication:8002/api/auth/user-info/'
     
-    # Invia il cookie `access_token` nella richiesta
     cookies = {'access_token': access_token}
     
     response = requests.get(url, cookies=cookies)

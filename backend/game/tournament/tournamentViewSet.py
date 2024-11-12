@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .models import Tournament, Player
 from .serializers import TournamentSerializer, MatchSerializer, PlayerSerializer, TournamentCreateSerializer, SetMatchWinnerSerializer
 from .views import get_user_id, get_user_info
-from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework.exceptions import NotFound
 from .errorResponseSerializer import ErrorResponseSerializer
 from .classicTournament import ClassicTournamentManager
@@ -16,9 +16,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'delete']
 
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     request=TournamentCreateSerializer,
     responses={
         status.HTTP_201_CREATED: TournamentSerializer,
@@ -72,9 +69,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_204_NO_CONTENT: OpenApiResponse(None),
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -103,9 +97,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -134,9 +125,7 @@ class TournamentViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
+
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -167,9 +156,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -200,9 +186,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -224,9 +207,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -246,9 +226,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
         return Tournament.objects.filter(user_id=user_id)
 
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -272,9 +249,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
         return Response(TournamentSerializer(tournament, many=True).data)
 
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     responses={
         status.HTTP_200_OK: TournamentSerializer,
         status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -295,12 +269,9 @@ class TournamentViewSet(viewsets.ModelViewSet):
         tournament = Tournament.objects.filter(user_id=user_id).filter(closed=True)
         if not tournament:
             return Response({"error": "Tournament not found"}, status=status.HTTP_404_NOT_FOUND)
-        return Response(TournamentSerializer(tournament).data)
+        return Response(TournamentSerializer(tournament, many=True).data)
 
     @extend_schema(
-    parameters=[
-        OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-    ],
     request= PlayerSerializer,
     responses={
         status.HTTP_204_NO_CONTENT: OpenApiResponse(None),
@@ -362,9 +333,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
 
     
     @extend_schema(
-        parameters=[
-            OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-        ],
         responses={
             status.HTTP_200_OK: MatchSerializer,
             status.HTTP_404_NOT_FOUND: OpenApiResponse(
@@ -394,9 +362,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
     
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(name='Token', description='Authorization token', required=True, type=str, location=OpenApiParameter.HEADER),
-        ],
         request=SetMatchWinnerSerializer,
         responses={
             status.HTTP_200_OK: MatchSerializer,
@@ -449,9 +414,6 @@ class TournamentViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @extend_schema(
-        parameters=[
-            OpenApiParameter(name='tournament_id', description='Tournament ID', required=True, type=int, location=OpenApiParameter.PATH),
-        ],
         responses={
             status.HTTP_200_OK: MatchSerializer,
             status.HTTP_404_NOT_FOUND: OpenApiResponse(

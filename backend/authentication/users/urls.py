@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from oauth2_provider.views import TokenView
-from .views import RegisterView, LoginView, VerifyOTPView, Enable2FAView, DeleteUserView, OAuth2CallbackView, UserInfoView, LogoutView, TokenRefreshCookieView
+from .views import RegisterView, LoginView, VerifyOTPView, Enable2FAView, DeleteUserView, OAuth2CallbackView, UserInfoView, LogoutView, TokenRefreshCookieView, is_Oauth2View
 from .views import TokenRefreshCookieView
 
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path('user-info/', UserInfoView.as_view(), name='user_info'),
     path('token/refresh-cookie/', TokenRefreshCookieView.as_view(), name='token_refresh_cookie'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('is-oauth2/', is_Oauth2View.as_view(), name='is_oauth2'),
 ]

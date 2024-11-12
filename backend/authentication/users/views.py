@@ -21,6 +21,45 @@ import jwt
 
 User = get_user_model()
 
+class CookieJWTAuthentication(BaseAuthentication):
+    def authenticate(self, request):
+        access_token = request.COOKIES.get('access_token')
+        refresh_token = request.COOKIES.get('refresh_token')
+
+        if not access_token:
+            return None
+
+        try:
+            token = AccessToken(access_token, verify=False)
+            user = User.objects.get(id=token['user_id'])
+            return (user, token)
+    
+        except jwt.ExpiredSignatureError:
+            if not refresh_token:
+                raise AuthenticationFailed('Access token expired and refresh token missing.')
+            
+            new_access_token = self.refresh_access_token(refresh_token)
+            if new_access_token:
+                request.new_access_token = new_access_token
+                new_access_token['oauth2'] = access_token['oauth2']
+                user = User.objects.get(id=AccessToken(new_access_token)['user_id'])
+                
+                return (user, new_access_token)
+            else:
+                raise AuthenticationFailed('Unable to refresh access token.')
+        
+        except Exception:
+            raise AuthenticationFailed('Invalid token')
+        
+    def refresh_access_token(self, refresh_token):
+        url = 'http://localhost/api/auth/token/refresh-cookie/'
+        response = requests.post(url, data={'refresh': refresh_token})
+
+        if response.status_code == 200:
+            return response.json().get('access')
+        return None
+
+
 #EFFETTUA LOGIN IMMEDIATO
 
 class RegisterView(generics.CreateAPIView):
@@ -44,7 +83,7 @@ class RegisterView(generics.CreateAPIView):
             value=access_token, 
             httponly=True, 
             secure=True, 
-            max_age=300 
+            max_age=3600
         )
         response.set_cookie(
             key='refresh_token', 
@@ -105,7 +144,7 @@ class LoginView(APIView):
                     value=access_token, 
                     httponly=True, 
                     secure=True, 
-                    max_age=5  
+                    max_age=3600 
                 )
                 response.set_cookie(
                     key='refresh_token', 
@@ -120,7 +159,6 @@ class LoginView(APIView):
 
 class VerifyOTPView(APIView):
     serializer_class = OTPSerializer
-
 
     def post(self, request, *args, **kwargs):
         username = request.data.get('username')
@@ -141,7 +179,7 @@ class VerifyOTPView(APIView):
                     value=access_token, 
                     httponly=True, 
                     secure=True, 
-                    max_age=5  
+                    max_age=3600
                 )
             response.set_cookie(
                     key='refresh_token', 
@@ -156,13 +194,14 @@ class VerifyOTPView(APIView):
 
 class Enable2FAView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
 
     def post(self, request, *args, **kwargs):
         token_str = request.COOKIES.get('access_token')
 
         if token_str:
             try:
-                token = jwt.decode(token_str, 'your-secret-key', algorithms=['HS256'])
+                token = jwt.decode(token_str, 'your-secret-key', algorithms=['HS256'], options={'verify_exp': False})
 
                 if token.get('oauth2') is True:
                     return Response({"error": "2FA can only be enabled for local users"}, status=400)
@@ -189,6 +228,7 @@ class Enable2FAView(APIView):
 
 class DeleteUserView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
 
     def delete(self, request, *args, **kwargs):
         user = request.user
@@ -259,7 +299,7 @@ class OAuth2CallbackView(APIView):
             value=access_token, 
             httponly=True, 
             secure=True, 
-            max_age=5  
+            max_age=3600
         )
         response.set_cookie(
             key='refresh_token', 
@@ -270,44 +310,6 @@ class OAuth2CallbackView(APIView):
         )
         
         return response
-
-
-
-class CookieJWTAuthentication(BaseAuthentication):
-    def authenticate(self, request):
-        access_token = request.COOKIES.get('access_token')
-        refresh_token = request.COOKIES.get('refresh_token')
-
-        if not access_token:
-            return None
-
-        try:
-            token = AccessToken(access_token)
-            user = User.objects.get(id=token['user_id'])
-            return (user, token)
-        
-        except jwt.ExpiredSignatureError:
-            if not refresh_token:
-                raise AuthenticationFailed('Access token expired and refresh token missing.')
-
-            new_access_token = self.refresh_access_token(refresh_token)
-            if new_access_token:
-                request.new_access_token = new_access_token
-                user = User.objects.get(id=AccessToken(new_access_token)['user_id'])
-                return (user, new_access_token)
-            else:
-                raise AuthenticationFailed('Unable to refresh access token.')
-        
-        except Exception:
-            raise AuthenticationFailed('Invalid token')
-
-    def refresh_access_token(self, refresh_token):
-        url = 'http://localhost:8002/api/auth/token/refresh-cookie/'
-        response = requests.post(url, data={'refresh': refresh_token})
-
-        if response.status_code == 200:
-            return response.json().get('access')
-        return None
 
 class UserInfoView(APIView):
     permission_classes = [IsAuthenticated]
@@ -321,14 +323,14 @@ class UserInfoView(APIView):
             "email": user.email
         })
         
-        if hasattr(request, 'new_access_token'):
-            response.set_cookie(
-                key='access_token',
-                value=request.new_access_token,
-                httponly=True,
-                secure=True,
-                max_age=5
-            )
+        # if hasattr(request, 'new_access_token'):
+        #     response.set_cookie(
+        #         key='access_token',
+        #         value=request.new_access_token,
+        #         httponly=True,
+        #         secure=True,
+        #         max_age=3600
+        #     )
         
         return response
     
@@ -348,15 +350,36 @@ class TokenRefreshCookieView(BaseTokenRefreshView):
                 value=access_token, 
                 httponly=True, 
                 secure=True, 
-                max_age=5
+                max_age=3600
             )
         return response
     
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
 
     def post(self, request, *args, **kwargs):
         response = Response({"message": "Logout successful"})
         response.delete_cookie('access_token')
         response.delete_cookie('refresh_token')
         return response
+    
+class is_Oauth2View(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
+
+    def get(self, request, *args, **kwargs):
+        token_str = request.COOKIES.get('access_token')
+
+        if token_str:
+            try:
+                token = jwt.decode(token_str, 'your-secret-key', algorithms=['HS256'])
+                return Response({"oauth2": token.get('oauth2')}, status=200)
+            except jwt.ExpiredSignatureError:
+                raise AuthenticationFailed('Token has expired')
+            except jwt.DecodeError:
+                raise AuthenticationFailed('Invalid token')
+            except Exception as e:
+                raise AuthenticationFailed('Authentication failed')
+        else:
+            raise AuthenticationFailed('Token not found in cookies')
