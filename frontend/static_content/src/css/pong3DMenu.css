@@ -220,7 +220,7 @@ section span:hover
 /* cambio sfondo al passaggio del mouse sopra la cellPong */
 
 .prova-active {
-    background-image: url('../resources/sfondoPong2D.png'); 
+    background-image: url('../resources/sfondoPong3D.png'); 
     background-size: cover;
     background-position: center;
 }

@@ -16,7 +16,7 @@ export default function home() {
 				<ul class="navbar-nav ms-auto">
 
 					<li class="nav-item">
-						<a class="nav-link" href="/userinfo" data-link>My profile</a>
+						<a class="nav-link" href="/userInfo" data-link>My profile</a>
 					</li>
                     <li class="nav-item">
                         <button id="logoutButton" class="nav-link">Logout</button>
@@ -297,7 +297,7 @@ export default function home() {
                 <a class="nav-link" href="/pong2DMenu" data-link>
                     <button class="cellPong" onclick="#">
                         <div class="content">
-                            <img src="/src/resources/pong2D.jpg">
+                            <img src="/src/resources/pong2D.png">
                         </div>
                         <img src="/src/resources/pong-2d_scritta.png" class="overlay-image">
                     </button>
@@ -309,7 +309,7 @@ export default function home() {
                 <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
-                            <img src="/src/resources/pong3D.jpg">
+                            <img src="/src/resources/pong3D.png">
                         </div>
                         <img src="/src/resources/pong-3d_scritta.png" class="overlay-image">
                     </button>

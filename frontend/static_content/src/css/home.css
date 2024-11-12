@@ -77,7 +77,7 @@ header
     font-family: 'Audiowide', cursive; /* Un font ispirato ai giochi retro (inserisci il tuo font preferito) */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombra del testo per un effetto tridimensionale */
     color: #ff0000; /* Colore del testo */
-    transition: transform 0.3s; /* Transizione per un effetto al passaggio del mouse */
+    transition: transform 0.3s; 
 }
 
 .navbar-brand:hover {

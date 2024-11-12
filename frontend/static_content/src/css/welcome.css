@@ -209,9 +209,6 @@ section span:hover
 	bottom: 70px;
 }
 
-.cellPong:hover {
-    transform: scale(1.05); /* Ingrandisce il bottone del 5% quando passato sopra con il mouse */
-}
 
 .col-md-5 {
     margin: 0 20px; /* Margine laterale per allontanare dai bordi dello schermo */

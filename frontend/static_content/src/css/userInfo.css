@@ -310,13 +310,16 @@ button[type="submit"]:active
 
 .button-group {
     display: flex;
+    flex-direction: column; /* Disposizione verticale dei bottoni */
     gap: 5px;
-    justify-content: flex-start; /* Allinea i bottoni a sinistra */
-    width: 100%; /* Assicura che il contenitore prenda tutta la larghezza disponibile */
-	flex-direction: column; /* Dispone i bottoni verticalmente */
 }
 
 
+.button-qr-container {
+    display: flex;
+    align-items: center; /* Centra verticalmente QR code e bottoni */
+    gap: 15px; /* Distanza tra i bottoni e il QR code */
+}
 
 
 
@@ -392,8 +395,6 @@ button[type="submit"]:active
 
 
 
-
-
   
 /* GRAFICO */
 
@@ -413,3 +414,4 @@ button[type="submit"]:active
     font-size: 16px;
     color: #333;
 }
+
