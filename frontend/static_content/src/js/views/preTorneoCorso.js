@@ -275,20 +275,20 @@ export default function preTorneoCorso() {
         <span></span>
         <span></span>
 
-		<div class="signin">
-			<div class="content">
-				<div id="signInForm" class="form">
-					<div class="inputBox">
-						<input type="submit" id="riprendiTorneo" value="Riprendi torneo">
-					</div>
-					<div class="inputBox">
-          <a href="/aggiungiGiocatori" data-link>
-						<input type="submit" id="creaTorneo" value="Crea torneo">
-          </a>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="signin">
+          <div class="content">
+            <div id="signInForm" class="form">
+              <div class="inputBox">
+                <input type="submit" id="riprendiTorneo" value="Riprendi torneo">
+              </div>
+              <div class="inputBox">
+              <a href="/aggiungiGiocatori" data-link>
+                <input type="submit" id="creaTorneo" value="Crea torneo">
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </section>
 
