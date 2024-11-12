@@ -28,6 +28,7 @@ body {
 
 .navbar {
     background-color: #333 !important; /* Colore di sfondo della navbar */
+	
 }
 
 /* Stile per i link della navbar */
@@ -145,8 +146,9 @@ section span:hover
 
 section .signin
 {
-	position: absolute;
+	position: fixed;
 	width: 400px;
+	height: auto;
   	background: #222;
 	z-index: 1000;
 	display: flex;
@@ -155,7 +157,9 @@ section .signin
 	padding: 40px;
 	border-radius: 4px;
 	box-shadow: 0 15px 35px rgba(0,0,0,9);
+	
 }
+
 section .signin .content
 {
 	position: relative;
@@ -294,4 +298,42 @@ button[type="submit"]:active
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
 	}
+}
+
+
+
+/* Stile del selettore */
+select#numPlayers {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid rgb(255, 125, 0);
+    background-color: #333;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+select#numPlayers:focus {
+    border-color: rgb(255, 125, 0);
+}
+
+/* Stile degli input per i nomi */
+#playerNamesContainer input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    border: 1px solid  rgb(255, 125, 0);
+    background-color: #333;
+    font-size: 1rem;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#playerNamesContainer input[type="text"]:focus {
+    border-color: rgb(255, 125, 0);
 }
