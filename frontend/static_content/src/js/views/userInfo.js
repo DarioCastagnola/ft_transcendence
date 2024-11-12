@@ -292,13 +292,20 @@ export default function userinfo() {
 					</div>
 				</div>
 
-				<!-- BOTTONI 2FA/LOGOUT -->
-				<div class="button-group">
-					<button id="enable2faButton" class="button">Enable 2FA</button>
-					<button id="logoutButton" class="button">Logout</button>
+				<!-- Contenitore per bottoni e QR Code -->
+				<div class="button-qr-container">
+					<div class="button-group">
+						<button id="enable2faButton" class="button">Enable 2FA</button>
+						<button id="logoutButton" class="button">Logout</button>
+					</div>
+
+					<!-- QR-CODE -->
+					<div class="qrCode">
+						<div id="qrCodeContainer" class="mt-3"></div> <!-- Container for the QR code -->
+					</div>
 				</div>
 
-				<div id="qrCodeContainer" class="mt-3"></div> <!-- Container for the QR code -->
+
 			</div>
 
 			<div style="width: 0; height: 300px; border: 1px solid #333; margin: 25px; "></div>
