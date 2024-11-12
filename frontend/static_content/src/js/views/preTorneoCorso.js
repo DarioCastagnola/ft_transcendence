@@ -282,7 +282,9 @@ export default function preTorneoCorso() {
 						<input type="submit" id="riprendiTorneo" value="Riprendi torneo">
 					</div>
 					<div class="inputBox">
+          <a href="/aggiungiGiocatori" data-link>
 						<input type="submit" id="creaTorneo" value="Crea torneo">
+          </a>
 					</div>
 				</div>
 			</div>

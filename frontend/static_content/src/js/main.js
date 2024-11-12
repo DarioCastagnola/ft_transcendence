@@ -14,6 +14,7 @@ import pong3D from "./views/pong3D.js";
 import pong2DMenu from "./views/pong2DMenu.js";
 import pong3DMenu from "./views/pong3DMenu.js";
 import preTorneoCorso from "./views/preTorneoCorso.js";
+import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
 
 
 const routes = {
@@ -31,7 +32,8 @@ const routes = {
     "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"},
     "/pong2DMenu": { title: "pong2DMenu", render: pong2DMenu, css: "./src/css/pong2DMenu.css"},
     "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"},
-    "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"}
+    "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"},
+    "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"}
 };
 
 const protected_routes = [
@@ -44,7 +46,8 @@ const protected_routes = [
     "/pong3D",
     "/pong2DMenu",
     "/pong3DMenu",
-    "/preTorneoCorso"
+    "/preTorneoCorso",
+    "/aggiungiGiocatori"
 ];
 
 let currentCSS = null;
