@@ -277,7 +277,7 @@ export default function aggiungiGiocatori() {
   
           <div class="signin">
                 <div class="content">
-                <h2>Giocatori</h2>
+                    <h2>Giocatori</h2>
                     <div id="signInForm" class="form">
                         <select id="numPlayers">
                             <option value="">Seleziona</option>
@@ -289,11 +289,11 @@ export default function aggiungiGiocatori() {
                         <div id="playerNamesContainer"></div>
 
                         <div class="inputBox">
-                            <input type="submit" id="loginButton" value="Inizia torneo">
+                            <input type="submit" id="iniziaTorneo" value="Inizia torneo">
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
   
       </section>
   
