@@ -27,46 +27,56 @@ class VerifyTokenView(View):
             return JsonResponse({"error": "Invalid token"}, status=401)
         
 
-def get_user_id(request):
-    auth_header = request.headers.get('Token')
-    if not auth_header:
-        auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        return None
+# def get_user_id(request):
+#     auth_header = request.headers.get('Token')
+#     if not auth_header:
+#         auth_header = request.headers.get('Authorization')
+#     if not auth_header:
+#         return None
     
-    parts = auth_header.split()
-    if len(parts) != 2 or parts[0] != 'Bearer':
+#     parts = auth_header.split()
+#     if len(parts) != 2 or parts[0] != 'Bearer':
+#         return None  
+    
+#     token = parts[1]
+#     url = 'http://authentication:8002/api/auth/user-info/'
+#     headers = {'Authorization': f'Bearer {token}'}
+    
+#     response = requests.get(url, headers=headers)
+
+#     if response.status_code == 200:
+#         return response.json().get('id') 
+#     else:
+#         return None 
+
+def get_user_id(request):
+    access_token = request.COOKIES.get('access_token')
+    if not access_token:
         return None  
     
-    token = parts[1]
     url = 'http://authentication:8002/api/auth/user-info/'
-    headers = {'Authorization': f'Bearer {token}'}
     
-    response = requests.get(url, headers=headers)
+    cookies = {'access_token': access_token}
+    
+    response = requests.get(url, cookies=cookies)
 
     if response.status_code == 200:
         return response.json().get('id') 
     else:
-        return None 
+        return None
 
 def get_user_info(request, info):
-    auth_header = request.headers.get('Token')
-    if not auth_header:
-        auth_header = request.headers.get('Authorization')
-    if not auth_header:
-        return None
-    
-    parts = auth_header.split()
-    if len(parts) != 2 or parts[0] != 'Bearer':
+    access_token = request.COOKIES.get('access_token')
+    if not access_token:
         return None  
     
-    token = parts[1]
     url = 'http://authentication:8002/api/auth/user-info/'
-    headers = {'Authorization': f'Bearer {token}'}
     
-    response = requests.get(url, headers=headers)
+    cookies = {'access_token': access_token}
+    
+    response = requests.get(url, cookies=cookies)
 
     if response.status_code == 200:
         return response.json().get(info) 
     else:
-        return None 
+        return None
