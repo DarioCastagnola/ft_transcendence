@@ -1,3 +1,5 @@
+import { router } from "../main.js"
+import { apiFetch } from "../service/apiService.js";
 
 export default function preTorneoCorso() {
   const html = `
@@ -282,7 +284,7 @@ export default function preTorneoCorso() {
 						<input type="submit" id="riprendiTorneo" value="Riprendi torneo">
 					</div>
 					<div class="inputBox">
-          <a href="/aggiungiGiocatori" data-link>
+          <a data-link>
 						<input type="submit" id="creaTorneo" value="Crea torneo">
           </a>
 					</div>
@@ -296,6 +298,43 @@ export default function preTorneoCorso() {
         <p>© 2024 Transcendence. Lde-mich, Dcastagn, Mlongo, Dfiliag.</p>
     </footer>
 		`;
+
+setTimeout(() => {
+
+	async function getTournamentId() {
+		const apiUrl = 'http://localhost/api/game/tournaments/open/';
+		const response = await apiFetch(apiUrl);
+
+    if (response.ok) {
+      const data = await response.json();
+      return data[0].id;
+		} else {
+      return -1;
+		}
+
+	}
+
+	async function deleteTournamentAndRoute() {
+    const tournamentId = await getTournamentId();
+    console.log(tournamentId)
+    if (tournamentId != -1) {
+      const apiUrl = `http://localhost/api/game/tournaments/${tournamentId}/`;
+      const response = await apiFetch(apiUrl, {
+        "method": "DELETE"
+      });
+    }
+
+    history.pushState({}, '', '/aggiungiGiocatori');
+    router();
+	}
+
+  const torneoButton = document.getElementById("torneoButton");
+
+  creaTorneo.addEventListener('click', () => {
+    deleteTournamentAndRoute();
+	});
+
+	}, 0);
 
   return html;
 }

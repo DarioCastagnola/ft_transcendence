@@ -1,4 +1,5 @@
-
+import { router } from "../main.js"
+import { apiFetch } from "../service/apiService.js";
 
 export default function pong2DMenu() {
     const html = `
@@ -279,7 +280,7 @@ export default function pong2DMenu() {
 			<a class="menuTesto" href="/pong" data-link>Partita rapida</a>
 		</div>
 		<div class="cellPong">
-			<a class="menuTesto"href="/pong" data-link>Torneo</a>
+			<a id="torneoButton" class="menuTesto">Torneo</a>
 		</div>
 	</section>
 
@@ -291,15 +292,45 @@ export default function pong2DMenu() {
         `;
 
 setTimeout(() => {
+
+	async function isTournamentActive() {
+		const apiUrl = 'http://localhost/api/game/tournaments/open/';
+		const response = await apiFetch(apiUrl);
+
+		if (response.status == 404) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	async function chooseTheRoute() {
+		if (await isTournamentActive()) {
+			history.pushState({}, '', '/preTorneoCorso');
+			router();
+		} else {
+			history.pushState({}, '', '/aggiungiGiocatori');
+			router();
+		}
+	}
+
+
+
 	document.querySelectorAll('.cellPong').forEach(cell => {
 		cell.addEventListener('mouseenter', () => {
 			document.querySelector('.prova').classList.add('prova-active');
 		});
-		
+
 		cell.addEventListener('mouseleave', () => {
 			document.querySelector('.prova').classList.remove('prova-active');
 		});
-	});		
+	});
+    const torneoButton = document.getElementById("torneoButton");
+
+    torneoButton.addEventListener('click', () => {
+		chooseTheRoute();
+	});
+
 	}, 0);
 
     return html;
