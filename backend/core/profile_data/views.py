@@ -1,43 +1,11 @@
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import jwt
-from django.views import View
-from django.conf import settings
-import requests
 from rest_framework import status
 from .models import UserProfile
 from .serializers import UserProfileSerializer, AddFriendSerializer
 from .utils import get_user_id
 from rest_framework.exceptions import ValidationError
-
-AUTH_SERVICE_URL = 'http://authentication:8002/api/auth/user-info/'
-
-class UserInfoView(APIView):
-    def get(self, request):
-        auth_header = request.headers.get('Authorization')
-        if not auth_header:
-            return Response({"detail": "Authorization header not provided"}, status=400)
-
-        parts = auth_header.split()
-
-        if len(parts) != 2 or parts[0] != 'Bearer':
-            return Response({"detail": "Authorization header must be 'Bearer <token>'"}, status=400)
-
-        token = parts[1]
-
-        headers = {'Authorization': f'Bearer {token}'}
-        try:
-            response = requests.get(AUTH_SERVICE_URL, headers=headers)
-            response.raise_for_status()  # Genera un'eccezione per errori HTTP
-        except requests.exceptions.RequestException as e:
-            return Response({"detail": "Failed to retrieve user info", "error": str(e)}, status=500)
-
-        if response.status_code == 200:
-            return Response(response.json(), status=200)
-        else:
-            return Response({"detail": "Failed to retrieve user info"}, status=response.status_code)
-    
+from django.utils import timezone
 
 class UserProfileUpdate(APIView):
     serializer_class = UserProfileSerializer
@@ -120,6 +88,36 @@ class RemoveFriendView(APIView):
             profile.friends.remove(friend)
             profile.save()
             return Response({'error': 'Friend removed'}, status=status.HTTP_200_OK)
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+class UpdateLastSeen(APIView):
+    def post(self, request):
+        user_id = get_user_id(request)
+        if not user_id:
+            raise ValidationError({"error": "User not found"})
+        try:
+            profile = UserProfile.objects.get(user_id=user_id)
+            profile.last_seen = timezone.now()
+            profile.save()
+            return Response({'error': 'Last seen updated'}, status=status.HTTP_200_OK)
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+class IsOnline(APIView):
+    def get(self, request):
+        user_id = get_user_id(request)
+        if not user_id:
+            raise ValidationError({"error": "User not found"})
+        try:
+            profile = UserProfile.objects.get(user_id=user_id)
+            if profile.last_seen and (timezone.now() - profile.last_seen).seconds < 60:
+                return Response({'is_online': True}, status=status.HTTP_200_OK)
+            return Response({'is_online': False}, status=status.HTTP_200_OK)
         except UserProfile.DoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:

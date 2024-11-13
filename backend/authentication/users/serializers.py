@@ -42,3 +42,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['oauth2'] = False
         return token
+
+class UserListSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = User
+        fields = ('id', 'username')
