@@ -109,10 +109,7 @@ class UpdateLastSeen(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         
 class IsOnline(APIView):
-    def get(self, request):
-        user_id = get_user_id(request)
-        if not user_id:
-            raise ValidationError({"error": "User not found"})
+    def get(self, request, user_id):
         try:
             profile = UserProfile.objects.get(user_id=user_id)
             if profile.last_seen and (timezone.now() - profile.last_seen).seconds < 60:
