@@ -1,5 +1,7 @@
 let gameInstance = null;
 
+import { apiFetch } from "../service/apiService.js"
+
 export default function pong() {
     const html = `
 	<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -280,8 +282,8 @@ export default function pong() {
 					<div class="row justify-content-center">
 					</div>
 					<canvas class ="w-100" id="myCanvas" style="border:3px solid #ffffff;"></canvas>
-          	<div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1: 0</div>
-            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2: 0</div>
+          	<div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1</div>
+            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2</div>
 				</div>
 			</div>
 		</section>
@@ -306,6 +308,55 @@ export default function pong() {
 		let isBallMoving = false;
 		canvas.width = 1800;
 		canvas.height = 900;
+		let username1;
+		let username2;
+
+		async function sendResults(winnerId) {
+			const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
+			
+			// Define the data you want to send in the POST request
+			const data = {
+			  winnerId: winnerId, // Replace with the actual field expected by the API
+			};
+		  
+			// Call apiFetch with method POST and data in the body
+			const response = await apiFetch(apiUrl, {
+			  method: 'POST',
+			  body: JSON.stringify(data),
+			});
+		  
+			if (response.ok) {
+			  const result = await response.json();
+			  return result.nickname;
+			} else {
+			  console.error("Failed to send match results", response.status);
+			  return null;
+			}
+		  }
+
+		async function fetchUserInfo(id) {
+		const apiUrl = `http://localhost/api/game/players/${id}/`;
+		const response = await apiFetch(apiUrl);
+
+		if (response.ok) {
+			const data = await response.json();
+			return data.nickname;
+		} else {
+			console.error("Failed to fetch user info", response.status);
+			return null;
+		}
+		}
+
+		async function loadUsernames() {
+		username1 = await fetchUserInfo(6);
+		username2 = await fetchUserInfo(8);
+
+		document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+		document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		}
+
+		loadUsernames();
+
 
 		const keys = {};
 	
@@ -362,7 +413,7 @@ export default function pong() {
 					ctx.fillText("YOU LOSE",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
 					setTimeout(function() {
 						window.location.href = "/pong2DMenu";
-					}, 2000); // 2000 milliseconds = 2 seconds
+					}, 3000); // 2000 milliseconds = 2 seconds
 					
 				}
 				if (this.user === "user2" && this.score === 5) {
@@ -370,7 +421,7 @@ export default function pong() {
 					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
 					setTimeout(function() {
 						window.location.href = "/pong2DMenu";
-					}, 2000); // 2000 milliseconds = 2 seconds
+					}, 3000); // 2000 milliseconds = 2 seconds
 					
 				}
 			}
@@ -440,14 +491,12 @@ export default function pong() {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player1.score += 1;
-					document.getElementById("scorePlayer1").textContent = "Player 1: " + player1.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 				if (this.x < 0) {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player2.score += 1;
-					document.getElementById("scorePlayer2").textContent = "Player 2: " + player2.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 			}
