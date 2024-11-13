@@ -280,6 +280,8 @@ export default function pong() {
 					<div class="row justify-content-center">
 					</div>
 					<canvas class ="w-100" id="myCanvas" style="border:3px solid #ffffff;"></canvas>
+          	<div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1: 0</div>
+            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2: 0</div>
 				</div>
 			</div>
 		</section>
@@ -358,10 +360,18 @@ export default function pong() {
 				if (this.user === "user1" && this.score === 5) {
 					ctx.fillText("YOU WIN!",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU LOSE",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
+					setTimeout(function() {
+						window.location.href = "/pong2DMenu";
+					}, 2000); // 2000 milliseconds = 2 seconds
+					
 				}
 				if (this.user === "user2" && this.score === 5) {
 					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
+					setTimeout(function() {
+						window.location.href = "/pong2DMenu";
+					}, 2000); // 2000 milliseconds = 2 seconds
+					
 				}
 			}
 		}
@@ -430,12 +440,14 @@ export default function pong() {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player1.score += 1;
+					document.getElementById("scorePlayer1").textContent = "Player 1: " + player1.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 				if (this.x < 0) {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player2.score += 1;
+					document.getElementById("scorePlayer2").textContent = "Player 2: " + player2.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 			}
@@ -538,9 +550,13 @@ export default function pong() {
 			player2.paddle.ft_draw();
 			player2.ft_drawScore();
 
+			if (player1.score == 5 || player2.score == 5) {
+				return ;
+			}
+
 			gameInstance = requestAnimationFrame(ft_gameLoop);
 	}
-	ft_gameLoop();
+		ft_gameLoop();
     }, 0);
 
     return html;

@@ -53,7 +53,6 @@ services:
     depends_on:
       - db_auth
     networks:
-      - external
       - internal_network
       - auth
     #command: sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
@@ -74,7 +73,6 @@ services:
       - db_data_auth:/var/lib/postgresql/data
     networks:
       - auth
-      - external
     ports:
       - 5432:5432
 
@@ -156,3 +154,4 @@ volumes:
   db_data_core:
   db_data_game:
   media:
+
