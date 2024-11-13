@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     user_id = models.IntegerField()
     avatar = models.ImageField(upload_to=avatar_file_path, null=True, blank=True)
     friends = models.ManyToManyField('self', symmetrical=True, blank=True, related_name='friend_set')
-    online = models.BooleanField(default=False)
+    last_seen = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f'User {self.user_id} avatar'
