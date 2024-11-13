@@ -5,7 +5,7 @@ import signIn from "./views/signIn.js";
 import signUp from "./views/SignUp.js";
 import about from "./views/about.js";
 import contact from "./views/contact.js";
-import userinfo from "./views/userinfo.js";
+import userInfo from "./views/userInfo.js";
 import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
@@ -13,6 +13,8 @@ import twoFA from "./views/twoFA.js";
 import pong3D from "./views/pong3D.js";
 import pong2DMenu from "./views/pong2DMenu.js";
 import pong3DMenu from "./views/pong3DMenu.js";
+import preTorneoCorso from "./views/preTorneoCorso.js";
+import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
 
 
 const routes = {
@@ -20,7 +22,7 @@ const routes = {
     "/home": { title: "Home", render: home, css: "./src/css/home.css" },
     "/signUp": { title: "SignUp", render: signUp, css: "./src/css/signUp.css" },
     "/signIn": { title: "SignIn", render: signIn, css: "./src/css/signIn.css" },
-    "/userinfo": { title: "UserInfo", render: userinfo, css: "./src/css/userInfo.css" },
+    "/userInfo": { title: "UserInfo", render: userInfo, css: "./src/css/userInfo.css" },
     "/about": { title: "About", render: about, css: "./src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./src/css/contact.css" },
     "/2FA": { title: "2FA", render: twoFA, css: "./src/css/twoFA.css" },
@@ -29,19 +31,23 @@ const routes = {
     "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./src/css/matchHistory.css" },
     "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"},
     "/pong2DMenu": { title: "pong2DMenu", render: pong2DMenu, css: "./src/css/pong2DMenu.css"},
-    "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"}
+    "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"},
+    "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"},
+    "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"}
 };
 
 const protected_routes = [
     "/home",
-    "/userinfo",
+    "/userInfo",
     "/2FA",
     "/userinfo-update",
     "/pong",
     "/matchHistory",
     "/pong3D",
     "/pong2DMenu",
-    "/pong3DMenu"
+    "/pong3DMenu",
+    "/preTorneoCorso",
+    "/aggiungiGiocatori"
 ];
 
 let currentCSS = null;
@@ -93,11 +99,11 @@ export function router() {
     let view = routes[location.pathname];
     // console.log(view)
     if (view) {
-        if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
-            window.history.pushState({}, '', '/');
-            router();
-            return ;
-        }
+        // if (protected_routes.includes(location.pathname) && (!localStorage.getItem("access") || !localStorage.getItem("refresh"))) {
+        //     window.history.pushState({}, '', '/');
+        //     router();
+        //     return ;
+        // }
         // console.log(view.title);
         // alert("wait")
         document.title = view.title;

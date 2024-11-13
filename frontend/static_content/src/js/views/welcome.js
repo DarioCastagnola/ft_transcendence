@@ -16,9 +16,6 @@ export default function welcome() {
                 <li class="nav-item">
                     <a class="nav-link" href="/signUp" data-link>Sign up</a>
                 </li>
-				<li class="nav-item">
-                    <a class="nav-link" href="/home" data-link>HOME</a>
-                </li>
             </ul>
         </div>
     </div>

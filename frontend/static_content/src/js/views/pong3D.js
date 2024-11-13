@@ -4,11 +4,291 @@ let gameInstance = null;
 
 export default function pong3D() {
     const html = `
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
-            <div id="threejs-canvas"></div>
-        </div>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <div class="container">
+		<a class="navbar-brand" href="/home" data-link>Transcendence</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
     </div>
+</nav>
+
+<section>
+    <span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+
+		<section class="image-section">
+			<div class="cellPong">
+				<div id="threejs-canvas"></div>
+        <div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1: 0</div>
+            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2: 0</div>
+			</div>
+		</section>
+
+</section>
+
+<footer class="custom-footer text-white text-center py-3">
+    <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
+</footer>
     `;
 
 	// const html = `<div id="threejs-canvas"></div>`
@@ -40,7 +320,7 @@ export default function pong3D() {
         const renderer = new THREE.WebGLRenderer();
         canvasContainer.innerHTML = ""; // Clear previous canvases if any
 
-        renderer.setSize(window.innerWidth / 1.5, window.innerHeight / 1.25);
+        renderer.setSize(window.innerWidth / 1.5, window.innerHeight / 1.75);
         canvasContainer.appendChild(renderer.domElement);
 
         // Grid
@@ -49,7 +329,7 @@ export default function pong3D() {
 		const divisions = 10; // Number of divisions
 		const gridHelper = new THREE.GridHelper(gridSize, divisions, 0x888888, 0x444444);
 		gridHelper.scale.set(1, 1, gridSizeY / gridSize); // Scale Z to make a rectangle
-		// scene.add(gridHelper);
+		scene.add(gridHelper);
 
 
 		const borderWidth = gridSizeY;
@@ -88,6 +368,8 @@ export default function pong3D() {
 
 		const rightBorderBox = new THREE.Box3().setFromObject(rightBorder);
 		const leftBorderBox = new THREE.Box3().setFromObject(leftBorder);
+		const rightGoalBox = new THREE.Box3().setFromObject(rightGoal);
+		const leftGoalBox = new THREE.Box3().setFromObject(leftGoal);
 
 
 
@@ -95,6 +377,7 @@ export default function pong3D() {
 			constructor(y, Player1, Player2) {
 				this.Player1 = Player1;
 				this.Player2 = Player2;
+				this.last_touched_by;
 				this.ballRadius = 8;
 				this.ballGeometry = new THREE.SphereGeometry(this.ballRadius);
 				this.ballMaterial = new THREE.MeshBasicMaterial({ color: 0xdbdbdb });
@@ -107,8 +390,8 @@ export default function pong3D() {
 				this.sx = 0;
 				this.sz = 0;
 				//d stands for directional values
-				this.dx = 7;
-				this.dz = 4;
+				this.dx = 3;
+				this.dz = 2;
 
 				this.collisionBall = new THREE.Box3().setFromObject(this.Ball);
 			}
@@ -124,20 +407,93 @@ export default function pong3D() {
 				this.Ball.position.set(this.x, this.y, this.z);
 				this.collisionBall.setFromObject(this.Ball);
 
-				if (this.z > (gridSizeY / 2) || this.z < -(gridSizeY / 2)) {
+				if (this.collisionBall.intersectsBox(leftGoalBox)) {
 					console.log("GOOOL");
-					scene.remove(this.Ball);
-					this.ft_addBallToScene();
+					this.Player1.score += 1;
+					document.getElementById("scorePlayer1").textContent = "Player 1: " + this.Player1.score;
+					console.log("Player1 = " + this.Player1.score + " Player2 = " + this.Player2.score);
+					if (this.Player1.score >= 5) {
+						const scores = {
+							player1Score: this.Player1.score,
+							player2Score: this.Player2.score
+						};
+				
+						// // Send POST request to the backend
+						// fetch('/your-backend-endpoint', {
+						// 	method: 'POST',
+						// 	headers: {
+						// 		'Content-Type': 'application/json'
+						// 	},
+						// 	body: JSON.stringify(scores)
+						// })
+						// .then(response => {
+						// 	if (response.ok) {
+						// 		console.log('Scores sent successfully');
+						// 		window.location.href = "/game-over";
+						// 	} else {
+						// 		console.error('Failed to send scores');
+						// 	}
+						// })
+						// .catch(error => {
+						// 	console.error('Error:', error);
+						// });
+						window.location.href = "/pong3DMenu";
+					}
+					this.z = this.sz;
+					this.x = this.sx;
+					this.Ball.position.set(this.sx, this.sy, this.sz);
+					isBallMoving = false;
 				}
-
-				// Check for collisions with the borders and bounce
+				if (this.collisionBall.intersectsBox(rightGoalBox)) {
+					console.log("GOOOL");
+					this.Player2.score += 1;
+					document.getElementById("scorePlayer2").textContent = "Player 2: " + this.Player2.score;
+					console.log("Player1 = " + this.Player1.score + " Player2 = " + this.Player2.score);
+					if (this.Player2.score >= 5) {
+						const scores = {
+							player1Score: this.Player1.score,
+							player2Score: this.Player2.score
+						};
+						
+						window.location.href = "/pong3DMenu";
+						// // Send POST request to the backend
+						// fetch('/your-backend-endpoint', {
+						// 	method: 'POST',
+						// 	headers: {
+						// 		'Content-Type': 'application/json'
+						// 	},
+						// 	body: JSON.stringify(scores)
+						// })
+						// .then(response => {
+						// 	if (response.ok) {
+						// 		console.log('Scores sent successfully');
+						// 		window.location.href = "/pong3DMenu";
+						// 	} else {
+						// 		console.error('Failed to send scores');
+						// 	}
+						// })
+						// .catch(error => {
+						// 	console.error('Error:', error);
+						// });
+					}
+					this.z = this.sz;
+					this.x = this.sx;
+					this.Ball.position.set(this.sx, this.sy, this.sz);
+					isBallMoving = false;
+				}
 				if (this.collisionBall.intersectsBox(leftBorderBox) || this.collisionBall.intersectsBox(rightBorderBox)) {
 					this.dx *= -1; // Reverse direction on the x-axis
 					console.log("Bounce off vertical border!");
 				}
-				if (this.collisionBall.intersectsBox(this.Player1.paddle.paddleHitBox) || this.collisionBall.intersectsBox(this.Player2.paddle.paddleHitBox)) {
+				if (this.collisionBall.intersectsBox(this.Player1.paddle.paddleHitBox) && this.last_touched_by != this.Player1) {
 					this.dz *= -1; // Reverse direction on the x-axis
-					console.log("Bounce off paddle!");
+					this.last_touched_by = this.Player1;
+					console.log("Bounce off left paddle!");
+				}
+				if (this.collisionBall.intersectsBox(this.Player2.paddle.paddleHitBox) && this.last_touched_by != this.Player2) {
+					this.dz *= -1; // Reverse direction on the x-axis
+					this.last_touched_by = this.Player2;
+					console.log("Bounce off right paddle!");
 				}
 			}
 		}
