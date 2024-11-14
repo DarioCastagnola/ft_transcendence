@@ -302,6 +302,24 @@ export default function pong() {
 
     setTimeout(() => {
 
+
+		const overlay = document.createElement('div');
+		overlay.id = 'overlay';
+
+		overlay.innerHTML = `
+			<div id="overlay">
+				<div class="game-screen">
+					<div class="content">
+						<h2 class="player">Player 1 vs Player 2</h2>
+						<button class="start-button">Start Game</button>
+					</div>
+				</div>
+			</div>
+		`;
+
+    	document.body.appendChild(overlay);
+
+
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
 		const speedMultiplier = 1.05;

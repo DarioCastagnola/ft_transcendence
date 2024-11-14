@@ -318,12 +318,6 @@ export default function pong3D() {
 
     	document.body.appendChild(overlay);
 
-		// durata overlay
-		// setTimeout(() => {
-		// 	overlay.remove();
-		// }, 3000);
-
-
 
 		// GIOCO PONG 3D -------------------------------------------------------
 
