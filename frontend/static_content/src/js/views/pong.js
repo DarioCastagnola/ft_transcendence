@@ -311,28 +311,28 @@ export default function pong() {
 		let username1;
 		let username2;
 
-		async function sendResults(winnerId) {
-			const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
+		// async function sendResults(winnerId) {
+		// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
 			
-			// Define the data you want to send in the POST request
-			const data = {
-			  winnerId: winnerId, // Replace with the actual field expected by the API
-			};
+		// 	// Define the data you want to send in the POST request
+		// 	const data = {
+		// 	  winnerId: winnerId, // Replace with the actual field expected by the API
+		// 	};
 		  
-			// Call apiFetch with method POST and data in the body
-			const response = await apiFetch(apiUrl, {
-			  method: 'POST',
-			  body: JSON.stringify(data),
-			});
+		// 	// Call apiFetch with method POST and data in the body
+		// 	const response = await apiFetch(apiUrl, {
+		// 	  method: 'POST',
+		// 	  body: JSON.stringify(data),
+		// 	});
 		  
-			if (response.ok) {
-			  const result = await response.json();
-			  return result.nickname;
-			} else {
-			  console.error("Failed to send match results", response.status);
-			  return null;
-			}
-		  }
+		// 	if (response.ok) {
+		// 	  const result = await response.json();
+		// 	  return result.nickname;
+		// 	} else {
+		// 	  console.error("Failed to send match results", response.status);
+		// 	  return null;
+		// 	}
+		//   }
 
 		async function fetchUserInfo(id) {
 		const apiUrl = `http://localhost/api/game/players/${id}/`;
