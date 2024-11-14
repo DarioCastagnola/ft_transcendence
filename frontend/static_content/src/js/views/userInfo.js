@@ -331,7 +331,7 @@ export default function userinfo() {
 
 
     async function fetchUserInfo() {
-      const apiUrl = 'http://localhost/api/auth/user-info/';
+      const apiUrl = 'https://localhost/api/auth/user-info/';
       const response = await apiFetch(apiUrl);
 
       if (response.ok) {
@@ -368,8 +368,8 @@ export default function userinfo() {
     logoutButton.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      const apiUrl = 'http://localhost/api/auth/logout/';
-      await apiFetch(apiUrl);
+      const apiUrl = 'https://localhost/api/auth/logout/';
+      await apiFetch(apiUrl, {method: "POST"});
       window.history.pushState({}, '', '/signIn');
       router();
     });

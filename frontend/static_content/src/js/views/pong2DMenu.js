@@ -294,7 +294,7 @@ export default function pong2DMenu() {
 setTimeout(() => {
 
 	async function isTournamentActive() {
-		const apiUrl = 'http://localhost/api/game/tournaments/open/';
+		const apiUrl = 'https://localhost/api/game/tournaments/open/';
 		const response = await apiFetch(apiUrl);
 
 		if (response.status == 404) {

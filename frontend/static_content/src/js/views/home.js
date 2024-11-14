@@ -332,8 +332,8 @@ export default function home() {
     logoutButton.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      const apiUrl = 'http://localhost/api/auth/logout/';
-      await apiFetch(apiUrl);
+      const apiUrl = 'https://localhost/api/auth/logout/';
+      await apiFetch(apiUrl, {method: "POST"});
       window.history.pushState({}, '', '/signIn');
       router();
     });

@@ -312,7 +312,7 @@ export default function TwoFA() {
         otp
       };
 
-	  const response = await apiFetch('http://localhost/api/auth/verify-otp/', {
+	  const response = await apiFetch('https://localhost/api/auth/verify-otp/', {
   	    method: 'POST',
         body: TwoFAData
       });

@@ -302,7 +302,7 @@ export default function preTorneoCorso() {
 setTimeout(() => {
 
 	async function getTournamentId() {
-		const apiUrl = 'http://localhost/api/game/tournaments/open/';
+		const apiUrl = 'https://localhost/api/game/tournaments/open/';
 		const response = await apiFetch(apiUrl);
 
     if (response.ok) {
@@ -318,7 +318,7 @@ setTimeout(() => {
     const tournamentId = await getTournamentId();
     console.log(tournamentId)
     if (tournamentId != -1) {
-      const apiUrl = `http://localhost/api/game/tournaments/${tournamentId}/`;
+      const apiUrl = `https://localhost/api/game/tournaments/${tournamentId}/`;
       const response = await apiFetch(apiUrl, {
         "method": "DELETE"
       });

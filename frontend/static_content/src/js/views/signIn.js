@@ -325,7 +325,7 @@ export default function signIn() {
       };
 
       // Send the form data to the API using fetch
-	  const response = await apiFetch('http://localhost/api/auth/login/', {
+	  const response = await apiFetch('https://localhost:443/api/auth/login/', {
   	    method: 'POST',
         body: loginData
       });

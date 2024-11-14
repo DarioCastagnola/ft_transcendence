@@ -2,13 +2,17 @@ import { router } from "../main.js"
 
 // Helper function to make API calls
 export async function apiFetch(url, options = {}) {
+  // Set the default credentials option to include cookies
+  // options.credentials = options.credentials || 'same-origin';
+  options.credentials = 'include';
+
   // Set the content type header if it's not already set
   options.headers = options.headers || {};
   options.headers['Content-Type'] = 'application/json';
 
   // If body exists and isn't a string, JSON.stringify it for the fetch call
   if (options.body && typeof options.body !== 'string') {
-    options.body = JSON.stringify(options.body);  // Adds JSON body here
+    options.body = JSON.stringify(options.body);
   }
 
   const response = await fetch(url, options);
@@ -22,3 +26,4 @@ export async function apiFetch(url, options = {}) {
 
   return response;
 }
+
