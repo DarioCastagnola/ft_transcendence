@@ -15,6 +15,7 @@ import pong2DMenu from "./views/pong2DMenu.js";
 import pong3DMenu from "./views/pong3DMenu.js";
 import preTorneoCorso from "./views/preTorneoCorso.js";
 import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
+import { apiFetch } from "./service/apiService.js";
 
 
 const routes = {
@@ -69,18 +70,12 @@ async function handleOAuthCallback() {
     const authCode = urlParams.get('code');
 
     if (authCode) {
-      const response = await fetch(`http://localhost/api/auth/oauth/callback/?code=${authCode}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      const apiUrl = `https://localhost/api/auth/oauth/callback/?code=${authCode}`
+      const response = await apiFetch(apiUrl)
 
       // Handle the API response
       const result = await response.json();
       if (response.ok) {
-        localStorage.setItem("access", result.access)
-        localStorage.setItem("refresh", result.refresh)
         history.pushState({}, '', '/home');
         router();
       } else {
