@@ -218,7 +218,6 @@ section span:hover
 
 /*OVERLAY INIZIO GAME------------------------------------*/
 
-/* Overlay con sfondo semi-trasparente scuro */
 #overlay {
     position: fixed;
     top: 0;
@@ -230,7 +229,6 @@ section span:hover
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    font-family: 'Orbitron', sans-serif;
     color: #FFD700;
 }
 
@@ -258,6 +256,16 @@ section span:hover
     animation: glow 1.5s infinite alternate;
 }
 
+/* Applicato il font "Press Start 2P" per Player 1, Player 2 e VS */
+.game-screen .player, .game-screen .vs {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 36px;
+    color: #FFD700;
+    text-shadow: 
+        0 0 5px #FFD700, 
+        0 0 10px #FFD700;
+}
+
 /* Bottone invisibile per l'overlay */
 .start-button {
     padding: 15px 30px;
@@ -268,7 +276,7 @@ section span:hover
     cursor: pointer;
     text-transform: uppercase;
     transition: color 0.3s;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
     letter-spacing: 2px;
 }
 .start-button:hover {
@@ -292,6 +300,7 @@ section span:hover
             0 0 50px #FF4500;
     }
 }
+
 
 /*----------------------------------------------------------*/
 

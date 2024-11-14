@@ -309,7 +309,7 @@ export default function pong3D() {
 			<div id="overlay">
 				<div class="game-screen">
 					<div class="content">
-						<h2>Player 1 vs Player 2</h2>
+						<h2 class="player">Player 1 vs Player 2</h2>
 						<button class="start-button">Start Game</button>
 					</div>
 				</div>
