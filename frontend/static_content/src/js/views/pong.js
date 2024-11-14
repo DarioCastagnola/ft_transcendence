@@ -341,6 +341,8 @@ export default function pong() {
 		//--------------------------------------------------------------
 
 
+		
+		// GAME PONG2D -------------------------------------------------
 
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
