@@ -303,21 +303,43 @@ export default function pong() {
     setTimeout(() => {
 
 
-		const overlay = document.createElement('div');
-		overlay.id = 'overlay';
+		//START GAME--------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
 
-		overlay.innerHTML = `
-			<div id="overlay">
-				<div class="game-screen">
-					<div class="content">
-						<h2 class="player">Player 1 vs Player 2</h2>
-						<button class="start-button">Start Game</button>
-					</div>
-				</div>
-			</div>
-		`;
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<h2 class="player">Player 1 vs Player 2</h2>
+		// 				<button class="start-buttonOne">Start Game</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
 
-    	document.body.appendChild(overlay);
+    	// document.body.appendChild(overlay);
+		//------------------------------------------------------------
+
+
+
+		//NEXT MATCH---------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<button class="start-button">Next match</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//--------------------------------------------------------------
+
 
 
 		const canvas = document.getElementById("myCanvas");
