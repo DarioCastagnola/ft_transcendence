@@ -1,4 +1,5 @@
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function TwoFA() {
   const html = `
@@ -311,13 +312,9 @@ export default function TwoFA() {
         otp
       };
 
-      // Send the form data to the API using fetch
-	  const response = await fetch('http://localhost/api/auth/verify-otp/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(TwoFAData),
+	  const response = await apiFetch('https://localhost/api/auth/verify-otp/', {
+  	    method: 'POST',
+        body: TwoFAData
       });
 
       // Handle the API response
@@ -327,8 +324,6 @@ export default function TwoFA() {
         // console.log('TwoFA result:', result);
         // Redirect to another page or handle success
         localStorage.removeItem("username")
-        localStorage.setItem("access", result.access)
-        localStorage.setItem("refresh", result.refresh)
         window.history.pushState({}, '', '/home');
         router();
       } else {

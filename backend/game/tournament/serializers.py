@@ -59,6 +59,9 @@ class RapidMatchSerializer(serializers.ModelSerializer):
     draw = serializers.BooleanField(required=False, read_only=True)
     closed = serializers.BooleanField(required=False, read_only=True)
     winner = serializers.PrimaryKeyRelatedField(read_only=True)
+    player1 = serializers.PrimaryKeyRelatedField(read_only=True)
+    player2 = serializers.PrimaryKeyRelatedField(read_only=True)
+    tournament = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Match

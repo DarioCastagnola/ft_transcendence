@@ -63,6 +63,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://127.0.0.1:4433"
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
@@ -143,4 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Cartella dove saranno salvati i 
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'profile_data.customError.custom_exception_handler',
 }
