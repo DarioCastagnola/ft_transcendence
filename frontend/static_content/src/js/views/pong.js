@@ -300,6 +300,7 @@ export default function pong() {
         cancelAnimationFrame(gameInstance);
     }
 
+	
     setTimeout(() => {
 
 
@@ -341,7 +342,7 @@ export default function pong() {
 		//--------------------------------------------------------------
 
 
-		
+
 		// GAME PONG2D -------------------------------------------------
 
 		const canvas = document.getElementById("myCanvas");
