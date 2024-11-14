@@ -323,6 +323,7 @@ export default function pong() {
 		//------------------------------------------------------------
 
 
+
 		//START GAME--------------------------------------------------
 		// const overlay = document.createElement('div');
 		// overlay.id = 'overlay';
@@ -517,17 +518,90 @@ export default function pong() {
 				if (this.user === "user1" && this.score === 5) {
 					ctx.fillText("YOU WIN!",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU LOSE",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
-					setTimeout(function() {
-						window.location.href = "/pong2DMenu";
-					}, 3000); // 2000 milliseconds = 2 seconds
+					if (localStorage.getItem("isTournament") === "true")
+						{
+							const overlay = document.createElement('div');
+							overlay.id = 'overlay';
+	
+							overlay.innerHTML = `
+								<div id="overlay">
+									<div class="game-screen">
+										<div class="content">
+											<a href="/pong" data-link>
+											<button class="start-button">Next match</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							`;
+	
+							document.body.appendChild(overlay);
+						}
+						else{
+	
+							const overlay = document.createElement('div');
+							overlay.id = 'overlay';
+	
+							overlay.innerHTML = `
+								<div id="overlay">
+									<div class="game-screen">
+										<div class="content">
+											<a href="/pong2DMenu" data-link>
+											<button class="start-button">End game</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							`;
+	
+							document.body.appendChild(overlay);
+						}
 
 				}
 				if (this.user === "user2" && this.score === 5) {
 					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
-					setTimeout(function() {
-						window.location.href = "/pong2DMenu";
-					}, 3000); // 2000 milliseconds = 2 seconds
+
+					if (localStorage.getItem("isTournament") === "true")
+					{
+						const overlay = document.createElement('div');
+						overlay.id = 'overlay';
+
+						overlay.innerHTML = `
+							<div id="overlay">
+								<div class="game-screen">
+									<div class="content">
+										<a href="/pong" data-link>
+										<button class="start-button">Next match</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						`;
+
+						document.body.appendChild(overlay);
+					}
+					else{
+
+						const overlay = document.createElement('div');
+						overlay.id = 'overlay';
+
+						overlay.innerHTML = `
+							<div id="overlay">
+								<div class="game-screen">
+									<div class="content">
+										<button class="start-button">End game</button>
+									</div>
+								</div>
+							</div>
+						`;
+
+						document.body.appendChild(overlay);
+					}
+
+					// setTimeout(function() {
+					// 	window.location.href = "/pong2DMenu";
+					// }, 3000); // 2000 milliseconds = 2 seconds
 
 				}
 			}
