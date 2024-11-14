@@ -229,6 +229,7 @@ button[type="submit"]:active
 
 /*-----------------*/
 
+/* Container principale */
 .signin {
     display: flex;
     justify-content: center;
@@ -240,16 +241,16 @@ button[type="submit"]:active
 
 .card-container {
     width: 100%;
-	height: 100%;
+    height: 100%;
     background: linear-gradient(145deg, #2c2f3d, #1e222a);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    overflow-y: hidden; /* Nasconde lo scroll inizialmente */
-    overflow-x: hidden; /* Nasconde lo scroll orizzontale */
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
-/* Match History Card */
+/* Card principale */
 .cardMatch {
     margin-bottom: 20px;
     padding: 20px;
@@ -265,7 +266,7 @@ button[type="submit"]:active
     box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.7);
 }
 
-/* Teams */
+/* Contenitore per le squadre */
 .cardMatch .teams {
     display: flex;
     justify-content: space-between;
@@ -277,25 +278,16 @@ button[type="submit"]:active
     text-align: center;
     font-size: 14px;
     color: #fff;
-    position: relative;
     padding: 20px;
-    border-radius: 15px;
+    border-radius: 50%; /* Rende il div un cerchio */
+    width: 50px; /* Larghezza del cerchio */
+    height: 50px; /* Altezza del cerchio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease;
 }
-
-/* .cardMatch .teams .team-home {
-    background: linear-gradient(135deg, #00caff, #0048ff);
-} */
-
-.cardMatch .teams .team-away {
-    background: linear-gradient(135deg, #ff2929, #cc9d00);
-}
-
-.cardMatch .teams div:hover {
-    transform: scale(1.05);
-}
-
 
 /* Colori dinamici per team-info */
 .team-info.verde {
@@ -306,12 +298,23 @@ button[type="submit"]:active
     background-color: red;
 }
 
-/* Effetto click per la cardMatch */
+/* Colore di default per l'elemento "amico" */
+.cardMatch .inner-card {
+    background-color: #1e90ff; /* Colore di default */
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
 .cardMatch.clicked {
     background-color: blue;
 }
 
+/* Effetto al passaggio del mouse */
+.cardMatch .teams div:hover {
+    transform: scale(1.05);
+}
 
+/* Informazioni del nome utente */
 .cardMatch .teams .team-name-info {
     font-weight: 600;
     overflow: hidden;
@@ -322,86 +325,12 @@ button[type="submit"]:active
     text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* Progress Dots */
-.cardMatch .teams div.progress-dots {
-    width: 80px;
-    height: 5px;
-    margin-top: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-}
-
-.cardMatch .teams div.progress-dots .load {
-    background: linear-gradient(90deg, #3a3dff, #ff2929);
-    position: absolute;
-    width: 3px;
-    height: 100%;
-    animation: loading_dots 7.5s infinite ease-in-out;
-}
-
-@keyframes loading_dots {
-    0% {
-        transform: translateX(0);
-        width: 3px;
-    }
-    50% {
-        transform: translateX(57px);
-        width: 3px;
-    }
-    100% {
-        transform: translateX(0);
-        width: 100%;
-    }
-}
-
-/* Scoreboard */
-.cardMatch .event-scoreboard .event-score-container {
-    background: linear-gradient(145deg, #2c2f3d, #1e222a);
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.5);
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cardMatch .event-scoreboard .event-score-container .score-container {
-    font-size: 28px;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(90deg, #3a3dff, #ff2929);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.cardMatch .event-scoreboard .event-score-container .current-time-container {
-    font-size: 12px;
-    color: #bbb;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.cardMatch .event-scoreboard .event-score-container .current-time-container .event-clock {
-    font-weight: bold;
-    color: #ddd;
-}
-
-/* Hover Effects on Cards */
+/* Effetti di scorrimento */
 .cardMatch-container {
     width: 100%;
-
-    max-height: 500px; /* Imposta l'altezza massima */
-    overflow-y: auto; /* Abilita lo scroll verticale */
-    overflow-x: hidden; /* Nasconde lo scroll orizzontale se presente */
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     gap: 20px;
