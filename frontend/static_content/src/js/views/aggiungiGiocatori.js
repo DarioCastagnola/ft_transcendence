@@ -370,6 +370,7 @@ export default function aggiungiGiocatori() {
                     // Redirect or show a success message after all requests are done
                     // alert("All players added successfully!");
 
+                    localStorage.setItem("isTournament", "true")
                     history.pushState({}, '', '/pong');
                     router()
                 } else {

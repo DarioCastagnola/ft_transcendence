@@ -334,6 +334,17 @@ setTimeout(() => {
     deleteTournamentAndRoute();
 	});
 
+  const riprendiTorneoButton = document.getElementById("riprendiTorneo");
+
+	riprendiTorneoButton.addEventListener('click', async function(event) {
+
+    localStorage.setItem("isTournament", "true")
+
+    history.pushState({}, '', '/pong');
+    router()
+
+	});
+
 	}, 0);
 
   return html;
