@@ -266,58 +266,88 @@ export default function signUp() {
 		<span></span>
 		<span></span>
 
-<div class="signin">
-  <div class="content">
-    <h2>Sign up</h2>
-    <div id="signupForm" class="form">
-      <div class="inputBox">
-        <input type="text" id="username" required>
-        <i>Username</i>
-      </div>
-      <!-- Error message for username -->
-      <div id="usernameError" class="error-message d-none"></div>
+		<div class="signin">
+		<div class="content">
+			<h2>Sign up</h2>
+			<div id="signupForm" class="form">
 
-      <div class="inputBox">
-        <input type="email" id="email" required>
-        <i>Email</i>
-      </div>
-      <!-- Error message for email -->
-      <div id="emailError" class="error-message d-none"></div>
+				<!-- IMMAGINE -->
+				<div class="profile-picture">
+					<img id="profile-img" src="https://via.placeholder.com/100" alt="Profile Image">
+					<input type="file" id="profile-image" accept="image/*">
+				</div>
 
-      <div class="inputBox">
-        <input type="password" id="password" required>
-        <i>Password</i>
-      </div>
-      <div class="inputBox">
-        <input type="password" id="repeatPassword" required>
-        <i>Repeat your password</i>
-      </div>
-      <!-- Error message for password -->
-      <div id="passwordError" class="error-message d-none"></div>
+				<div class="inputBox">
+					<input type="text" id="username" required>
+					<i>Username</i>
+				</div>
+				<!-- Error message for username -->
+				<div id="usernameError" class="error-message d-none"></div>
 
-      <div class="links">
-        <a href="/signIn" data-link>Sign in</a>
-        <button id="loginWith42" class="login-button">Login with 42</button>
-      </div>
+				<div class="inputBox">
+					<input type="email" id="email" required>
+					<i>Email</i>
+				</div>
+				<!-- Error message for email -->
+				<div id="emailError" class="error-message d-none"></div>
 
-      <div class="inputBox">
-        <!-- Added id="registerButton" for the event listener -->
-        <input type="submit" id="registerButton" value="Sign up">
-      </div>
-    </div>
-  </div>
-</div>
+				<div class="inputBox">
+					<input type="password" id="password" required>
+					<i>Password</i>
+				</div>
+				<div class="inputBox">
+					<input type="password" id="repeatPassword" required>
+					<i>Repeat your password</i>
+				</div>
+				<!-- Error message for password -->
+				<div id="passwordError" class="error-message d-none"></div>
+
+				<div class="links">
+					<a href="/signIn" data-link>Sign in</a>
+					<button id="loginWith42" class="login-button">Login with 42</button>
+				</div>
+
+				<div class="inputBox">
+					<!-- Added id="registerButton" for the event listener -->
+					<input type="submit" id="registerButton" value="Sign up">
+				</div>
+			</div>
+		</div>
+		</div>
   `;
 
 setTimeout(() => {
-  // Get form and button elements
-  const registerButton = document.getElementById('registerButton');
-  const usernameError = document.getElementById('usernameError');
-  const emailError = document.getElementById('emailError');
-  const passwordError = document.getElementById('passwordError');
 
-  // Add click event listener to the register button
-  registerButton.addEventListener('click', async function(event) {
+	// UPLOAD IMMAGINE ----------------------------------------------
+
+	document.getElementById("profile-image").addEventListener("change", function() {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var output = document.getElementById('profile-img');
+            output.src = reader.result; // Cambia l'immagine con quella selezionata
+        };
+
+        var file = this.files[0]; // Ottieni il file dal <input>
+        if (file) {
+            reader.readAsDataURL(file); // Usa il file selezionato
+        } else {
+            console.log("Nessun file selezionato.");
+        }
+    });
+
+	//-----------------------------------------------------------------
+
+
+
+	// Get form and button elements
+	const registerButton = document.getElementById('registerButton');
+	const usernameError = document.getElementById('usernameError');
+	const emailError = document.getElementById('emailError');
+	const passwordError = document.getElementById('passwordError');
+
+	// Add click event listener to the register button
+	registerButton.addEventListener('click', async function(event) {
     // Prevent default behavior
     event.preventDefault();
 

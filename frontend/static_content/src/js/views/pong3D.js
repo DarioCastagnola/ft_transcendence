@@ -298,6 +298,35 @@ export default function pong3D() {
     }
 
     setTimeout(() => {
+
+
+		// OVERLAY ---------------------------------------------------------
+
+		const overlay = document.createElement('div');
+		overlay.id = 'overlay';
+
+		overlay.innerHTML = `
+			<div id="overlay">
+				<div class="game-screen">
+					<div class="content">
+						<h2 class="player">Player 1 vs Player 2</h2>
+						<button class="start-button">Start Game</button>
+					</div>
+				</div>
+			</div>
+		`;
+
+    	document.body.appendChild(overlay);
+
+		// durata overlay
+		// setTimeout(() => {
+		// 	overlay.remove();
+		// }, 3000);
+
+
+
+		// GIOCO PONG 3D -------------------------------------------------------
+
         const canvasContainer = document.getElementById("threejs-canvas");
 
 		const keys = {};
@@ -601,7 +630,31 @@ export default function pong3D() {
         }
 
         gameLoop();
+
     }, 0);
 
     return html;
 }
+
+
+{/* <div class="signin">
+	<div class="content">
+		<h2>Giocatori</h2>
+		<div id="signInForm" class="form">
+			<select id="numPlayers">
+				<option value="">Seleziona</option>
+				<option value="2">2</option>
+				<option value="4">4</option>
+				<option value="6">6</option>
+				<option value="8">8</option>
+			</select>
+			<div id="playerNamesContainer"></div>
+
+			<div class="inputBox">
+				<a href="/pong3D" data-link>
+					<input type="submit" id="creaTorneo" value="Inizia torneo">
+				</a>    
+			</div>
+		</div>
+	</div>
+</div> */}
