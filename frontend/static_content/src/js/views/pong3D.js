@@ -306,11 +306,12 @@ export default function pong3D() {
 		overlay.id = 'overlay';
 
 		overlay.innerHTML = `
-			<div class="signin">
-				<div class="content">
-					<h2>Player1</h2>
-					<h2>VS</h2>
-					<h2>Player2</h2>
+			<div id="overlay">
+				<div class="game-screen">
+					<div class="content">
+						<h2>Player 1 vs Player 2</h2>
+						<button class="start-button">Start Game</button>
+					</div>
 				</div>
 			</div>
 		`;
@@ -318,9 +319,9 @@ export default function pong3D() {
     	document.body.appendChild(overlay);
 
 		// durata overlay
-		setTimeout(() => {
-			overlay.remove();
-		}, 3000);
+		// setTimeout(() => {
+		// 	overlay.remove();
+		// }, 3000);
 
 
 
