@@ -303,6 +303,25 @@ export default function pong() {
 	
     setTimeout(() => {
 
+		//LEADER BOARD--------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<h2 class="leaderBoardOne">Player 1</h2>
+		// 				<h2 class="leaderBoardTwo">Player 2</h2>
+		// 				<h2 class="leaderBoardThird">Player 3</h2>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//------------------------------------------------------------
+
 
 		//START GAME--------------------------------------------------
 		// const overlay = document.createElement('div');
