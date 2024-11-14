@@ -245,7 +245,7 @@ button[type="submit"]:active
 
 
 
-/* EDIT IMMAGINE */
+/* EDIT IMMAGINE --------------------------------------------*/
 
 .profile-picture {
     position: relative;
@@ -276,11 +276,12 @@ button[type="submit"]:active
     font-size: 1.2em;
 }
 
+/*-------------------------------------------------------------*/
 
 
 
+/* BUTTON 2FA/LOGOUT ------------------------------------------*/
 
-/* BUTTON 2FA/LOGOUT */
 .button {
 	height: 50px;
 	margin: 5px;
@@ -321,10 +322,13 @@ button[type="submit"]:active
     gap: 15px; /* Distanza tra i bottoni e il QR code */
 }
 
+/*-----------------------------------------------------------------------*/
 
 
 
-/* BUTTON MATCH HISTORY */
+
+/* BUTTON MATCH HISTORY ------------------------------------------------ */
+
 .button2 {
 	padding: 10px 40px;
 	font-size: 18px;
@@ -392,11 +396,11 @@ button[type="submit"]:active
 	box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
 }
   
-
+/*------------------------------------------------------------------------*/
 
 
   
-/* GRAFICO */
+/* GRAFICO --------------------------------------------------------------*/
 
 .chart-container {
     width: 250px; 
@@ -414,4 +418,7 @@ button[type="submit"]:active
     font-size: 16px;
     color: #333;
 }
+
+/*--------------------------------------------------------------------*/
+
 

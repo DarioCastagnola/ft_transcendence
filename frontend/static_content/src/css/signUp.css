@@ -227,3 +227,43 @@ button[type="submit"]:active
 		height: calc(20vw - 2px);
 	}
 }
+
+
+
+
+/* EDIT IMMAGINE ----------------------------------------------------*/
+
+.profile-picture {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    text-align: center; /* Centra il contenuto all'interno */
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer; /* Cambia il cursore per far capire che l'immagine è cliccabile */
+    transition: transform 0.3s ease;
+}
+
+.profile-picture img:hover {
+    transform: scale(1.05); /* Aggiunge un effetto di ingrandimento quando si passa sopra l'immagine */
+}
+
+.profile-picture input[type="file"] {
+    position: absolute; /* Posiziona il pulsante sopra l'immagine */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Nasconde l'input ma lo rende cliccabile */
+    cursor: pointer; /* Cambia il cursore quando si passa sopra */
+}
+
+
+
+/*------------------------------------------------------------*/

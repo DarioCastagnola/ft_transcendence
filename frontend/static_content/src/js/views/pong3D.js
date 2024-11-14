@@ -300,7 +300,7 @@ export default function pong3D() {
     setTimeout(() => {
 
 
-		// OVERLAY
+		// OVERLAY ---------------------------------------------------------
 
 		const overlay = document.createElement('div');
 		overlay.id = 'overlay';
@@ -325,7 +325,7 @@ export default function pong3D() {
 
 
 
-		// GIOCO PONG 3D
+		// GIOCO PONG 3D -------------------------------------------------------
 
         const canvasContainer = document.getElementById("threejs-canvas");
 
