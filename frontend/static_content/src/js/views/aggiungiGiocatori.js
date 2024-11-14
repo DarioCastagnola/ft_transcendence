@@ -275,7 +275,7 @@ export default function aggiungiGiocatori() {
           <span></span>
           <span></span>
   
-          <div class="signin">
+            <div class="signin">
                 <div class="content">
                     <h2>Giocatori</h2>
                     <div id="signInForm" class="form">
@@ -289,7 +289,9 @@ export default function aggiungiGiocatori() {
                         <div id="playerNamesContainer"></div>
 
                         <div class="inputBox">
-                            <input type="submit" id="iniziaTorneo" value="Inizia torneo">
+                            <a href="/pong3D" data-link>
+                                <input type="submit" id="creaTorneo" value="Inizia torneo">
+                            </a>    
                         </div>
                     </div>
                 </div>
