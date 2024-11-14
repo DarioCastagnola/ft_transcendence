@@ -10,7 +10,7 @@ export default function pong() {
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
     </div>
 </nav>
 
@@ -294,7 +294,7 @@ export default function pong() {
     <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
 </footer>
     `;
-	
+
 	// Cleanup previous instance
 	    if (gameInstance) {
         cancelAnimationFrame(gameInstance);
@@ -308,23 +308,25 @@ export default function pong() {
 		let isBallMoving = false;
 		canvas.width = 1800;
 		canvas.height = 900;
+		let player1Id;
+		let player2Id;
 		let username1;
 		let username2;
 
 		// async function sendResults(winnerId) {
 		// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
-			
+
 		// 	// Define the data you want to send in the POST request
 		// 	const data = {
 		// 	  winnerId: winnerId, // Replace with the actual field expected by the API
 		// 	};
-		  
+
 		// 	// Call apiFetch with method POST and data in the body
 		// 	const response = await apiFetch(apiUrl, {
 		// 	  method: 'POST',
 		// 	  body: JSON.stringify(data),
 		// 	});
-		  
+
 		// 	if (response.ok) {
 		// 	  const result = await response.json();
 		// 	  return result.nickname;
@@ -334,32 +336,74 @@ export default function pong() {
 		// 	}
 		//   }
 
-		async function fetchUserInfo(id) {
-		const apiUrl = `http://localhost/api/game/players/${id}/`;
-		const response = await apiFetch(apiUrl);
+		async function getPlayersId() {
+			const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
+			const response = await apiFetch(apiUrl);
 
-		if (response.ok) {
-			const data = await response.json();
-			return data.nickname;
-		} else {
-			console.error("Failed to fetch user info", response.status);
-			return null;
+			if (response.ok) {
+				const data = await response.json();
+				player1Id = data.player1
+				player2Id = data.player2
+			} else {
+				console.error("Failed to fetch next match", response.status);
+                history.pushState({}, '', '/home');
+				router()
+				return null;
+			}
 		}
+
+		async function fetchUserInfo(id) {
+			const apiUrl = `http://localhost/api/game/players/${id}/`;
+			const response = await apiFetch(apiUrl);
+
+			if (response.ok) {
+				const data = await response.json();
+				return data.nickname;
+			} else {
+				console.error("Failed to fetch user info", response.status);
+                history.pushState({}, '', '/home');
+				router()
+				return null;
+			}
 		}
 
 		async function loadUsernames() {
-		username1 = await fetchUserInfo(6);
-		username2 = await fetchUserInfo(8);
+			username1 = await fetchUserInfo(player1Id);
+			username2 = await fetchUserInfo(player2Id);
 
-		document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
-		document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
 		}
 
-		loadUsernames();
+
+		async function spawnOverlay () {
+			await getPlayersId();
+			await loadUsernames();
+
+			// OVERLAY ---------------------------------------------------------
+
+			const overlay = document.createElement('div');
+			overlay.id = 'overlay';
+
+			overlay.innerHTML = `
+				<div id="overlay">
+					<div class="game-screen">
+						<div class="content">
+							<h2 class="player">${username1} vs ${username2}</h2>
+							<button class="start-button">Start Game</button>
+						</div>
+					</div>
+				</div>
+			`;
+
+			document.body.appendChild(overlay);
+		}
+
+		spawnOverlay()
 
 
 		const keys = {};
-	
+
 		class Paddle {
 			constructor(user) {
 				this.paddle_distance_from_border = 30;
@@ -388,7 +432,7 @@ export default function pong() {
 					this.y = 0;
 				} else if (this.y + this.height > canvas.height) {
 					this.y = canvas.height - this.height;
-				}	
+				}
 			}
 		}
 
@@ -414,7 +458,7 @@ export default function pong() {
 					setTimeout(function() {
 						window.location.href = "/pong2DMenu";
 					}, 3000); // 2000 milliseconds = 2 seconds
-					
+
 				}
 				if (this.user === "user2" && this.score === 5) {
 					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
@@ -422,7 +466,7 @@ export default function pong() {
 					setTimeout(function() {
 						window.location.href = "/pong2DMenu";
 					}, 3000); // 2000 milliseconds = 2 seconds
-					
+
 				}
 			}
 		}
@@ -462,12 +506,12 @@ export default function pong() {
 					const paddleCenter = player2.paddle.y + player2.paddle.height / 2;
 					const ballCenter = this.y + this.height / 2;
 					const distanceFromCenter = ballCenter - paddleCenter;
-					
+
 					this.dy += distanceFromCenter * 0.1;
 
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
-					this.last_touched_by = player2;	
+					this.last_touched_by = player2;
 				}
 				if (this.x < player1.paddle.x + player1.paddle.width && this.x + this.width > player1.paddle.x &&
 					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y &&
@@ -477,9 +521,9 @@ export default function pong() {
 					const paddleCenter = player1.paddle.y + player1.paddle.height / 2;
 					const ballCenter = this.y + this.height / 2;
 					const distanceFromCenter = ballCenter - paddleCenter;
-    
+
 					this.dy += distanceFromCenter * 0.1;
-					
+
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
 					this.last_touched_by = player1;
@@ -515,7 +559,7 @@ export default function pong() {
 				this.last_touched_by = 0;
 			}
 		}
-		
+
 		class Board {
 			constructor(x, y, width, height) {
 				this.x = x;
@@ -574,7 +618,7 @@ export default function pong() {
 
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			
+
 			if (keys["w"]) {
 				player1.ft_movePaddle(-10);
 			}

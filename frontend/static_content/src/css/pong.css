@@ -103,7 +103,7 @@ header
 	font-family: 'Quicksand', sans-serif;
 }
 
-section 
+section
 {
 	position: absolute;
 	width: 100vw;
@@ -117,7 +117,7 @@ section
 }
 
 /* Colore sfumatura */
-section::before 
+section::before
 {
 	content: '';
 	position: absolute;
@@ -128,7 +128,7 @@ section::before
 }
 
 /* Animazione sfondo sfumatura */
-@keyframes animate 
+@keyframes animate
 {
 	0%
 	{
@@ -140,7 +140,7 @@ section::before
 	}
 }
 
-section span 
+section span
 {
 	position: relative;
 	display: block;
@@ -151,7 +151,7 @@ section span
 	transition: 1.5s;
 }
 
-section span:hover 
+section span:hover
 {
 	/* background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); */
 	transition: 0s;
@@ -160,7 +160,7 @@ section span:hover
 /* adattare */
 @media (max-width: 900px)
 {
-	section span 
+	section span
 	{
 		width: calc(10vw - 2px);
 		height: calc(10vw - 2px);
@@ -169,7 +169,7 @@ section span:hover
 
 @media (max-width: 600px)
 {
-	section span 
+	section span
 	{
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
@@ -188,16 +188,16 @@ section span:hover
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
-    padding: 100px; 
+    height: 100vh;
+    padding: 100px;
 }
 
 .cellPong {
 	background: none;
 	border: none;
-	display: flex; 
-	justify-content: center; 
-	align-items: center; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: relative;
 	background: #222;
 	padding: 10px;
@@ -209,6 +209,92 @@ section span:hover
 	z-index: 1000;
 	bottom: 70px;
 }
+
+/*OVERLAY INIZIO GAME------------------------------------*/
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #FFD700;
+}
+
+/* Schermata di testo centrale */
+.game-screen {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Testo con effetto luminoso */
+.game-screen h2 {
+    font-size: 48px;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow:
+        0 0 10px #FFD700,
+        0 0 20px #FFD700,
+        0 0 30px #FF8C00,
+        0 0 40px #FF8C00,
+        0 0 50px #FF8C00;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Applicato il font "Press Start 2P" per Player 1, Player 2 e VS */
+.game-screen .player, .game-screen .vs {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 36px;
+    color: #FFD700;
+    text-shadow:
+        0 0 5px #FFD700,
+        0 0 10px #FFD700;
+}
+
+/* Bottone invisibile per l'overlay */
+.start-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    background: transparent;
+    color: #FFD700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
+    letter-spacing: 2px;
+}
+.start-button:hover {
+    color: #FF4500;
+    text-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
+}
+
+/* Animazione del bagliore */
+@keyframes glow {
+    from {
+        text-shadow:
+            0 0 5px #FFD700,
+            0 0 10px #FFD700,
+            0 0 15px #FFD700;
+    }
+    to {
+        text-shadow:
+            0 0 20px #FF8C00,
+            0 0 30px #FF8C00,
+            0 0 40px #FF8C00,
+            0 0 50px #FF4500;
+    }
+}
+
 
 /*-------------------------------------------------------*/
 
