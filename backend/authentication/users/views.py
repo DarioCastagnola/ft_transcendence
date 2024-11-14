@@ -10,12 +10,9 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.contrib.auth import authenticate, get_user_model, login as django_login
 from .serializers import UserSerializer, LoginSerializer, OTPSerializer
 from django.views import View
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import AccessToken
 from .serializers import CustomTokenObtainPairSerializer, UserListSerializer
 from rest_framework.exceptions import AuthenticationFailed
-from datetime import timedelta
-from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 import jwt
 
@@ -68,24 +65,20 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
     def create(self, request, *args, **kwargs):
-        # Serializzare e validare i dati
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        # Creare l'utente
+
         user = serializer.save()
 
-        # Generare i token
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
         refresh_token = str(refresh)
 
-        # Creare la risposta con il messaggio di successo
         response = Response({
             'message': 'User created successfully'
         }, status=status.HTTP_201_CREATED)
 
-        # Impostare i cookie per i token
         response.set_cookie(
             key='access_token', 
             value=access_token, 
