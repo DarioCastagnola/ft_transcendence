@@ -325,7 +325,6 @@ export default function userinfo() {
   setTimeout(() => {
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");
-    const accessToken = localStorage.getItem("access");
     const enable2faButton = document.getElementById("enable2faButton");
     const logoutButton = document.getElementById("logoutButton");
     const qrCodeContainer = document.getElementById("qrCodeContainer");
@@ -366,14 +365,16 @@ export default function userinfo() {
       enable2FAFetch()
     });
 
-    logoutButton.addEventListener('click', () => {
-      localStorage.removeItem("access")
-      localStorage.removeItem("refresh")
+    logoutButton.addEventListener('click', async function (event) {
+      event.preventDefault();
+
+      const apiUrl = 'http://localhost/api/auth/logout/';
+      await apiFetch(apiUrl);
       window.history.pushState({}, '', '/signIn');
       router();
     });
 
-	
+
 	//GRAFICO
 
 	const vittorie = 65; // percentuale vittoria

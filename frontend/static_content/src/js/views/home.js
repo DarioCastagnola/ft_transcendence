@@ -1,5 +1,6 @@
 import "../components/counter.js";
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function home() {
     const html = `
@@ -328,10 +329,12 @@ export default function home() {
   setTimeout(() => {
     const logoutButton = document.getElementById("logoutButton");
 
-    logoutButton.addEventListener('click', () => {
-      localStorage.removeItem("access")
-      localStorage.removeItem("refresh")
-      window.history.pushState({}, '', '/login');
+    logoutButton.addEventListener('click', async function (event) {
+      event.preventDefault();
+
+      const apiUrl = 'http://localhost/api/auth/logout/';
+      await apiFetch(apiUrl);
+      window.history.pushState({}, '', '/signIn');
       router();
     });
   }, 0);

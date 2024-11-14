@@ -1,4 +1,5 @@
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function signUp() {
   const html = `
@@ -344,18 +345,16 @@ setTimeout(() => {
     // Create the data object to send
     const formData = { username, email, password };
 
-    // Send the form data to the API using fetch
-    const response = await fetch('http://localhost/api/auth/register/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+	const response = await apiFetch('http://localhost/api/auth/register/', {
+  	  method: 'POST',
+      body: formData
     });
 
     // Handle the API response
     const result = await response.json();
     if (response.ok) {
       // Redirect to the login page on success
-      history.pushState({}, '', '/signIn');
+      history.pushState({}, '', '/home');
       router();
     } else {
       // Display any validation errors from the server
