@@ -269,6 +269,19 @@ section span:hover
 /* Bottone invisibile per l'overlay */
 .start-button {
     padding: 15px 30px;
+    font-size: 36px;
+    background: transparent;
+    color: #FFD700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
+    letter-spacing: 2px;
+}
+
+.start-buttonOne{
+    padding: 15px 30px;
     font-size: 20px;
     background: transparent;
     color: #FFD700;
@@ -279,7 +292,13 @@ section span:hover
     font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
     letter-spacing: 2px;
 }
+
 .start-button:hover {
+    color: #FF4500;
+    text-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
+}
+
+.start-buttonOne:hover {
     color: #FF4500;
     text-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
 }

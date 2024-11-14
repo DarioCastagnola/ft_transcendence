@@ -15,6 +15,7 @@ import pong2DMenu from "./views/pong2DMenu.js";
 import pong3DMenu from "./views/pong3DMenu.js";
 import preTorneoCorso from "./views/preTorneoCorso.js";
 import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
+import userList from "./views/userList.js";
 import { apiFetch } from "./service/apiService.js";
 
 
@@ -34,7 +35,8 @@ const routes = {
     "/pong2DMenu": { title: "pong2DMenu", render: pong2DMenu, css: "./src/css/pong2DMenu.css"},
     "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"},
     "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"},
-    "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"}
+    "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"},
+    "/userList": { title: "userList", render: userList, css: "./src/css/userList.css"}
 };
 
 const protected_routes = [

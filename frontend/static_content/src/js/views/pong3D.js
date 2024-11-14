@@ -300,29 +300,42 @@ export default function pong3D() {
     setTimeout(() => {
 
 
-		// OVERLAY ---------------------------------------------------------
+		//START GAME--------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
 
-		const overlay = document.createElement('div');
-		overlay.id = 'overlay';
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<h2 class="player">Player 1 vs Player 2</h2>
+		// 				<button class="start-buttonOne">Start Game</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
 
-		overlay.innerHTML = `
-			<div id="overlay">
-				<div class="game-screen">
-					<div class="content">
-						<h2 class="player">Player 1 vs Player 2</h2>
-						<button class="start-button">Start Game</button>
-					</div>
-				</div>
-			</div>
-		`;
+    	// document.body.appendChild(overlay);
+		//------------------------------------------------------------
 
-    	document.body.appendChild(overlay);
 
-		// durata overlay
-		// setTimeout(() => {
-		// 	overlay.remove();
-		// }, 3000);
 
+		//NEXT MATCH---------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<button class="start-button">Next match</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//--------------------------------------------------------------
 
 
 		// GIOCO PONG 3D -------------------------------------------------------
