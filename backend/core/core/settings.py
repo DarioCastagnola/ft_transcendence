@@ -143,4 +143,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Cartella dove saranno salvati i 
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'EXCEPTION_HANDLER': 'profile_data.customError.custom_exception_handler',
 }
