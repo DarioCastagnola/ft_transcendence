@@ -54,13 +54,14 @@ services:
       - db_auth
     networks:
       - internal_network
+      - external
       - auth
     #command: sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    command: sh -c "./wait_for_db.sh db_auth python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    environment:
-      - debug=1
+    command: sh -c "./wait_for_db.sh db_auth 5432 && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
     ports:
       - 8002:8002
+    env_file:
+      - ./auth.env
 
   db_auth:
     image: postgres
@@ -84,14 +85,17 @@ services:
     volumes:
       - ./backend/core:/core
       - media:/core/media
+      - ./backend/wait_for_db.sh:/wait_for_db.sh
     depends_on:
       - db_core
     networks:
       - internal_network
       - core
-    command:  sh -c "/copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"
+    command:  sh -c "./wait_for_db.sh db_core 5432 && /copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"
     ports:
       - 8003:8003
+    env_file:
+      - ./core.env
 
   db_core:
     image: postgres
@@ -101,11 +105,13 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
     volumes:
-      - db_data_core:/var/lib/postgresql/data_core
+      - db_data_core:/var/lib/postgresql/data
+      - ./backend/wait_for_db.sh:/wait_for_db.sh
     networks:
       - core
+      - internal_network
     ports:
-      - 5432:5432
+      - 5433:5432
 
   game:
     container_name: game
@@ -120,9 +126,11 @@ services:
     networks:
       - internal_network
       - game
-    command:  sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8004 game.wsgi:application"
+    command:  sh -c "./wait_for_db.sh db_game 5432 && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8004 game.wsgi:application"
     ports:
       - 8004:8004
+    env_file:
+      - ./game.env
 
   db_game:
     image: postgres
@@ -132,11 +140,11 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
     volumes:
-      - db_data_game:/var/lib/postgresql/data_game
+      - db_data_game:/var/lib/postgresql/data
     networks:
       - game
     ports:
-      - 5432:5432
+      - 5434:5432
 
 networks:
   external:

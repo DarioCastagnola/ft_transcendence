@@ -9,12 +9,13 @@ from rest_framework_simplejwt.views import TokenRefreshView as BaseTokenRefreshV
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.contrib.auth import authenticate, get_user_model, login as django_login
 from .serializers import UserSerializer, LoginSerializer, OTPSerializer
-from django.views import View
 from rest_framework_simplejwt.tokens import AccessToken
 from .serializers import CustomTokenObtainPairSerializer, UserListSerializer
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import BaseAuthentication
 import jwt
+import os
+# from django.middleware.csrf import get_token
 
 User = get_user_model()
 
@@ -93,6 +94,13 @@ class RegisterView(generics.CreateAPIView):
             secure=True, 
             max_age=86400
         )
+        # response.set_cookie(
+        #     key='csrftoken',
+        #     value=get_token(request),
+        #     httponly=False,  
+        #     secure=True,
+        #     samesite='None'
+        # )
 
         return response
 
@@ -145,15 +153,24 @@ class LoginView(APIView):
                     value=access_token, 
                     httponly=True, 
                     secure=True, 
-                    max_age=3600 
+                    max_age=3600,
+                    samesite='None'
                 )
                 response.set_cookie(
                     key='refresh_token', 
                     value=str(refresh), 
                     httponly=True, 
                     secure=True, 
-                    max_age=86400 
+                    max_age=86400,
+                    samesite='None'
                 )
+                # response.set_cookie(
+                #     key='csrftoken',
+                #     value=get_token(request),
+                #     httponly=False,  
+                #     secure=True,
+                #     samesite='None'
+                # )
                 return response
 
         return Response({"error": "Invalid Credentials"}, status=400)
@@ -189,6 +206,13 @@ class VerifyOTPView(APIView):
                     secure=True, 
                     max_age=86400 
                 )
+            # response.set_cookie(
+            #         key='csrftoken',
+            #         value=get_token(request),
+            #         httponly=False,  
+            #         secure=True,
+            #         samesite='None'
+            #     )
             return response
         else:
             return Response({"error": "Invalid OTP"}, status=400)
@@ -202,7 +226,7 @@ class Enable2FAView(APIView):
 
         if token_str:
             try:
-                token = jwt.decode(token_str, 'your-secret-key', algorithms=['HS256'], options={'verify_exp': False})
+                token = jwt.decode(token_str, os.getenv('SECRET', 'secret'), algorithms=['HS256'], options={'verify_exp': False})
 
                 if token.get('oauth2') is True:
                     return Response({"error": "2FA can only be enabled for local users"}, status=400)
@@ -309,7 +333,13 @@ class OAuth2CallbackView(APIView):
             secure=True, 
             max_age=86400
         )
-        
+        # response.set_cookie(
+        #     key='csrftoken',
+        #     value=get_token(request),
+        #     httponly=False,  
+        #     secure=True,
+        #     samesite='None'
+        # )
         return response
 
 class UserInfoView(APIView):
@@ -323,16 +353,7 @@ class UserInfoView(APIView):
             "username": user.username,
             "email": user.email
         })
-        
-        # if hasattr(request, 'new_access_token'):
-        #     response.set_cookie(
-        #         key='access_token',
-        #         value=request.new_access_token,
-        #         httponly=True,
-        #         secure=True,
-        #         max_age=3600
-        #     )
-        
+
         return response
     
 class TokenRefreshCookieView(BaseTokenRefreshView):

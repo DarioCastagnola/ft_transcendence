@@ -1,14 +1,19 @@
 from pathlib import Path
 from datetime import timedelta
+import os
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'your-secret-key'
+SECRET_KEY = os.getenv('SECRET', 'secret'),
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'authentication',
+    ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,6 +53,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://127.0.0.1:4433",
 ]
 
+
 ROOT_URLCONF = 'authentication.urls'
 
 TEMPLATES = [
@@ -71,10 +77,10 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'user',
-        'PASSWORD': 'password',
-        'HOST': 'db_auth',
+        'NAME': os.getenv('DB_NAME', 'default_name'),
+        'USER': os.getenv('DB_USER', 'default_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'default_password'),
+        'HOST': os.getenv('DB_HOST', 'default_host'),
         'PORT': 5432,
     }
 }
@@ -125,7 +131,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': False,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': os.getenv('SECRET', 'secret'),
     'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -136,10 +142,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# OAUTH2_CLIENT_ID = 'u-s4t2ud-ad73af585dfdd1ff90139ee7a9030635a0f9f563b584c7a3b92dd0dda112b3cd'
-# OAUTH2_CLIENT_SECRET = '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'
-OAUTH2_CLIENT_ID = 'u-s4t2ud-66d1325a205f85bce9bb8f729e8ee9fde0051355dbaf775183489f2c9faa4167'
-OAUTH2_CLIENT_SECRET = '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'
-OAUTH2_REDIRECT_URI = 'https://localhost:4433/callback'
-OAUTH2_PROVIDER_URL = 'https://api.intra.42.fr/oauth'
-USER_INFO_URL = 'https://api.intra.42.fr/v2/me'
+OAUTH2_CLIENT_ID = os.getenv('OAUTH2_CLIENT_ID', 'secret'),
+OAUTH2_CLIENT_SECRET = os.getenv('OAUTH2_CLIENT_SECRET', 'secret'),
+OAUTH2_REDIRECT_URI = os.getenv('OAUTH2_REDIRECT_URI', 'secret'),
+OAUTH2_PROVIDER_URL = os.getenv('OAUTH2_PROVIDER_URL', 'secret'),
+USER_INFO_URL = os.getenv('USER_INFO_URL'),

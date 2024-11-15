@@ -1,0 +1,142 @@
+worker_processes 1;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+
+    upstream authentication {
+        server authentication:8002;
+    }
+    
+    upstream core {
+        server core:8003;
+    }
+
+    upstream game {
+        server game:8004;
+    }
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location /media/ {
+            alias /media/;
+            autoindex on;
+            types {
+                text/css css;
+                application/javascript js;
+                image/svg+xml svg;
+                text/plain txt;
+                image/png png;
+                image/jpeg jpeg;
+                image/jpg jpg;
+                image/gif gif;
+            }
+        }
+
+        set $backend_url '';
+        
+        location ~ ^/api/auth|/o/ {
+            set $backend_url authentication;
+            proxy_pass http://$backend_url;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /api/core {
+            proxy_pass http://core;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /api/game {
+            proxy_pass http://game;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /oauth {
+        proxy_pass https://intra.42.fr;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name localhost;
+
+        ssl_certificate /etc/nginx/ssl/nginx.crt;
+        ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+        location /media/ {
+            alias /media/;
+            autoindex on;
+            types {
+                text/css css;
+                application/javascript js;
+                image/svg+xml svg;
+                text/plain txt;
+                image/png png;
+                image/jpeg jpeg;
+                image/jpg jpg;
+                image/gif gif;
+            }
+        }
+
+        set $backend_url '';
+        
+        location ~ ^/api/auth|/o/ {
+            set $backend_url authentication;
+            proxy_pass http://$backend_url;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /api/core {
+            proxy_pass http://core;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /api/game {
+            proxy_pass http://game;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_redirect off;
+        }
+
+        location /oauth {
+        proxy_pass https://intra.42.fr;  
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+        }
+
+    }
+}
