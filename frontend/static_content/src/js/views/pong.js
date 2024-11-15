@@ -296,7 +296,7 @@ export default function pong() {
     `;
 
 	// Cleanup previous instance
-	    if (gameInstance) {
+	if (gameInstance) {
         cancelAnimationFrame(gameInstance);
     }
 
@@ -399,71 +399,93 @@ export default function pong() {
 		// 	}
 		//   }
 
-		async function getPlayersId() {
-			const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
-			const response = await apiFetch(apiUrl);
+		// async function getPlayersId() {
+		// 	const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
+		// 	const response = await apiFetch(apiUrl);
 
-			if (response.ok) {
-				const data = await response.json();
-				player1Id = data.player1
-				player2Id = data.player2
-			} else {
-				console.error("Failed to fetch next match", response.status);
-                history.pushState({}, '', '/home');
-				router()
-				return null;
-			}
-		}
+		// 	if (response.ok) {
+		// 		const data = await response.json();
+		// 		player1Id = data.player1
+		// 		player2Id = data.player2
+		// 	} else {
+		// 		console.error("Failed to fetch next match", response.status);
+        //         history.pushState({}, '', '/home');
+		// 		router()
+		// 		return null;
+		// 	}
+		// }
+
+		// async function fetchUserInfo(id) {
+		// 	const apiUrl = `http://localhost/api/game/players/${id}/`;
+		// 	const response = await apiFetch(apiUrl);
+
+		// 	if (response.ok) {
+		// 		const data = await response.json();
+		// 		return data.nickname;
+		// 	} else {
+		// 		console.error("Failed to fetch user info", response.status);
+        //         history.pushState({}, '', '/home');
+		// 		router()
+		// 		return null;
+		// 	}
+		// }
+
+		// async function loadUsernames() {
+		// 	username1 = await fetchUserInfo(player1Id);
+		// 	username2 = await fetchUserInfo(player2Id);
+
+		// 	document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+		// 	document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		// }
+
+
+		// async function spawnOverlay () {
+		// 	await getPlayersId();
+		// 	await loadUsernames();
+
+		// 	// OVERLAY ---------------------------------------------------------
+
+		// 	const overlay = document.createElement('div');
+		// 	overlay.id = 'overlay';
+
+		// 	overlay.innerHTML = `
+		// 		<div id="overlay">
+		// 			<div class="game-screen">
+		// 				<div class="content">
+		// 					<h2 class="player">${username1} vs ${username2}</h2>
+		// 					<button class="start-button">Start Game</button>
+		// 				</div>
+		// 			</div>
+		// 		</div>
+		// 	`;
+
+		// 	document.body.appendChild(overlay);
+		// }
+
+		// spawnOverlay()
 
 		async function fetchUserInfo(id) {
 			const apiUrl = `http://localhost/api/game/players/${id}/`;
 			const response = await apiFetch(apiUrl);
-
+	
 			if (response.ok) {
 				const data = await response.json();
 				return data.nickname;
 			} else {
 				console.error("Failed to fetch user info", response.status);
-                history.pushState({}, '', '/home');
-				router()
 				return null;
 			}
 		}
-
-		async function loadUsernames() {
-			username1 = await fetchUserInfo(player1Id);
-			username2 = await fetchUserInfo(player2Id);
-
+	
+			async function loadUsernames() {
+			username1 = await fetchUserInfo(6);
+			username2 = await fetchUserInfo(8);
+	
 			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
 			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
-		}
-
-
-		async function spawnOverlay () {
-			await getPlayersId();
-			await loadUsernames();
-
-			// OVERLAY ---------------------------------------------------------
-
-			const overlay = document.createElement('div');
-			overlay.id = 'overlay';
-
-			overlay.innerHTML = `
-				<div id="overlay">
-					<div class="game-screen">
-						<div class="content">
-							<h2 class="player">${username1} vs ${username2}</h2>
-							<button class="start-button">Start Game</button>
-						</div>
-					</div>
-				</div>
-			`;
-
-			document.body.appendChild(overlay);
-		}
-
-		spawnOverlay()
-
+			}
+	
+		loadUsernames();	
 
 		const keys = {};
 
@@ -534,7 +556,7 @@ export default function pong() {
 									</div>
 								</div>
 							`;
-	
+	op
 							document.body.appendChild(overlay);
 						}
 						else{
@@ -752,6 +774,8 @@ export default function pong() {
 		// 4. Ball's movement
 		// 5. Loop the game
 
+		let isAIEnabled = true; // Flag to enable or disable AI
+
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -761,11 +785,24 @@ export default function pong() {
 			if (keys["s"]) {
 				player1.ft_movePaddle(10);
 			}
-			if (keys["arrowup"]) {
-				player2.ft_movePaddle(-10);
-			}
-			if (keys["arrowdown"]) {
-				player2.ft_movePaddle(10);
+			if (isAIEnabled) {
+				// Define AI paddle speed limit to make it more realistic
+				const aiSpeed = 10; 
+		
+				// Move the AI paddle towards the ball's y position
+				if (ball.y + ball.height / 2 < player2.paddle.y + player2.paddle.height / 2) {
+					player2.ft_movePaddle(-aiSpeed); // Move up if ball is above paddle
+				} else if (ball.y + ball.height / 2 > player2.paddle.y + player2.paddle.height / 2) {
+					player2.ft_movePaddle(aiSpeed); // Move down if ball is below paddle
+				}
+			} else {
+				// Human-controlled player 2
+				if (keys["arrowup"]) {
+					player2.ft_movePaddle(-10);
+				}
+				if (keys["arrowdown"]) {
+					player2.ft_movePaddle(10);
+				}
 			}
 
 			if (isBallMoving){
