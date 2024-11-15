@@ -277,7 +277,7 @@ export default function pong2DMenu() {
 
 	<section>
 		<div class="cellPong">
-			<a id="partitaRapidaButton" class="menuTesto" data-link>Partita rapida</a>
+			<a id="partitaRapidaButton" class="menuTesto" href="/pong" data-link>Partita rapida</a>
 		</div>
 		<div class="cellPong">
 			<a id="torneoButton" class="menuTesto">Torneo</a>
@@ -333,10 +333,11 @@ setTimeout(() => {
 
     const partitaRapidaButton = document.getElementById("partitaRapidaButton");
 
-    torneoButton.addEventListener('click', () => {
+    partitaRapidaButton.addEventListener('click', () => {
         localStorage.setItem("isTournament", "false")
-		history.pushState({}, '', '/pong');
-		router()
+		// history.pushState({}, '', '/pong');
+		// router()
+		console.log("ciao");
 	});
 
 	}, 0);
