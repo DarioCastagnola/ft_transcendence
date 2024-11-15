@@ -39,7 +39,7 @@ class UserProfileDetail(APIView):
             serializer = UserProfileSerializer(profile)
             return Response(serializer.data, status=status.HTTP_200_OK)
         
-    def create_user_profile(user_id):
+    def create_user_profile(self, user_id):
         try:
             profile = UserProfile.objects.get(user_id=user_id)
             return profile

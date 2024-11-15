@@ -144,8 +144,8 @@ services:
 
 networks:
   external:
+    driver: bridge
   internal_network:
-    internal: true
   auth:
     internal: true
   core:

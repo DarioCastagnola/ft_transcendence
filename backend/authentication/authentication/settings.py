@@ -5,7 +5,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET', 'secret'),
+SECRET_KEY = os.getenv('SECRET', 'secret')
 
 DEBUG = True
 
@@ -143,8 +143,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-OAUTH2_CLIENT_ID = os.getenv('OAUTH2_CLIENT_ID', 'secret'),
-OAUTH2_CLIENT_SECRET = os.getenv('OAUTH2_CLIENT_SECRET', 'secret'),
-OAUTH2_REDIRECT_URI = os.getenv('OAUTH2_REDIRECT_URI', 'secret'),
-OAUTH2_PROVIDER_URL = os.getenv('OAUTH2_PROVIDER_URL', 'secret'),
-USER_INFO_URL = os.getenv('USER_INFO_URL'),
+OAUTH2_CLIENT_ID = os.getenv('OAUTH2_CLIENT_ID', 'secret')
+OAUTH2_CLIENT_SECRET = os.getenv('OAUTH2_CLIENT_SECRET', 'secret')
+OAUTH2_REDIRECT_URI = os.getenv('OAUTH2_REDIRECT_URI', 'secret')
+OAUTH2_PROVIDER_URL = os.getenv('OAUTH2_PROVIDER_URL', 'secret')
+USER_INFO_URL = os.getenv('USER_INFO_URL')
