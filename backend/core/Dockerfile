@@ -17,3 +17,4 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
+CMD ["sh", "-c", "./wait_for_db.sh db_core 5432 && /copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"]
