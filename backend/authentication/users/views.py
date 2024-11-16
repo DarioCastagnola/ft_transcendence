@@ -35,7 +35,7 @@ class CookieJWTAuthentication(BaseAuthentication):
     
         except jwt.ExpiredSignatureError:
             if not refresh_token:
-                raise AuthenticationFailed('Access token expired and refresh token missing.')
+                raise AuthenticationFailed('Access token scaduto e refresh token mancante')
             
             new_access_token = self.refresh_access_token(refresh_token)
             if new_access_token:
@@ -45,7 +45,7 @@ class CookieJWTAuthentication(BaseAuthentication):
                 
                 return (user, new_access_token)
             else:
-                raise AuthenticationFailed('Unable to refresh access token.')
+                raise AuthenticationFailed('Impossibile aggiornare l\'access token')
         
         except Exception:
             raise AuthenticationFailed('Invalid token')
@@ -78,7 +78,7 @@ class RegisterView(generics.CreateAPIView):
         refresh_token = str(refresh)
 
         response = Response({
-            'message': 'User created successfully'
+            'message': 'User creato con successo',
         }, status=status.HTTP_201_CREATED)
 
         response.set_cookie(
@@ -142,13 +142,13 @@ class LoginView(APIView):
         if user:
             device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
             if device:
-                return Response({"message": "2FA enabled, enter OTP"}, status=200)
+                return Response({"message": "2FA abilitato, inserire OTP"}, status=200)
             else:
                 refresh = CustomTokenObtainPairSerializer.get_token(user)
                 refresh['oauth2'] = False
                 access_token = str(refresh.access_token)
 
-                response = Response({"message": "Login successful"})
+                response = Response({"message": "Login effettuato con successo"})
                 response.set_cookie(
                     key='access_token', 
                     value=access_token, 
@@ -174,7 +174,7 @@ class LoginView(APIView):
                 # )
                 return response
 
-        return Response({"error": "Invalid Credentials"}, status=400)
+        return Response({"error": "Credenziali non valide"}, status=400)
 
 class VerifyOTPView(APIView):
     serializer_class = OTPSerializer
@@ -183,7 +183,7 @@ class VerifyOTPView(APIView):
         username = request.data.get('username')
         user = User.objects.filter(username=username).first()
         if not user or user == None:
-            return Response({"error": "User not found"}, status=400)
+            return Response({"error": "Utente non trovato"}, status=400)
         otp_code = request.data.get('otp')
         device = TOTPDevice.objects.filter(user=user, confirmed=True).first()
 
@@ -192,7 +192,7 @@ class VerifyOTPView(APIView):
             refresh['oauth2'] = False
             access_token = str(refresh.access_token)
 
-            response = Response({"message": "Login successful"})
+            response = Response({"message": "Login effettuato con successo"})
             response.set_cookie(
                 key='access_token', 
                     value=access_token, 
@@ -216,7 +216,7 @@ class VerifyOTPView(APIView):
             #     )
             return response
         else:
-            return Response({"error": "Invalid OTP"}, status=400)
+            return Response({"error": "OTP non valido"}, status=400)
 
 class Enable2FAView(APIView):
     permission_classes = [IsAuthenticated]
@@ -233,14 +233,14 @@ class Enable2FAView(APIView):
                     return Response({"error": "2FA can only be enabled for local users"}, status=400)
 
             except jwt.ExpiredSignatureError:
-                raise AuthenticationFailed('Token has expired')
+                raise AuthenticationFailed('Il token è scaduto')
             except jwt.DecodeError:
-                raise AuthenticationFailed('Invalid token')
+                raise AuthenticationFailed('Token non valido')
             except Exception as e:
-                raise AuthenticationFailed('Authentication failed')
+                raise AuthenticationFailed('Autenticazione fallita')
 
         else:
-            raise AuthenticationFailed('Token not found in cookies')
+            raise AuthenticationFailed('Token non trovato nei cookies')
 
         user = request.user
 
@@ -250,7 +250,7 @@ class Enable2FAView(APIView):
             otp_uri = device.config_url
             return Response({"otp_uri": otp_uri}, status=200)
         else:
-            return Response({"message": "2FA is already enabled"}, status=200)
+            return Response({"message": "2FA è gia abilitato"}, status=200)
 
 class DeleteUserView(APIView):
     permission_classes = [IsAuthenticated]
@@ -259,7 +259,7 @@ class DeleteUserView(APIView):
     def delete(self, request, *args, **kwargs):
         user = request.user
         user.delete()
-        return Response({"message": "User deleted successfully"}, status=204)
+        return Response({"message": "Utente cancellato con successo"}, status=204)
 
 
 class OAuth2CallbackView(APIView):
@@ -267,7 +267,7 @@ class OAuth2CallbackView(APIView):
         code = request.GET.get('code')
 
         if not code:
-            return Response({"error": "No code provided"}, status=400)
+            return Response({"error": "Nessun codice inserito"}, status=400)
 
         token_url = f"{settings.OAUTH2_PROVIDER_URL}/token"
         data = {
@@ -283,13 +283,13 @@ class OAuth2CallbackView(APIView):
             response = requests.post(token_url, data=data, headers=headers)
             response.raise_for_status()
         except requests.HTTPError as e:
-            return Response({"error": f"Failed to obtain access token: {str(e)}"}, status=response.status_code)
+            return Response({"error": f"Impossibile ottenere il token di accesso: {str(e)}"}, status=response.status_code)
 
         tokens = response.json()
         access_token = tokens.get('access_token')
 
         if not access_token:
-            return Response({"error": "No access token found"}, status=400)
+            return Response({"error": "Nessun token di accesso trovato"}, status=400)
 
         user_info_url = settings.USER_INFO_URL
         headers = {'Authorization': f'Bearer {access_token}'}
@@ -297,7 +297,7 @@ class OAuth2CallbackView(APIView):
             user_info_response = requests.get(user_info_url, headers=headers)
             user_info_response.raise_for_status()
         except requests.HTTPError as e:
-            return Response({"error": f"Failed to obtain user info: {str(e)}"}, status=user_info_response.status_code)
+            return Response({"error": f"Impossibile ottenere informazioni utente: {str(e)}"}, status=user_info_response.status_code)
 
         user_info = user_info_response.json()
         username = user_info.get('login')
@@ -361,7 +361,7 @@ class TokenRefreshCookieView(BaseTokenRefreshView):
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get('refresh_token')
         if not refresh_token:
-            return Response({"error": "Refresh token missing"}, status=401)
+            return Response({"error": "Refresh token mancante"}, status=401)
         
         request.data['refresh'] = refresh_token
         response = super().post(request, *args, **kwargs)
@@ -382,7 +382,7 @@ class LogoutView(APIView):
     authentication_classes = [CookieJWTAuthentication]
 
     def post(self, request, *args, **kwargs):
-        response = Response({"message": "Logout successful"})
+        response = Response({"message": "Logout effettuato con successo."})
         response.delete_cookie('access_token')
         response.delete_cookie('refresh_token')
         return response
@@ -396,16 +396,16 @@ class is_Oauth2View(APIView):
 
         if token_str:
             try:
-                token = jwt.decode(token_str, 'your-secret-key', algorithms=['HS256'], options={'verify_exp': False})
+                token = jwt.decode(token_str, os.getenv('SECRET', 'secret'), algorithms=['HS256'], options={'verify_exp': False})
                 return Response({"oauth2": token.get('oauth2')}, status=200)
             except jwt.ExpiredSignatureError:
-                raise AuthenticationFailed('Token has expired')
+                raise AuthenticationFailed('Token scaduto')
             except jwt.DecodeError:
-                raise AuthenticationFailed('Invalid token')
+                raise AuthenticationFailed('Token non valido')
             except Exception as e:
-                raise AuthenticationFailed('Authentication failed')
+                raise AuthenticationFailed('Autenticazione fallita')
         else:
-            raise AuthenticationFailed('Token not found in cookies')
+            raise AuthenticationFailed('Token non trovato nei cookies')
         
 class UserListView(APIView):
     permission_classes = [IsAuthenticated]
@@ -422,7 +422,7 @@ class UpdateUserView(APIView):
 
     @extend_schema(
         summary="Aggiorna i dati dell'utente",
-        description="Endpoint per aggiornare username, email e password dell'utente autenticato.",
+        description="Endpoint per aggiornare username, email e password dell'utente autenticato, il json può contenere solo i campi da aggiornare.",
         request=UpdateUserSerializer,
         responses={200: UpdateUserSerializer}
     )
