@@ -10,11 +10,12 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.contrib.auth import authenticate, get_user_model, login as django_login
 from .serializers import UserSerializer, LoginSerializer, OTPSerializer
 from rest_framework_simplejwt.tokens import AccessToken
-from .serializers import CustomTokenObtainPairSerializer, UserListSerializer
+from .serializers import CustomTokenObtainPairSerializer, UserListSerializer, UpdateUserSerializer
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authentication import BaseAuthentication
 import jwt
 import os
+from drf_spectacular.utils import extend_schema
 # from django.middleware.csrf import get_token
 
 User = get_user_model()
@@ -414,3 +415,27 @@ class UserListView(APIView):
         users = User.objects.all()
         serializer = UserListSerializer(users, many=True)
         return Response(serializer.data, status=200)
+    
+class UpdateUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
+
+    @extend_schema(
+        summary="Aggiorna i dati dell'utente",
+        description="Endpoint per aggiornare username, email e password dell'utente autenticato.",
+        request=UpdateUserSerializer,
+        responses={200: UpdateUserSerializer}
+    )
+    def put(self, request):
+        user = request.user
+        serializer = UpdateUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response({"message": "Profilo aggiornato con successo."}, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({"error": f"Si è verificato un errore: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            {"error": "Dati non validi", "details": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST
+        )
