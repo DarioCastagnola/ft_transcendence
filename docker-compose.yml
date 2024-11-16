@@ -64,16 +64,14 @@ services:
   db_auth:
     image: postgres
     container_name: db_auth
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
       - db_data_auth:/var/lib/postgresql/data
     networks:
       - auth
     ports:
       - 5432:5432
+    env_file:
+      - ./auth.env
 
   core:
     container_name: core
@@ -97,10 +95,6 @@ services:
   db_core:
     image: postgres
     container_name: db_core
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
       - db_data_core:/var/lib/postgresql/data
       - ./backend/wait_for_db.sh:/wait_for_db.sh
@@ -109,6 +103,8 @@ services:
       - internal_network
     ports:
       - 5433:5432
+    env_file:
+      - ./core.env
 
   game:
     container_name: game
@@ -131,16 +127,14 @@ services:
   db_game:
     image: postgres
     container_name: db_game
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
       - db_data_game:/var/lib/postgresql/data
     networks:
       - game
     ports:
       - 5434:5432
+    env_file:
+      - ./core.env
 
 networks:
   external:
