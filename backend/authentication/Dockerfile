@@ -14,3 +14,4 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
+CMD ["sh", "-c", "./wait_for_db.sh db_auth 5432 && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"]

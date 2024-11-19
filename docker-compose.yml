@@ -27,6 +27,8 @@ services:
       networks:
         - internal_network
         - external
+      security_opt:
+        - no-new-privileges:true
 
   nginx_front:
       image: nginx:latest
@@ -48,33 +50,31 @@ services:
       context: ./backend/authentication
       dockerfile: Dockerfile
     volumes:
-      - ./backend/authentication:/authentication
-      - ./backend/wait_for_db.sh:/wait_for_db.sh
+      # - ./backend/authentication:/authentication
+      - auth_data:/authentication
+      # - ./backend/wait_for_db.sh:/wait_for_db.sh
     depends_on:
       - db_auth
     networks:
       - internal_network
       - auth
-    #command: sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    command: sh -c "./wait_for_db.sh db_auth python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8002 authentication.wsgi:application"
-    environment:
-      - debug=1
-    ports:
-      - 8002:8002
+      - external
+    env_file:
+      - ./auth.env
+    security_opt:
+      - no-new-privileges:true
 
   db_auth:
     image: postgres
     container_name: db_auth
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
       - db_data_auth:/var/lib/postgresql/data
     networks:
       - auth
-    # ports:
-    #   - 5431:5432
+    env_file:
+      - ./auth.env
+    security_opt:
+      - no-new-privileges:true
 
   core:
     container_name: core
@@ -82,30 +82,30 @@ services:
       context: ./backend/core
       dockerfile: Dockerfile
     volumes:
-      - ./backend/core:/core
+      # - ./backend/core:/core
+      - core_data:/core
       - media:/core/media
+      # - ./backend/wait_for_db.sh:/wait_for_db.sh
     depends_on:
       - db_core
     networks:
       - internal_network
       - core
-    command:  sh -c "/copy_avatars.sh && python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8003 core.wsgi:application"
-    ports:
-      - 8003:8003
+    env_file:
+      - ./core.env
+    security_opt:
+      - no-new-privileges:true
 
   db_core:
     image: postgres
     container_name: db_core
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
-      - db_data_core:/var/lib/postgresql/data_core
+      - db_data_core:/var/lib/postgresql/data
     networks:
       - core
-    # ports:
-    #   - 5431:5432
+      - internal_network
+    env_file:
+      - ./core.env
 
   game:
     container_name: game
@@ -113,33 +113,33 @@ services:
       context: ./backend/game
       dockerfile: Dockerfile
     volumes:
-      - ./backend/game:/game
+      # - ./backend/game:/game
+      - game_data:/game
+      # - ./backend/wait_for_db.sh:/wait_for_db.sh
       - media:/game/media
     depends_on:
       - db_game
     networks:
       - internal_network
       - game
-    command:  sh -c "python3 manage.py migrate && gunicorn --reload --bind 0.0.0.0:8004 game.wsgi:application"
-    ports:
-      - 8004:8004
+    env_file:
+      - ./game.env
+    security_opt:
+      - no-new-privileges:true
 
   db_game:
     image: postgres
     container_name: db_game
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
     volumes:
-      - db_data_game:/var/lib/postgresql/data_game
+      - db_data_game:/var/lib/postgresql/data
     networks:
       - game
-    # ports:
-    #   - 5431:5432
+    env_file:
+      - ./core.env
 
 networks:
   external:
+    driver: bridge
   internal_network:
     internal: true
   auth:
@@ -154,3 +154,6 @@ volumes:
   db_data_core:
   db_data_game:
   media:
+  auth_data:
+  core_data:
+  game_data:

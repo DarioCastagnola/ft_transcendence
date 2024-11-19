@@ -5,7 +5,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(read_only=True)
     friends = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     avatar = serializers.ImageField(read_only=True, required=False)
-    last_seen = serializers.DateTimeField(read_only=True, required=False)
+    last_seen = serializers.DateTimeField(
+        format='%d %B %Y, %H:%M', 
+        read_only=True, 
+        required=False
+    )
 
     class Meta:
         model = UserProfile
