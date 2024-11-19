@@ -1,4 +1,5 @@
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function signIn() {
   const html = `
@@ -324,12 +325,9 @@ export default function signIn() {
       };
 
       // Send the form data to the API using fetch
-      const response = await fetch('http://localhost/api/auth/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
+	  const response = await apiFetch('https://localhost:443/api/auth/login/', {
+  	    method: 'POST',
+        body: loginData
       });
 
       // Handle the API response
@@ -338,15 +336,13 @@ export default function signIn() {
         // alert('Login successful!');
         console.log('Login result:', result);
         // Redirect to another page or handle success
-        if (result.access) {
-          localStorage.setItem("access", result.access)
-          localStorage.setItem("refresh", result.refresh)
-          window.history.pushState({}, '', '/home');
-          router();
-        } else {
+        if (result.message === '2FA enabled, enter OTP') {
           localStorage.setItem("username", username)
           window.history.pushState({}, '', '/2FA');
           router();
+        } else {
+		  window.history.pushState({}, '', '/home');
+		  router();
         }
       } else {
         // alert(`Login failed: ${result.message}`);

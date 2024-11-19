@@ -213,3 +213,113 @@ section span:hover
 /*-------------------------------------------------------*/
 
 
+
+
+
+/*OVERLAY INIZIO GAME------------------------------------*/
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: #FFD700;
+}
+
+/* Schermata di testo centrale */
+.game-screen {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Testo con effetto luminoso */
+.game-screen h2 {
+    font-size: 48px;
+    color: #FFD700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 10px #FFD700, 
+        0 0 20px #FFD700,
+        0 0 30px #FF8C00,
+        0 0 40px #FF8C00,
+        0 0 50px #FF8C00;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Applicato il font "Press Start 2P" per Player 1, Player 2 e VS */
+.game-screen .player, .game-screen .vs {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 36px;
+    color: #FFD700;
+    text-shadow: 
+        0 0 5px #FFD700, 
+        0 0 10px #FFD700;
+}
+
+/* Bottone invisibile per l'overlay */
+.start-button {
+    padding: 15px 30px;
+    font-size: 36px;
+    background: transparent;
+    color: #FFD700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
+    letter-spacing: 2px;
+}
+
+.start-buttonOne{
+    padding: 15px 30px;
+    font-size: 20px;
+    background: transparent;
+    color: #FFD700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Press Start 2P', sans-serif; /* Font per il bottone */
+    letter-spacing: 2px;
+}
+
+.start-button:hover {
+    color: #FF4500;
+    text-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
+}
+
+.start-buttonOne:hover {
+    color: #FF4500;
+    text-shadow: 0 0 10px #FF4500, 0 0 20px #FF4500;
+}
+
+/* Animazione del bagliore */
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 5px #FFD700, 
+            0 0 10px #FFD700,
+            0 0 15px #FFD700;
+    }
+    to {
+        text-shadow: 
+            0 0 20px #FF8C00, 
+            0 0 30px #FF8C00,
+            0 0 40px #FF8C00,
+            0 0 50px #FF4500;
+    }
+}
+
+
+/*----------------------------------------------------------*/
+

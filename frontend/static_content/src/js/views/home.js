@@ -1,5 +1,6 @@
 import "../components/counter.js";
 import { router } from "../main.js";
+import { apiFetch } from "../service/apiService.js";
 
 export default function home() {
     const html = `
@@ -19,7 +20,7 @@ export default function home() {
 						<a class="nav-link" href="/userInfo" data-link>My profile</a>
 					</li>
                     <li class="nav-item">
-                        <button id="logoutButton" class="nav-link">Logout</button>
+						<a class="nav-link" href="/userList" data-link>User list</a>
 					</li>
 
 				</ul>
@@ -305,7 +306,6 @@ export default function home() {
                 </div>
                 <div class="col-md-5">
 
-
                 <a class="nav-link" href="/pong3DMenu" data-link>
                     <button class="cellPong" onclick="location.href='#';">
                         <div class="content">
@@ -326,12 +326,15 @@ export default function home() {
         `;
 
   setTimeout(() => {
+
     const logoutButton = document.getElementById("logoutButton");
 
-    logoutButton.addEventListener('click', () => {
-      localStorage.removeItem("access")
-      localStorage.removeItem("refresh")
-      window.history.pushState({}, '', '/login');
+    logoutButton.addEventListener('click', async function (event) {
+      event.preventDefault();
+
+      const apiUrl = 'https://localhost/api/auth/logout/';
+      await apiFetch(apiUrl, {method: "POST"});
+      window.history.pushState({}, '', '/signIn');
       router();
     });
   }, 0);

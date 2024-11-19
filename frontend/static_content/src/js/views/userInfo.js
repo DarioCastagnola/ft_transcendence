@@ -272,8 +272,7 @@ export default function userinfo() {
 
 				<!-- IMMAGINE -->
 				<div class="profile-picture">
-					<img src="https://via.placeholder.com/100">
-					<label for="profile-image" class="upload-icon">📷</label>
+					<img id="profile-img" src="https://via.placeholder.com/100" alt="Profile Image">
 					<input type="file" id="profile-image" accept="image/*">
 				</div>
 
@@ -323,16 +322,38 @@ export default function userinfo() {
 
 
   setTimeout(() => {
+
+	// UPLOAD IMMAGINE ----------------------------------------------
+
+	document.getElementById("profile-image").addEventListener("change", function() {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var output = document.getElementById('profile-img');
+            output.src = reader.result; // Cambia l'immagine con quella selezionata
+        };
+
+        var file = this.files[0]; // Ottieni il file dal <input>
+        if (file) {
+            reader.readAsDataURL(file); // Usa il file selezionato
+        } else {
+            console.log("Nessun file selezionato.");
+        }
+    });
+
+	//-----------------------------------------------------------------
+
+
+	
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");
-    const accessToken = localStorage.getItem("access");
     const enable2faButton = document.getElementById("enable2faButton");
     const logoutButton = document.getElementById("logoutButton");
     const qrCodeContainer = document.getElementById("qrCodeContainer");
 
 
     async function fetchUserInfo() {
-      const apiUrl = 'http://localhost/api/auth/user-info/';
+      const apiUrl = 'https://localhost/api/auth/user-info/';
       const response = await apiFetch(apiUrl);
 
       if (response.ok) {
@@ -366,14 +387,16 @@ export default function userinfo() {
       enable2FAFetch()
     });
 
-    logoutButton.addEventListener('click', () => {
-      localStorage.removeItem("access")
-      localStorage.removeItem("refresh")
+    logoutButton.addEventListener('click', async function (event) {
+      event.preventDefault();
+
+      const apiUrl = 'https://localhost/api/auth/logout/';
+      await apiFetch(apiUrl, {method: "POST"});
       window.history.pushState({}, '', '/signIn');
       router();
     });
 
-	
+
 	//GRAFICO
 
 	const vittorie = 65; // percentuale vittoria

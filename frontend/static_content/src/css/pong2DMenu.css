@@ -98,7 +98,7 @@ header
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Audiowide', cursive;
 }
 
 section 
@@ -228,3 +228,12 @@ section span:hover
 .prova-active span{
 	display: none;
 }
+
+.custom-modal-dark {
+    background-color:rgba(255, 255, 255, 0.1); /* Grigio scuro */
+    font-size: 2.5rem; /* Dimensione font */
+    font-family: 'Audiowide', cursive; /* font gioco retro */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombra del testo */
+    color: rgb(255, 0, 0); /* Colore testo */
+    border: none; /* Rimuove il bordo, opzionale */
+}	

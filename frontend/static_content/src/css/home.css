@@ -228,6 +228,7 @@ section span:hover
 }
 
 /* OVERLAY FOTO SCRITTE PONG */
+
 .overlay-image {
     position: absolute; /* Posizionamento assoluto */
     width: 200px; /* Dimensione dell'immagine sovrapposta */

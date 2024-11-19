@@ -245,11 +245,13 @@ button[type="submit"]:active
 
 
 
-/* EDIT IMMAGINE */
+/* EDIT IMMAGINE --------------------------------------------*/
 
 .profile-picture {
     position: relative;
     display: inline-block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    text-align: center; /* Centra il contenuto all'interno */
     margin-bottom: 20px;
 }
 
@@ -258,29 +260,32 @@ button[type="submit"]:active
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer; /* Cambia il cursore per far capire che l'immagine è cliccabile */
+    transition: transform 0.3s ease;
+}
+
+.profile-picture img:hover {
+    transform: scale(1.05); /* Aggiunge un effetto di ingrandimento quando si passa sopra l'immagine */
 }
 
 .profile-picture input[type="file"] {
-    display: none;
+    position: absolute; /* Posiziona il pulsante sopra l'immagine */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Nasconde l'input ma lo rende cliccabile */
+    cursor: pointer; /* Cambia il cursore quando si passa sopra */
 }
 
-.upload-icon {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: rgb(217, 255, 0);
-    color: black;
-    padding: 5px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2em;
-}
+/*-------------------------------------------------------------*/
 
 
 
 
 
-/* BUTTON 2FA/LOGOUT */
+/* BUTTON 2FA/LOGOUT ------------------------------------------*/
+
 .button {
 	height: 50px;
 	margin: 5px;
@@ -321,10 +326,14 @@ button[type="submit"]:active
     gap: 15px; /* Distanza tra i bottoni e il QR code */
 }
 
+/*-----------------------------------------------------------------------*/
 
 
 
-/* BUTTON MATCH HISTORY */
+
+
+/* BUTTON MATCH HISTORY ------------------------------------------------ */
+
 .button2 {
 	padding: 10px 40px;
 	font-size: 18px;
@@ -392,11 +401,12 @@ button[type="submit"]:active
 	box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
 }
   
+/*------------------------------------------------------------------------*/
 
 
 
   
-/* GRAFICO */
+/* GRAFICO --------------------------------------------------------------*/
 
 .chart-container {
     width: 250px; 
@@ -414,4 +424,7 @@ button[type="submit"]:active
     font-size: 16px;
     color: #333;
 }
+
+/*--------------------------------------------------------------------*/
+
 

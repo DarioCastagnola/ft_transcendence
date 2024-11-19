@@ -1,5 +1,7 @@
 let gameInstance = null;
 
+import { apiFetch } from "../service/apiService.js"
+
 export default function pong() {
     const html = `
 	<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -8,7 +10,7 @@ export default function pong() {
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
     </div>
 </nav>
 
@@ -280,8 +282,8 @@ export default function pong() {
 					<div class="row justify-content-center">
 					</div>
 					<canvas class ="w-100" id="myCanvas" style="border:3px solid #ffffff;"></canvas>
-          	<div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1: 0</div>
-            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2: 0</div>
+          	<div id="scorePlayer1" style="position: absolute; top: 10px; left: 20px; color: white; font-size: 24px;">Player 1</div>
+            <div id="scorePlayer2" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 24px;">Player 2</div>
 				</div>
 			</div>
 		</section>
@@ -292,13 +294,76 @@ export default function pong() {
     <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
 </footer>
     `;
-	
+
 	// Cleanup previous instance
-	    if (gameInstance) {
+	if (gameInstance) {
         cancelAnimationFrame(gameInstance);
     }
 
+	
     setTimeout(() => {
+
+		//LEADER BOARD--------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<h2 class="leaderBoardOne">Player 1</h2>
+		// 				<h2 class="leaderBoardTwo">Player 2</h2>
+		// 				<h2 class="leaderBoardThird">Player 3</h2>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//------------------------------------------------------------
+
+
+
+		//START GAME--------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<h2 class="player">Player 1 vs Player 2</h2>
+		// 				<button class="start-buttonOne">Start Game</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//------------------------------------------------------------
+
+
+
+		//NEXT MATCH---------------------------------------------------
+		// const overlay = document.createElement('div');
+		// overlay.id = 'overlay';
+
+		// overlay.innerHTML = `
+		// 	<div id="overlay">
+		// 		<div class="game-screen">
+		// 			<div class="content">
+		// 				<button class="start-button">Next match</button>
+		// 			</div>
+		// 		</div>
+		// 	</div>
+		// `;
+
+    	// document.body.appendChild(overlay);
+		//--------------------------------------------------------------
+
+
+
+		// GAME PONG2D -------------------------------------------------
 
 		const canvas = document.getElementById("myCanvas");
 		const ctx = canvas.getContext("2d");
@@ -306,9 +371,124 @@ export default function pong() {
 		let isBallMoving = false;
 		canvas.width = 1800;
 		canvas.height = 900;
+		let player1Id;
+		let player2Id;
+		let username1;
+		let username2;
+
+		// async function sendResults(winnerId) {
+		// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
+
+		// 	// Define the data you want to send in the POST request
+		// 	const data = {
+		// 	  winnerId: winnerId, // Replace with the actual field expected by the API
+		// 	};
+
+		// 	// Call apiFetch with method POST and data in the body
+		// 	const response = await apiFetch(apiUrl, {
+		// 	  method: 'POST',
+		// 	  body: JSON.stringify(data),
+		// 	});
+
+		// 	if (response.ok) {
+		// 	  const result = await response.json();
+		// 	  return result.nickname;
+		// 	} else {
+		// 	  console.error("Failed to send match results", response.status);
+		// 	  return null;
+		// 	}
+		//   }
+
+		// async function getPlayersId() {
+		// 	const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
+		// 	const response = await apiFetch(apiUrl);
+
+		// 	if (response.ok) {
+		// 		const data = await response.json();
+		// 		player1Id = data.player1
+		// 		player2Id = data.player2
+		// 	} else {
+		// 		console.error("Failed to fetch next match", response.status);
+        //         history.pushState({}, '', '/home');
+		// 		router()
+		// 		return null;
+		// 	}
+		// }
+
+		// async function fetchUserInfo(id) {
+		// 	const apiUrl = `http://localhost/api/game/players/${id}/`;
+		// 	const response = await apiFetch(apiUrl);
+
+		// 	if (response.ok) {
+		// 		const data = await response.json();
+		// 		return data.nickname;
+		// 	} else {
+		// 		console.error("Failed to fetch user info", response.status);
+        //         history.pushState({}, '', '/home');
+		// 		router()
+		// 		return null;
+		// 	}
+		// }
+
+		// async function loadUsernames() {
+		// 	username1 = await fetchUserInfo(player1Id);
+		// 	username2 = await fetchUserInfo(player2Id);
+
+		// 	document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+		// 	document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		// }
+
+
+		// async function spawnOverlay () {
+		// 	await getPlayersId();
+		// 	await loadUsernames();
+
+		// 	// OVERLAY ---------------------------------------------------------
+
+		// 	const overlay = document.createElement('div');
+		// 	overlay.id = 'overlay';
+
+		// 	overlay.innerHTML = `
+		// 		<div id="overlay">
+		// 			<div class="game-screen">
+		// 				<div class="content">
+		// 					<h2 class="player">${username1} vs ${username2}</h2>
+		// 					<button class="start-button">Start Game</button>
+		// 				</div>
+		// 			</div>
+		// 		</div>
+		// 	`;
+
+		// 	document.body.appendChild(overlay);
+		// }
+
+		// spawnOverlay()
+
+		async function fetchUserInfo(id) {
+			const apiUrl = `http://localhost/api/game/players/${id}/`;
+			const response = await apiFetch(apiUrl);
+	
+			if (response.ok) {
+				const data = await response.json();
+				return data.nickname;
+			} else {
+				console.error("Failed to fetch user info", response.status);
+				return null;
+			}
+		}
+	
+			async function loadUsernames() {
+			username1 = await fetchUserInfo(6);
+			username2 = await fetchUserInfo(8);
+	
+			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+			}
+	
+		loadUsernames();	
 
 		const keys = {};
-	
+
 		class Paddle {
 			constructor(user) {
 				this.paddle_distance_from_border = 30;
@@ -337,7 +517,7 @@ export default function pong() {
 					this.y = 0;
 				} else if (this.y + this.height > canvas.height) {
 					this.y = canvas.height - this.height;
-				}	
+				}
 			}
 		}
 
@@ -360,18 +540,90 @@ export default function pong() {
 				if (this.user === "user1" && this.score === 5) {
 					ctx.fillText("YOU WIN!",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU LOSE",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
-					setTimeout(function() {
-						window.location.href = "/pong2DMenu";
-					}, 2000); // 2000 milliseconds = 2 seconds
-					
+					if (localStorage.getItem("isTournament") === "true")
+						{
+							const overlay = document.createElement('div');
+							overlay.id = 'overlay';
+	
+							overlay.innerHTML = `
+								<div id="overlay">
+									<div class="game-screen">
+										<div class="content">
+											<a href="/pong" data-link>
+											<button class="start-button">Next match</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							`;
+							document.body.appendChild(overlay);
+						}
+						else{
+	
+							const overlay = document.createElement('div');
+							overlay.id = 'overlay';
+	
+							overlay.innerHTML = `
+								<div id="overlay">
+									<div class="game-screen">
+										<div class="content">
+											<a href="/pong2DMenu" data-link>
+											<button class="start-button">End game</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							`;
+	
+							document.body.appendChild(overlay);
+						}
+
 				}
 				if (this.user === "user2" && this.score === 5) {
 					ctx.fillText("YOU LOSE",canvas.width / 5, canvas.height / 2);
 					ctx.fillText("YOU WIN!",canvas.width / 2 + canvas.width / 6, canvas.height / 2);
-					setTimeout(function() {
-						window.location.href = "/pong2DMenu";
-					}, 2000); // 2000 milliseconds = 2 seconds
-					
+
+					if (localStorage.getItem("isTournament") === "true")
+					{
+						const overlay = document.createElement('div');
+						overlay.id = 'overlay';
+
+						overlay.innerHTML = `
+							<div id="overlay">
+								<div class="game-screen">
+									<div class="content">
+										<a href="/pong" data-link>
+										<button class="start-button">Next match</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						`;
+
+						document.body.appendChild(overlay);
+					}
+					else{
+
+						const overlay = document.createElement('div');
+						overlay.id = 'overlay';
+
+						overlay.innerHTML = `
+							<div id="overlay">
+								<div class="game-screen">
+									<div class="content">
+										<button class="start-button">End game</button>
+									</div>
+								</div>
+							</div>
+						`;
+
+						document.body.appendChild(overlay);
+					}
+
+					// setTimeout(function() {
+					// 	window.location.href = "/pong2DMenu";
+					// }, 3000); // 2000 milliseconds = 2 seconds
+
 				}
 			}
 		}
@@ -411,12 +663,12 @@ export default function pong() {
 					const paddleCenter = player2.paddle.y + player2.paddle.height / 2;
 					const ballCenter = this.y + this.height / 2;
 					const distanceFromCenter = ballCenter - paddleCenter;
-					
+
 					this.dy += distanceFromCenter * 0.1;
 
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
-					this.last_touched_by = player2;	
+					this.last_touched_by = player2;
 				}
 				if (this.x < player1.paddle.x + player1.paddle.width && this.x + this.width > player1.paddle.x &&
 					this.y < player1.paddle.y + player1.paddle.height && this.y + this.height > player1.paddle.y &&
@@ -426,9 +678,9 @@ export default function pong() {
 					const paddleCenter = player1.paddle.y + player1.paddle.height / 2;
 					const ballCenter = this.y + this.height / 2;
 					const distanceFromCenter = ballCenter - paddleCenter;
-    
+
 					this.dy += distanceFromCenter * 0.1;
-					
+
 					this.dx *= speedMultiplier;
 					this.dy *= speedMultiplier;
 					this.last_touched_by = player1;
@@ -440,14 +692,12 @@ export default function pong() {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player1.score += 1;
-					document.getElementById("scorePlayer1").textContent = "Player 1: " + player1.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 				if (this.x < 0) {
 					this.ft_resetPosition();
 					isBallMoving = false;
 					player2.score += 1;
-					document.getElementById("scorePlayer2").textContent = "Player 2: " + player2.score;
 					console.log("player1: ", player1.score, "player2: ", player2.score);
 				}
 			}
@@ -466,7 +716,7 @@ export default function pong() {
 				this.last_touched_by = 0;
 			}
 		}
-		
+
 		class Board {
 			constructor(x, y, width, height) {
 				this.x = x;
@@ -523,20 +773,32 @@ export default function pong() {
 		// 4. Ball's movement
 		// 5. Loop the game
 
+		// let isAIEnabled = true; // Flag to enable or disable AI
+
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			
+
 			if (keys["w"]) {
 				player1.ft_movePaddle(-10);
 			}
 			if (keys["s"]) {
 				player1.ft_movePaddle(10);
 			}
-			if (keys["arrowup"]) {
-				player2.ft_movePaddle(-10);
-			}
-			if (keys["arrowdown"]) {
-				player2.ft_movePaddle(10);
+			if (localStorage.getItem("opponentType") === "bot") {
+				const aiSpeed = 10; 
+		
+				if (ball.y + ball.height / 2 < player2.paddle.y + player2.paddle.height / 2) {
+					player2.ft_movePaddle(-aiSpeed);
+				} else if (ball.y + ball.height / 2 > player2.paddle.y + player2.paddle.height / 2) {
+					player2.ft_movePaddle(aiSpeed);
+				}
+			} else {
+				if (keys["arrowup"]) {
+					player2.ft_movePaddle(-10);
+				}
+				if (keys["arrowdown"]) {
+					player2.ft_movePaddle(10);
+				}
 			}
 
 			if (isBallMoving){

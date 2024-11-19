@@ -64,6 +64,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://127.0.0.1:4433"
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
