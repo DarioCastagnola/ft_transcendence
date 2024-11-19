@@ -277,7 +277,7 @@ export default function pong2DMenu() {
 
 	<section>
 		<div class="cellPong">
-			<a id="partitaRapidaButton" class="menuTesto" href="/pong" data-link>Partita rapida</a>
+			<a id="partitaRapidaButton" class="menuTesto" href="#" data-link>Partita rapida</a>
 		</div>
 		<div class="cellPong">
 			<a id="torneoButton" class="menuTesto">Torneo</a>
@@ -285,6 +285,25 @@ export default function pong2DMenu() {
 	</section>
 
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="botOrHumanModal" tabindex="-1" aria-labelledby="botOrHumanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="botOrHumanModalLabel">Scegli il tuo avversario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Vuoi che il tuo avversario sia un bot o un giocatore umano?
+            </div>
+            <div class="modal-footer">
+                <button id="botOpponentButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Bot</button>
+                <button id="humanOpponentButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Giocatore umano</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer class="custom-footer text-white text-center py-3">
     <p>© 2024 Transcendence. Tutti i diritti riservati.</p>
@@ -331,14 +350,36 @@ setTimeout(() => {
 		chooseTheRoute();
 	});
 
-    const partitaRapidaButton = document.getElementById("partitaRapidaButton");
+    // const partitaRapidaButton = document.getElementById("partitaRapidaButton");
 
+    // partitaRapidaButton.addEventListener('click', () => {
+    //     localStorage.setItem("isTournament", "false")
+	// 	// history.pushState({}, '', '/pong');
+	// 	// router()
+	// 	console.log("ciao");
+	// });
+
+	const partitaRapidaButton = document.getElementById("partitaRapidaButton");
     partitaRapidaButton.addEventListener('click', () => {
-        localStorage.setItem("isTournament", "false")
-		// history.pushState({}, '', '/pong');
-		// router()
-		console.log("ciao");
-	});
+        // Show the modal
+        const botOrHumanModal = new bootstrap.Modal(document.getElementById('botOrHumanModal'));
+        botOrHumanModal.show();
+    });
+
+    // Handle modal button clicks
+    document.getElementById('botOpponentButton').addEventListener('click', () => {
+        localStorage.setItem("isTournament", "false");
+        localStorage.setItem("opponentType", "bot");
+        history.pushState({}, '', '/pong');
+        router();
+    });
+
+    document.getElementById('humanOpponentButton').addEventListener('click', () => {
+        localStorage.setItem("isTournament", "false");
+        localStorage.setItem("opponentType", "human");
+        history.pushState({}, '', '/pong');
+        router();
+    });
 
 	}, 0);
 

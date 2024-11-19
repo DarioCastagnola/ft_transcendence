@@ -556,7 +556,6 @@ export default function pong() {
 									</div>
 								</div>
 							`;
-	op
 							document.body.appendChild(overlay);
 						}
 						else{
@@ -774,7 +773,7 @@ export default function pong() {
 		// 4. Ball's movement
 		// 5. Loop the game
 
-		let isAIEnabled = true; // Flag to enable or disable AI
+		// let isAIEnabled = true; // Flag to enable or disable AI
 
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -785,18 +784,15 @@ export default function pong() {
 			if (keys["s"]) {
 				player1.ft_movePaddle(10);
 			}
-			if (isAIEnabled) {
-				// Define AI paddle speed limit to make it more realistic
+			if (localStorage.getItem("opponentType") === "bot") {
 				const aiSpeed = 10; 
 		
-				// Move the AI paddle towards the ball's y position
 				if (ball.y + ball.height / 2 < player2.paddle.y + player2.paddle.height / 2) {
-					player2.ft_movePaddle(-aiSpeed); // Move up if ball is above paddle
+					player2.ft_movePaddle(-aiSpeed);
 				} else if (ball.y + ball.height / 2 > player2.paddle.y + player2.paddle.height / 2) {
-					player2.ft_movePaddle(aiSpeed); // Move down if ball is below paddle
+					player2.ft_movePaddle(aiSpeed);
 				}
 			} else {
-				// Human-controlled player 2
 				if (keys["arrowup"]) {
 					player2.ft_movePaddle(-10);
 				}
