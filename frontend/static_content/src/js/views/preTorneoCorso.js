@@ -339,7 +339,7 @@ setTimeout(() => {
 	riprendiTorneoButton.addEventListener('click', async function(event) {
 
     localStorage.setItem("isTournament", "true")
-
+    localStorage.setItem("opponentType", "human")
     history.pushState({}, '', '/pong');
     router()
 

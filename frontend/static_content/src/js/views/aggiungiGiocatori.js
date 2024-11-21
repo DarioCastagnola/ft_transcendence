@@ -371,6 +371,7 @@ export default function aggiungiGiocatori() {
                     // alert("All players added successfully!");
 
                     localStorage.setItem("isTournament", "true")
+                    localStorage.setItem("opponentType", "human")
                     history.pushState({}, '', '/pong');
                     router()
                 } else {

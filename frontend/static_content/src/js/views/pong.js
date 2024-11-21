@@ -1,6 +1,7 @@
 let gameInstance = null;
 
-import { apiFetch } from "../service/apiService.js"
+import { router } from "../main.js";
+import { apiFetch, fetchUserInfo } from "../service/apiService.js"
 
 export default function pong() {
     const html = `
@@ -374,7 +375,33 @@ export default function pong() {
 		let player1Id;
 		let player2Id;
 		let username1;
+		let botNames = ["gpAInico", "AIdi-stef", "mpAIterno"];
 		let username2;
+		
+		if (localStorage.getItem("isTournament") === "false") {
+			fetchUserInfo().then((result) => {
+				username1 = result.username;
+				if (localStorage.getItem("opponentType") === "bot") {
+					username2 = botNames[Math.floor(Math.random() * botNames.length)];
+				}
+				else
+					username2 = "Guest";
+				document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+				document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+				console.log(username1);
+			});
+		};
+		
+			// // Assign the fetched username to `username1`
+			// fetchUsername().then((result) => {
+			// 	username1 = result;
+			// 	console.log("Username1:", username1);
+			// 		if (localStorage.getItem("opponentType") === "bot") {
+			// 			username2 = botNames[Math.floor(Math.random() * botNames.length)];
+			// 			console.log("Username2 (Bot):", username2);
+			// 	}
+			// });
+		// }
 
 		// async function sendResults(winnerId) {
 		// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
@@ -464,28 +491,29 @@ export default function pong() {
 
 		// spawnOverlay()
 
-		async function fetchUserInfo(id) {
-			const apiUrl = `http://localhost/api/game/players/${id}/`;
-			const response = await apiFetch(apiUrl);
+		// TESTING PURPOSES
+		// async function fetchUserInfo(id) {
+		// 	const apiUrl = `http://localhost/api/game/players/${id}/`;
+		// 	const response = await apiFetch(apiUrl);
 	
-			if (response.ok) {
-				const data = await response.json();
-				return data.nickname;
-			} else {
-				console.error("Failed to fetch user info", response.status);
-				return null;
-			}
-		}
+		// 	if (response.ok) {
+		// 		const data = await response.json();
+		// 		return data.nickname;
+		// 	} else {
+		// 		console.error("Failed to fetch user info", response.status);
+		// 		return null;
+		// 	}
+		// }
 	
-			async function loadUsernames() {
-			username1 = await fetchUserInfo(6);
-			username2 = await fetchUserInfo(8);
+		// 	async function loadUsernames() {
+		// 	username1 = await fetchUserInfo(6);
+		// 	username2 = await fetchUserInfo(8);
 	
-			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
-			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
-			}
+		// 	document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+		// 	document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		// 	}
 	
-		loadUsernames();	
+		// loadUsernames();	
 
 		const keys = {};
 
