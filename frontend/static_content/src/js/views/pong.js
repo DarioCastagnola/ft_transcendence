@@ -802,30 +802,73 @@ export default function pong() {
 		// 5. Loop the game
 
 		// let isAIEnabled = true; // Flag to enable or disable AI
+		let lastUpdateTime = 0; 
+		let targetY = 0; // The predicted y-coordinate the AI paddle should move to
+		let paddleSpeed = 15; // Fixed paddle movement speed
+		let aiRefreshRate = 1000; // AI refresh rate in milliseconds (1 second)
+
+		function ft_predictBallPosition(ball, canvas) {
+			// Predict the ball's y-coordinate when it reaches the AI paddle's x position
+			let predictedY = ball.y;
+			let predictedDy = ball.dy;
+			let predictedX = ball.x;
+			let predictedDx = ball.dx;
+		
+			const targetX = player2.paddle.x + player2.paddle.width; // AI paddle x-coordinate
+			const timeToReachTarget = (targetX - predictedX) / predictedDx; // Time for ball to reach AI's paddle (in seconds)
+		
+			// Simulate the ball's movement to the point where it reaches the paddle's x-coordinate
+			let timeElapsed = 0;
+			while (timeElapsed < timeToReachTarget) {
+				predictedY += predictedDy * 0.01; // Update position in small time steps
+				timeElapsed += 0.01;
+		
+				// Handle wall bounces (if the ball hits top or bottom)
+				if (predictedY <= 0 || predictedY + ball.height >= canvas.height) {
+					predictedDy = -predictedDy; // Reverse direction on bounce
+				}
+			}
+		
+			// Return the predicted y-coordinate for the ball when it reaches the paddle's x-coordinate
+			return Math.max(0, Math.min(predictedY, canvas.height - ball.height)); // Ensure it's within the canvas bounds
+		}
+		
+		
 
 		function ft_gameLoop() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			if (keys["w"]) {
-				player1.ft_movePaddle(-10);
+				player1.ft_movePaddle(-paddleSpeed);
 			}
 			if (keys["s"]) {
-				player1.ft_movePaddle(10);
+				player1.ft_movePaddle(paddleSpeed);
 			}
 			if (localStorage.getItem("opponentType") === "bot") {
-				const aiSpeed = 10; 
-		
-				if (ball.y + ball.height / 2 < player2.paddle.y + player2.paddle.height / 2) {
-					player2.ft_movePaddle(-aiSpeed);
-				} else if (ball.y + ball.height / 2 > player2.paddle.y + player2.paddle.height / 2) {
-					player2.ft_movePaddle(aiSpeed);
+				const currentTime = Date.now();
+			
+				// AI refresh logic
+				if (currentTime - lastUpdateTime >= aiRefreshRate) {
+					lastUpdateTime = currentTime;
+			
+					// Predict the ball's position when it reaches the AI paddle
+					targetY = ft_predictBallPosition(ball, canvas);
 				}
-			} else {
+			
+				// Move the paddle towards the predicted position
+				const paddleCenter = player2.paddle.y + player2.paddle.height / 2;
+				if (paddleCenter < targetY) {
+					player2.ft_movePaddle(paddleSpeed);
+				} else if (paddleCenter > targetY) {
+					player2.ft_movePaddle(-paddleSpeed);
+				}
+			}
+		 	else {
 				if (keys["arrowup"]) {
-					player2.ft_movePaddle(-10);
+					player2.ft_movePaddle(-paddleSpeed);
 				}
 				if (keys["arrowdown"]) {
-					player2.ft_movePaddle(10);
+					player2.ft_movePaddle(paddleSpeed);
 				}
 			}
 
