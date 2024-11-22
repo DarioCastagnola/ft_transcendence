@@ -27,3 +27,15 @@ export async function apiFetch(url, options = {}) {
   return response;
 }
 
+export async function fetchUserInfo() {
+  const apiUrl = 'https://localhost/api/auth/user-info/';
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    console.error("Failed to fetch user info", response.status);
+  }
+}
+

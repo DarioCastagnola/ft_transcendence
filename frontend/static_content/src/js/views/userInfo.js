@@ -1,5 +1,6 @@
 import { router } from "../main.js";
 import { apiFetch } from "../service/apiService.js";
+import { fetchUserInfo } from "../service/apiService.js";
 
 export default function userinfo() {
   const html = `
@@ -352,20 +353,27 @@ export default function userinfo() {
     const qrCodeContainer = document.getElementById("qrCodeContainer");
 
 
-    async function fetchUserInfo() {
-      const apiUrl = 'https://localhost/api/auth/user-info/';
-      const response = await apiFetch(apiUrl);
+    // async function fetchUserInfo() {
+    //   const apiUrl = 'https://localhost/api/auth/user-info/';
+    //   const response = await apiFetch(apiUrl);
 
-      if (response.ok) {
-        const data = await response.json();
-        usernameElement.value = data.username;
-        emailElement.value = data.email;
-      } else {
-        console.error("Failed to fetch user info", response.status);
-      }
-    }
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     usernameElement.value = data.username;
+    //     emailElement.value = data.email;
+    //   } else {
+    //     console.error("Failed to fetch user info", response.status);
+    //   }
+    // }
+	
+	// fetchUserInfo();
 
-    fetchUserInfo();
+
+
+    fetchUserInfo().then((result) => {
+		usernameElement.value = result.username;
+		emailElement.value = result.email;
+	});
 
     // Enable 2FA button click handler
     enable2faButton.addEventListener('click', () => {
