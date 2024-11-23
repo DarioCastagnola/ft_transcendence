@@ -4,6 +4,14 @@ import { fetchUserInfo } from "../service/apiService.js";
 
 export default function userinfo() {
   const html = `
+  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+   <div class="container">
+	   <a class="navbar-brand" href="/home" data-link>Transcendence</a>
+	   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		   <span class="navbar-toggler-icon"></span>
+	   </button>
+   </div>
+</nav>
   <section>
 
 		<span></span>

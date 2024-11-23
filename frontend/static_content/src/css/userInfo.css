@@ -1,3 +1,47 @@
+/*NAVBAR-----------------------------------------------------*/
+
+.navbar {
+    background-color: #333 !important; /* Colore di sfondo della navbar */
+}
+
+/* Stile per i link della navbar */
+.navbar-nav .nav-link {
+    color: #ffffff; /* Colore del testo */
+    padding: 10px 15px; /* Spazio attorno ai link */
+}
+
+/* Effetto hover per i link */
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+/* Stile per il dropdown */
+.navbar-nav .dropdown-menu {
+    background-color: #343a40; /* Colore di sfondo per il menu a discesa */
+}
+
+.navbar-nav .dropdown-item {
+    color: #ffffff; /* Colore del testo per gli elementi del dropdown */
+}
+
+/* Effetto hover per gli elementi del dropdown */
+.navbar-nav .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+.navbar-brand {
+    font-size: 2.5rem; /* Dimensione del font */
+    font-family: 'Audiowide', cursive; /* Un font ispirato ai giochi retro (inserisci il tuo font preferito) */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombra del testo per un effetto tridimensionale */
+    color: rgb(255, 0, 0); /* Colore del testo */
+    transition: transform 0.3s; /* Transizione per un effetto al passaggio del mouse */
+}
+
+.navbar-brand:hover {
+    transform: scale(1.1); /* Ingrandisce il testo al passaggio del mouse */
+}
+
+/* -----------------------------------------------------*/
 
 *
 {
