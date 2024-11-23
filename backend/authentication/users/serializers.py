@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         
         if password:
             password_validator = RegexValidator(
-                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&.,-£;:]).{8,72}$',
                 message=(
                     "La password deve contenere almeno 8 caratteri, una lettera maiuscola, "
                     "una lettera minuscola, un numero e un carattere speciale."

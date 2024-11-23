@@ -378,6 +378,77 @@ export default function pong() {
 		let botNames = ["gpAInico", "AIdi-stef", "mpAIterno"];
 		let username2;
 		
+		
+		// async function sendResults(winnerId) {
+			// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
+			
+			// 	// Define the data you want to send in the POST request
+			// 	const data = {
+				// 	  winnerId: winnerId, // Replace with the actual field expected by the API
+				// 	};
+				
+				// 	// Call apiFetch with method POST and data in the body
+				// 	const response = await apiFetch(apiUrl, {
+					// 	  method: 'POST',
+					// 	  body: JSON.stringify(data),
+					// 	});
+					
+					// 	if (response.ok) {
+						// 	  const result = await response.json();
+		// 	  return result.nickname;
+		// 	} else {
+			// 	  console.error("Failed to send match results", response.status);
+			// 	  return null;
+			// 	}
+			//   }
+			
+			async function getPlayersId() {
+				const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
+				const response = await apiFetch(apiUrl);
+				
+				if (response.ok) {
+					const data = await response.json();
+					player1Id = data.player1;
+					player2Id = data.player2;
+					console.log("next match log = ", data);
+				} else {
+					console.error("Failed to fetch next match", response.status);
+					history.pushState({}, '', '/home');
+					router()
+					return null;
+				}
+			}
+			
+			async function fetchPlayerInfo(id) {
+			const apiUrl = `http://localhost/api/game/players/${id}/`;
+			const response = await apiFetch(apiUrl);
+
+			if (response.ok) {
+				const data = await response.json();
+				console.log(data);
+				return data.nickname;
+			} else {
+				console.error("Failed to fetch user info", response.status);
+                history.pushState({}, '', '/home');
+				router()
+				return null;
+			}
+		}
+		
+		async function loadUsernames() {
+			username1 = await fetchPlayerInfo(player1Id);
+			console.log(player1Id)
+			username2 = await fetchPlayerInfo(player2Id);
+			console.log(player2Id)
+			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		}
+		
+		async function initializeTournamentNames() {
+			await getPlayersId();
+			await loadUsernames();
+		}
+		
 		if (localStorage.getItem("isTournament") === "false") {
 			fetchUserInfo().then((result) => {
 				username1 = result.username;
@@ -385,90 +456,18 @@ export default function pong() {
 					username2 = botNames[Math.floor(Math.random() * botNames.length)];
 				}
 				else
-					username2 = "Guest";
-				document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
-				document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
-				console.log(username1);
-			});
-		};
-		
-			// // Assign the fetched username to `username1`
-			// fetchUsername().then((result) => {
-			// 	username1 = result;
-			// 	console.log("Username1:", username1);
-			// 		if (localStorage.getItem("opponentType") === "bot") {
-			// 			username2 = botNames[Math.floor(Math.random() * botNames.length)];
-			// 			console.log("Username2 (Bot):", username2);
-			// 	}
-			// });
-		// }
-
-		// async function sendResults(winnerId) {
-		// 	const apiUrl = `http://localhost/api/game/tournaments/set-match-winner/`;
-
-		// 	// Define the data you want to send in the POST request
-		// 	const data = {
-		// 	  winnerId: winnerId, // Replace with the actual field expected by the API
-		// 	};
-
-		// 	// Call apiFetch with method POST and data in the body
-		// 	const response = await apiFetch(apiUrl, {
-		// 	  method: 'POST',
-		// 	  body: JSON.stringify(data),
-		// 	});
-
-		// 	if (response.ok) {
-		// 	  const result = await response.json();
-		// 	  return result.nickname;
-		// 	} else {
-		// 	  console.error("Failed to send match results", response.status);
-		// 	  return null;
-		// 	}
-		//   }
-
-		// async function getPlayersId() {
-		// 	const apiUrl = `https://localhost/api/game/tournaments/next-match/`;
-		// 	const response = await apiFetch(apiUrl);
-
-		// 	if (response.ok) {
-		// 		const data = await response.json();
-		// 		player1Id = data.player1
-		// 		player2Id = data.player2
-		// 	} else {
-		// 		console.error("Failed to fetch next match", response.status);
-        //         history.pushState({}, '', '/home');
-		// 		router()
-		// 		return null;
-		// 	}
-		// }
-
-		// async function fetchUserInfo(id) {
-		// 	const apiUrl = `http://localhost/api/game/players/${id}/`;
-		// 	const response = await apiFetch(apiUrl);
-
-		// 	if (response.ok) {
-		// 		const data = await response.json();
-		// 		return data.nickname;
-		// 	} else {
-		// 		console.error("Failed to fetch user info", response.status);
-        //         history.pushState({}, '', '/home');
-		// 		router()
-		// 		return null;
-		// 	}
-		// }
-
-		// async function loadUsernames() {
-		// 	username1 = await fetchUserInfo(player1Id);
-		// 	username2 = await fetchUserInfo(player2Id);
-
-		// 	document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
-		// 	document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
-		// }
-
+				username2 = "Guest";
+			document.getElementById("scorePlayer1").textContent = username1 || "Player 1";
+			document.getElementById("scorePlayer2").textContent = username2 || "Player 2";
+		});
+		}
+		else if (localStorage.getItem("isTournament") === "true") {
+			initializeTournamentNames();
+		}
 
 		// async function spawnOverlay () {
-		// 	await getPlayersId();
-		// 	await loadUsernames();
+			// 	await getPlayersId();
+			// 	await loadUsernames();
 
 		// 	// OVERLAY ---------------------------------------------------------
 
