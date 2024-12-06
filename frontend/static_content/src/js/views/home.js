@@ -325,19 +325,19 @@ export default function home() {
     </footer>
         `;
 
-  setTimeout(() => {
+//   setTimeout(() => {
 
-    const logoutButton = document.getElementById("logoutButton");
+//     const logoutButton = document.getElementById("logoutButton");
 
-    logoutButton.addEventListener('click', async function (event) {
-      event.preventDefault();
+//     logoutButton.addEventListener('click', async function (event) {
+//       event.preventDefault();
 
-      const apiUrl = 'https://localhost/api/auth/logout/';
-      await apiFetch(apiUrl, {method: "POST"});
-      window.history.pushState({}, '', '/signIn');
-      router();
-    });
-  }, 0);
+//       const apiUrl = 'https://localhost/api/auth/logout/';
+//       await apiFetch(apiUrl, {method: "POST"});
+//       window.history.pushState({}, '', '/signIn');
+//       router();
+//     });
+//   }, 0);
 
   return html;
 }

@@ -296,7 +296,7 @@ export default function userinfo() {
 						<i>Mail</i>
 					</div>
 					<div class="inputBox">
-						<input type="submit" onclick="submitForm()" value="Save">
+						<input type="submit" value="Save" id="save-update">
 					</div>
 				</div>
 
@@ -330,52 +330,117 @@ export default function userinfo() {
 			`;
 
 
-  setTimeout(() => {
 
-	// UPLOAD IMMAGINE ----------------------------------------------
+	setTimeout(() => {
 
-	document.getElementById("profile-image").addEventListener("change", function() {
-        var reader = new FileReader();
-
-        reader.onload = function() {
-            var output = document.getElementById('profile-img');
-            output.src = reader.result; // Cambia l'immagine con quella selezionata
-        };
-
-        var file = this.files[0]; // Ottieni il file dal <input>
-        if (file) {
-            reader.readAsDataURL(file); // Usa il file selezionato
+		
+		// UPLOAD IMMAGINE ----------------------------------------------
+		
+		document.getElementById("profile-image").addEventListener("change", function() {
+			var reader = new FileReader();
+			
+			reader.onload = function() {
+				var output = document.getElementById('profile-img');
+				output.src = reader.result; // Cambia l'immagine con quella selezionata
+			};
+			
+			var file = this.files[0]; // Ottieni il file dal <input>
+			if (file) {
+				reader.readAsDataURL(file); // Usa il file selezionato
+				uploadImage(file);
         } else {
             console.log("Nessun file selezionato.");
         }
     });
 
-	//-----------------------------------------------------------------
+	function uploadImage(file) {
+		const apiUrl = "https://localhost/api/core/user-profile/";
+		apiFetch(apiUrl, {
+			method: "POST",
+			body: file, // Il file viene inviato direttamente come binario
+		})
+		.then(response => {
+			if (response.ok) {
+				console.log("Immagine caricata con successo.");
+			} else {
+				console.error("Errore durante il caricamento dell'immagine.");
+			}
+		})
+		.catch(error => {
+			console.error("Errore di rete:", error);
+		});
+	}
 
-
+	async function fetchProfileImage() {
+		try {
+			// Ottenere l'ID dell'utente
+			let userInfo = await fetchUserInfo();
+			let user_id = userInfo.id;
+			const apiUrl = `https://localhost/api/core/user-profile/${user_id}/`; // URL del backend
+		
+			// Chiamata all'API per ottenere il profilo utente
+			const response = await apiFetch(apiUrl);
+			if (!response.ok) {
+				throw new Error("Errore nel recupero dell'immagine");
+			}
+			
+			// Parse della risposta JSON
+			const data = await response.json();
+			console.log("Dati API:", data);
+			const avatarBinary = data.avatar; // Estrarre il binario dell'immagine dalla chiave `avatar`
 	
+			// Convertire il binario (base64 o raw) in un URL visibile
+			const binaryData = atob(avatarBinary); // Decodifica base64 (se il backend restituisce base64)
+			const byteArray = new Uint8Array(binaryData.length);
+			for (let i = 0; i < binaryData.length; i++) {
+				byteArray[i] = binaryData.charCodeAt(i);
+			}
+			const blob = new Blob([byteArray], { type: "image/png" }); // Specifica il MIME type dell'immagine
+			const url = URL.createObjectURL(blob);
+	
+			// Aggiornare l'immagine nel DOM
+			document.getElementById("profile-img").src = url;
+		} catch (error) {
+			console.error("Errore:", error);
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------
+	
+	
+	fetchProfileImage();
     const usernameElement = document.getElementById("user-username");
     const emailElement = document.getElementById("user-email");
     const enable2faButton = document.getElementById("enable2faButton");
     const logoutButton = document.getElementById("logoutButton");
     const qrCodeContainer = document.getElementById("qrCodeContainer");
 
-
-    // async function fetchUserInfo() {
-    //   const apiUrl = 'https://localhost/api/auth/user-info/';
-    //   const response = await apiFetch(apiUrl);
-
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     usernameElement.value = data.username;
-    //     emailElement.value = data.email;
-    //   } else {
-    //     console.error("Failed to fetch user info", response.status);
-    //   }
-    // }
+	document.getElementById("save-update").addEventListener("click", async (event) => {
+        event.preventDefault(); // Prevent default behavior
+        await submitForm(); // Call the function
+    });
 	
-	// fetchUserInfo();
-
+	async function submitForm() {
+		const apiUrl = `http://localhost/api/auth/update-user/`;
+	
+				const data = {
+					username: document.getElementById("user-username").value,
+        			email: document.getElementById("user-email").value
+				};
+				    const response = await apiFetch(apiUrl, {
+				    method: 'PUT',
+				    body: JSON.stringify(data),
+				});
+	
+				if (response.ok) {
+					console.log("User info updated correctly");
+					return 0;
+				} else {
+				  console.error("Failed to update user info", response.status);
+				  return null;
+				}
+	}
 
 
     fetchUserInfo().then((result) => {

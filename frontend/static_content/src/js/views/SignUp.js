@@ -1,5 +1,5 @@
 import { router } from "../main.js";
-import { apiFetch } from "../service/apiService.js";
+import { apiFetch, fetchUserProfileById, fetchUserInfo } from "../service/apiService.js";
 
 export default function signUp() {
   const html = `
@@ -383,8 +383,11 @@ setTimeout(() => {
     // Handle the API response
     const result = await response.json();
     if (response.ok) {
-      // Redirect to the login page on success
-	  
+		//Daniele Sua Maestà mi ha chiesto di fare un get di userprofile quindi eccotelo quà
+		let userinfoid = await fetchUserInfo();
+		userinfoid = userinfoid.id;
+		await fetchUserProfileById(userinfoid);
+		// Redirect to the login page on success
       history.pushState({}, '', '/home');
       router();
     } else {
