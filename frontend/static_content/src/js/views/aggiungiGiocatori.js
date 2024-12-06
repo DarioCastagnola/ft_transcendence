@@ -307,19 +307,24 @@ export default function aggiungiGiocatori() {
 
           `;
 
+          function calculateMatches(numPlayers) {
+            return (numPlayers * (numPlayers - 1)) / 2;
+        }
+
           setTimeout(() => {
-            document.querySelector(".signin .content").innerHTML = html;
-	        const creaTorneoButton = document.getElementById('creaTorneo');
-
-            // Assegna la funzione `generatePlayerInputs` all'evento `change` del selettore
-            const numPlayersSelect = document.getElementById("numPlayers");
-            numPlayersSelect.addEventListener("change", generatePlayerInputs);
-
-            //////////////////////////////////////////////////////////////////////////////////////
-
-            creaTorneoButton.addEventListener('click', async function(event) {
-                const playerInputs = document.querySelectorAll("#playerNamesContainer input");
-                const playerNames = Array.from(playerInputs).map(input => input.value);
+              document.querySelector(".signin .content").innerHTML = html;
+              const creaTorneoButton = document.getElementById('creaTorneo');
+              
+              // Assegna la funzione `generatePlayerInputs` all'evento `change` del selettore
+              const numPlayersSelect = document.getElementById("numPlayers");
+              numPlayersSelect.addEventListener("change", generatePlayerInputs);
+              
+              //////////////////////////////////////////////////////////////////////////////////////
+              
+              creaTorneoButton.addEventListener('click', async function(event) {
+                  const playerInputs = document.querySelectorAll("#playerNamesContainer input");
+                  const playerNames = Array.from(playerInputs).map(input => input.value);
+                  localStorage.setItem("MatchesLeftToPlay", calculateMatches(playerNames.length + 1));
 
                 const apiUrl = "https://localhost/api/game/tournaments/";
 

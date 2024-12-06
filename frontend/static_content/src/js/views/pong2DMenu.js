@@ -350,15 +350,6 @@ setTimeout(() => {
 		chooseTheRoute();
 	});
 
-    // const partitaRapidaButton = document.getElementById("partitaRapidaButton");
-
-    // partitaRapidaButton.addEventListener('click', () => {
-    //     localStorage.setItem("isTournament", "false")
-	// 	// history.pushState({}, '', '/pong');
-	// 	// router()
-	// 	console.log("ciao");
-	// });
-
 	const partitaRapidaButton = document.getElementById("partitaRapidaButton");
     partitaRapidaButton.addEventListener('click', () => {
         // Show the modal
