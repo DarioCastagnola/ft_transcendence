@@ -53,3 +53,14 @@ export async function getTournamentId() {
 
 }
 
+export async function fetchUserProfileById(user_id) {
+  const apiUrl =  `https://localhost/api/core/user-profile/${user_id}/`
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    console.error("Failed to fetch user profile by id", response.status);
+  }
+}
