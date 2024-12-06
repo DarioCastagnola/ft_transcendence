@@ -39,3 +39,17 @@ export async function fetchUserInfo() {
   }
 }
 
+export async function getTournamentId() {
+  const apiUrl = 'https://localhost/api/game/tournaments/open/';
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data[0].id);
+    return data[0].id;
+  } else {
+    return -1;
+  }
+
+}
+

@@ -1,5 +1,5 @@
 import { router } from "../main.js"
-import { apiFetch } from "../service/apiService.js";
+import { apiFetch, getTournamentId } from "../service/apiService.js";
 
 export default function preTorneoCorso() {
   const html = `
@@ -301,18 +301,20 @@ export default function preTorneoCorso() {
 
 setTimeout(() => {
 
-	async function getTournamentId() {
-		const apiUrl = 'https://localhost/api/game/tournaments/open/';
-		const response = await apiFetch(apiUrl);
+	// async function getTournamentId() {
+	// 	const apiUrl = 'https://localhost/api/game/tournaments/open/';
+	// 	const response = await apiFetch(apiUrl);
 
-    if (response.ok) {
-      const data = await response.json();
-      return data[0].id;
-		} else {
-      return -1;
-		}
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     return data[0].id;
+	// 	} else {
+  //     return -1;
+	// 	}
 
-	}
+	// }
+
+  getTournamentId();
 
 	async function deleteTournamentAndRoute() {
     const tournamentId = await getTournamentId();
