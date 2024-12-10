@@ -1,3 +1,4 @@
+// import { fetchMatchHistory } from "../service/apiService";
 
 export default function matchHistory() {
     const html = `
@@ -273,15 +274,22 @@ export default function matchHistory() {
 	</section>
     `;
 	setTimeout(() => {
-		// Dati delle partite
+
+		// prepareHistory();
+		// // Dati delle partite
+		// async function prepareHistory() {
+		// 	const history = await fetchMatchHistory();
+		// 	console.log(history);
+		// }
+		
 		const partiteGiocate = [
 			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
 			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
 			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-			// { data: '23 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 4', punteggio: '1 - 3', risultato: 'Sconfitta' },
-			// { data: '24 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 6', punteggio: '4 - 2', risultato: 'Vittoria' },
-			// { data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' },
-			// { data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' }
+			{ data: '23 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 4', punteggio: '1 - 3', risultato: 'Sconfitta' },
+			{ data: '24 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 6', punteggio: '4 - 2', risultato: 'Vittoria' },
+			{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' },
+			{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' }
 		];
 		
 		// Seleziona il contenitore per le card

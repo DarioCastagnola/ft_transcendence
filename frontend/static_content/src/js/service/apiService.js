@@ -1,17 +1,22 @@
 import { router } from "../main.js"
 
-// Helper function to make API calls
 export async function apiFetch(url, options = {}) {
   // Set the default credentials option to include cookies
-  // options.credentials = options.credentials || 'same-origin';
   options.credentials = 'include';
 
-  // Set the content type header if it's not already set
+  // Set headers if not already provided
   options.headers = options.headers || {};
-  options.headers['Content-Type'] = 'application/json';
 
-  // If body exists and isn't a string, JSON.stringify it for the fetch call
-  if (options.body && typeof options.body !== 'string') {
+  // Check if body is FormData
+  const isFormData = options.body instanceof FormData;
+
+  // Only set Content-Type if not FormData (browser sets it for FormData automatically)
+  if (!isFormData) {
+    options.headers['Content-Type'] = 'application/json';
+  }
+
+  // If the body exists and is not FormData or a string, stringify it
+  if (options.body && !isFormData && typeof options.body !== 'string') {
     options.body = JSON.stringify(options.body);
   }
 
@@ -64,3 +69,15 @@ export async function fetchUserProfileById(user_id) {
     console.error("Failed to fetch user profile by id", response.status);
   }
 }
+
+// export async function fetchMatchHistory() {
+//   const apiUrl =  'https://localhost/api/game/matches/history/';
+//   const response = await apiFetch(apiUrl);
+
+//   if (response.ok) {
+//     const data = await response.json();
+//     return data;
+//   } else {
+//     console.error("Failed to fetch match history", response.status);
+//   }
+// }

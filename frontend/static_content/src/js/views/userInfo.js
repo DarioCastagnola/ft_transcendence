@@ -353,22 +353,30 @@ export default function userinfo() {
         }
     });
 
-	function uploadImage(file) {
+	async function uploadImage(file) {
 		const apiUrl = "https://localhost/api/core/user-profile/";
-		apiFetch(apiUrl, {
-			method: "POST",
-			body: file, // Il file viene inviato direttamente come binario
-		})
-		.then(response => {
+		console.log(file);
+		try {
+			let userInfo = await fetchUserInfo();
+			let user_id = userInfo.id;
+			const formData = new FormData();
+			formData.append("user_id", user_id); // Append the user ID
+			formData.append("avatar", file);    // Append the image file
+
+			// Send the request
+			const response = await apiFetch(apiUrl, {
+				method: "POST",
+				body: formData, // Pass the FormData
+			});
+
 			if (response.ok) {
-				console.log("Immagine caricata con successo.");
+				console.log("Image uploaded successfully.");
 			} else {
-				console.error("Errore durante il caricamento dell'immagine.");
+				console.error("Error uploading image. Response status:", response.status);
 			}
-		})
-		.catch(error => {
-			console.error("Errore di rete:", error);
-		});
+    } catch (error) {
+        console.error("Network error:", error);
+    }
 	}
 
 	async function fetchProfileImage() {
@@ -387,19 +395,10 @@ export default function userinfo() {
 			// Parse della risposta JSON
 			const data = await response.json();
 			console.log("Dati API:", data);
-			const avatarBinary = data.avatar; // Estrarre il binario dell'immagine dalla chiave `avatar`
-	
-			// Convertire il binario (base64 o raw) in un URL visibile
-			const binaryData = atob(avatarBinary); // Decodifica base64 (se il backend restituisce base64)
-			const byteArray = new Uint8Array(binaryData.length);
-			for (let i = 0; i < binaryData.length; i++) {
-				byteArray[i] = binaryData.charCodeAt(i);
-			}
-			const blob = new Blob([byteArray], { type: "image/png" }); // Specifica il MIME type dell'immagine
-			const url = URL.createObjectURL(blob);
+			const fullUrl = "https://localhost" + data.avatar;
 	
 			// Aggiornare l'immagine nel DOM
-			document.getElementById("profile-img").src = url;
+			document.getElementById("profile-img").src = fullUrl;
 		} catch (error) {
 			console.error("Errore:", error);
 		}
