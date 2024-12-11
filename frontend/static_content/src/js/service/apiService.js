@@ -70,14 +70,14 @@ export async function fetchUserProfileById(user_id) {
   }
 }
 
-// export async function fetchMatchHistory() {
-//   const apiUrl =  'https://localhost/api/game/matches/history/';
-//   const response = await apiFetch(apiUrl);
+export async function fetchMatchHistory() {
+  const apiUrl =  'https://localhost/api/game/matches/history/';
+  const response = await apiFetch(apiUrl);
 
-//   if (response.ok) {
-//     const data = await response.json();
-//     return data;
-//   } else {
-//     console.error("Failed to fetch match history", response.status);
-//   }
-// }
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    console.error("Failed to fetch match history", response.status);
+  }
+}

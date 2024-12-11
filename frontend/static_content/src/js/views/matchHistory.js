@@ -1,7 +1,16 @@
-// import { fetchMatchHistory } from "../service/apiService";
+
+import { fetchMatchHistory } from "../service/apiService.js";
 
 export default function matchHistory() {
     const html = `
+	<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+   <div class="container">
+	   <a class="navbar-brand" href="/home" data-link>Transcendence</a>
+	   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		   <span class="navbar-toggler-icon"></span>
+	   </button>
+   </div>
+</nav>
     <section>
 
 		<span></span>
@@ -275,26 +284,49 @@ export default function matchHistory() {
     `;
 	setTimeout(() => {
 
-		// prepareHistory();
+		prepareHistory();
 		// // Dati delle partite
 		// async function prepareHistory() {
 		// 	const history = await fetchMatchHistory();
-		// 	console.log(history);
+		// 	console.log("Match history = ", history);
 		// }
 		
-		const partiteGiocate = [
-			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-			{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-			{ data: '23 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 4', punteggio: '1 - 3', risultato: 'Sconfitta' },
-			{ data: '24 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 6', punteggio: '4 - 2', risultato: 'Vittoria' },
-			{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' },
-			{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' }
-		];
+		// const partiteGiocate = [
+		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
+		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
+		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
+		// 	{ data: '23 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 4', punteggio: '1 - 3', risultato: 'Sconfitta' },
+		// 	{ data: '24 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 6', punteggio: '4 - 2', risultato: 'Vittoria' },
+		// 	{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' },
+		// 	{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' }
+		// ];
+
+		async function prepareHistory() {
+		const history = await fetchMatchHistory(); // Recupera i dati
+        console.log("Match history = ", history);
+        
+        // Mappa i dati ricevuti nel formato richiesto
+        const partiteGiocate = history.map(partita => {
+            const punteggio = `${partita.player1_score} - ${partita.player2_score}`;
+            const risultato = partita.winner === partita.player1 ? 'Vittoria' : 'Sconfitta';
+            return {
+                data: new Date(partita.created_at).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }),
+                teamA: `Giocatore ${partita.player1}`, // Puoi cambiare con il nome se disponibile
+                teamB: `Giocatore ${partita.player2}`, // Puoi cambiare con il nome se disponibile
+                punteggio: punteggio,
+                risultato: risultato
+            };
+        });
+
+        console.log("Partite giocate mappate = ", partiteGiocate);
+
+        // Pulisce il contenitore prima di aggiungere nuove card
+        const container = document.querySelector('.card-container');
+        container.innerHTML = ''; 
 		
-		// Seleziona il contenitore per le card
-		const container = document.querySelector('.card-container');
-		console.log(container);
+		// // Seleziona il contenitore per le card
+		// const container = document.querySelector('.card-container');
+		// console.log(container);
 		
 		// Genera le card
 		partiteGiocate.forEach((partita, index) => {
@@ -344,7 +376,7 @@ export default function matchHistory() {
 				container.style.overflowY = 'auto';
 			}
 		});
-	
+	}
 	}, 0);
 	return html;
 }
