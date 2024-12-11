@@ -325,7 +325,7 @@ export default function signIn() {
       };
 
       // Send the form data to the API using fetch
-	  const response = await apiFetch('https://localhost:443/api/auth/login/', {
+	  const response = await apiFetch('https://localhost:4242/api/auth/login/', {
   	    method: 'POST',
         body: loginData
       });
@@ -336,10 +336,11 @@ export default function signIn() {
         // alert('Login successful!');
         console.log('Login result:', result);
         // Redirect to another page or handle success
-        if (result.message === '2FA enabled, enter OTP') {
+        if (result.message === '2FA abilitato, inserire OTP') {
           localStorage.setItem("username", username)
           window.history.pushState({}, '', '/2FA');
           router();
+		  alert("ciao");
         } else {
 		  window.history.pushState({}, '', '/home');
 		  router();

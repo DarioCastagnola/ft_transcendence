@@ -33,7 +33,7 @@ export async function apiFetch(url, options = {}) {
 }
 
 export async function fetchUserInfo() {
-  const apiUrl = 'https://localhost/api/auth/user-info/';
+  const apiUrl = 'https://localhost:4242/api/auth/user-info/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -45,7 +45,7 @@ export async function fetchUserInfo() {
 }
 
 export async function getTournamentId() {
-  const apiUrl = 'https://localhost/api/game/tournaments/open/';
+  const apiUrl = 'https://localhost:4242/api/game/tournaments/open/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -59,7 +59,7 @@ export async function getTournamentId() {
 }
 
 export async function fetchUserProfileById(user_id) {
-  const apiUrl =  `https://localhost/api/core/user-profile/${user_id}/`
+  const apiUrl =  `https://localhost:4242/api/core/user-profile/${user_id}/`
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -71,7 +71,7 @@ export async function fetchUserProfileById(user_id) {
 }
 
 export async function fetchMatchHistory() {
-  const apiUrl =  'https://localhost/api/game/matches/history/';
+  const apiUrl =  'https://localhost:4242/api/game/matches/history/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
