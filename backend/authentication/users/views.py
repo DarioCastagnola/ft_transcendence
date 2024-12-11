@@ -86,21 +86,23 @@ class RegisterView(generics.CreateAPIView):
             value=access_token, 
             httponly=True, 
             secure=True, 
-            max_age=3600
+            max_age=3600,
+            samesite='None'
         )
         response.set_cookie(
             key='refresh_token', 
             value=refresh_token, 
             httponly=True, 
             secure=True, 
-            max_age=86400
+            max_age=86400,
+            samesite='None'
         )
         # response.set_cookie(
         #     key='csrftoken',
         #     value=get_token(request),
         #     httponly=False,  
         #     secure=True,
-        #     samesite='None'
+            # samesite='None'
         # )
 
         return response
@@ -198,14 +200,16 @@ class VerifyOTPView(APIView):
                     value=access_token, 
                     httponly=True, 
                     secure=True, 
-                    max_age=3600
+                    max_age=3600,
+                    samesite='None'
                 )
             response.set_cookie(
                     key='refresh_token', 
                     value=str(refresh), 
                     httponly=True, 
                     secure=True, 
-                    max_age=86400 
+                    max_age=86400,
+                    samesite='None'
                 )
             # response.set_cookie(
             #         key='csrftoken',
@@ -325,14 +329,16 @@ class OAuth2CallbackView(APIView):
             value=access_token, 
             httponly=True, 
             secure=True, 
-            max_age=3600
+            max_age=3600,
+            samesite='None'
         )
         response.set_cookie(
             key='refresh_token', 
             value=refresh_token, 
             httponly=True, 
             secure=True, 
-            max_age=86400
+            max_age=86400,
+            samesite='None'
         )
         # response.set_cookie(
         #     key='csrftoken',
@@ -373,7 +379,8 @@ class TokenRefreshCookieView(BaseTokenRefreshView):
                 value=access_token, 
                 httponly=True, 
                 secure=True, 
-                max_age=3600
+                max_age=3600,
+                samesite='None'
             )
         return response
     

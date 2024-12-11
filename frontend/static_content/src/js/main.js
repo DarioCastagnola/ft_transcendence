@@ -6,7 +6,6 @@ import signUp from "./views/SignUp.js";
 import about from "./views/about.js";
 import contact from "./views/contact.js";
 import userInfo from "./views/userInfo.js";
-import userinfoUpdate from "./views/userinfo-update.js";
 import pong from "./views/pong.js";
 import matchHistory from "./views/matchHistory.js";
 import twoFA from "./views/twoFA.js";
@@ -28,7 +27,6 @@ const routes = {
     "/about": { title: "About", render: about, css: "./src/css/about.css" },
     "/contact": { title: "Contact", render: contact, css: "./src/css/contact.css" },
     "/2FA": { title: "2FA", render: twoFA, css: "./src/css/twoFA.css" },
-    "/userinfo-update": { title: "UserInfo-update", render: userinfoUpdate, css: "./src/css/userinfo-update.css" },
     "/pong": { title: "pong", render: pong, css: "./src/css/pong.css"},
     "/matchHistory": { title: "matchHistory", render: matchHistory, css: "./src/css/matchHistory.css" },
     "/pong3D": { title: "pong3D", render: pong3D, css: "./src/css/pong3D.css"},
@@ -43,7 +41,6 @@ const protected_routes = [
     "/home",
     "/userInfo",
     "/2FA",
-    "/userinfo-update",
     "/pong",
     "/matchHistory",
     "/pong3D",
@@ -72,7 +69,7 @@ async function handleOAuthCallback() {
     const authCode = urlParams.get('code');
 
     if (authCode) {
-      const apiUrl = `https://localhost/api/auth/oauth/callback/?code=${authCode}`
+      const apiUrl = `https://localhost:4242/api/auth/oauth/callback/?code=${authCode}`
       const response = await apiFetch(apiUrl)
 
       // Handle the API response
