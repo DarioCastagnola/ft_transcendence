@@ -396,31 +396,7 @@ setTimeout(() => {
         let botNames = ["gpAInico", "AIdi-stef", "mpAIterno", "PIERPAOLO"];
         let username2;
         console.log("Matches left = ", localStorage.getItem("MatchesLeftToPlay"));
-        // let playableMatches = undefined;
-        // let matchesLeftToPlay = undefined;
-
-        // function calculateMatches(numPlayers) {
-        //     return (numPlayers * (numPlayers - 1)) / 2;
-        // }
-
-        // async function getNumMatchesToPlay(tournament_id) {
-        //     if (localStorage.getItem("isTournament") === "true") {
-        //         const apiUrl = `http://localhost/api/game/tournaments/${tournament_id}`;
-        //         const response = await apiFetch(apiUrl);
-
-        //     if (response.ok) {
-        //         const data = await response.json();
-        //         playableMatches = calculateMatches(data.max_participants);
-        //         console.log("playable matches = ", playableMatches)
-        //     } else {
-        //         console.error("Failed to tournament info", response.status);
-        //         history.pushState({}, "", "/home");
-        //         router();
-        //         return null;
-        //     }
-        //     }
-        // }
-
+        
 		async function MatchResult(P1SCORE, P2SCORE, WINNERID) {
 			if (localStorage.getItem("isTournament") === "false") {
 				const apiUrl = `https://localhost:4242/api/game/matches/`;
