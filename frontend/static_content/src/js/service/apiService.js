@@ -81,3 +81,35 @@ export async function fetchMatchHistory() {
     console.error("Failed to fetch match history", response.status);
   }
 }
+
+
+export async function fetchUsernamebyId(user_id) {
+  const apiUrl = 'https://localhost:4242/api/auth/users/';
+  const response = await apiFetch(apiUrl);
+  if (response.ok) {
+    const data = await response.json();
+
+    const user = data.find(user => user.id === user_id);
+    if (user) {
+      return user.username;
+    } else {
+      console.error(`User with id ${user_id} not found`);
+      return null;
+    }
+  } else {
+    console.error("Failed to fetch user's username", response.status);
+    return null;
+  }
+}
+
+export async function fetchNicknameByPlayerId(player_id) {
+  const apiUrl =  `https://localhost:4242/api/game/players/${player_id}/`;
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.nickname;
+  } else {
+    console.error("Failed to fetch nickname", response.status);
+  }
+}

@@ -1,5 +1,5 @@
 
-import { fetchMatchHistory } from "../service/apiService.js";
+import { fetchMatchHistory, fetchNicknameByPlayerId } from "../service/apiService.js";
 
 export default function matchHistory() {
     const html = `
@@ -285,38 +285,26 @@ export default function matchHistory() {
 	setTimeout(() => {
 
 		prepareHistory();
-		// // Dati delle partite
-		// async function prepareHistory() {
-		// 	const history = await fetchMatchHistory();
-		// 	console.log("Match history = ", history);
-		// }
-		
-		// const partiteGiocate = [
-		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-		// 	{ data: '22 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 2', punteggio: '2 - 1', risultato: 'Vittoria'},
-		// 	{ data: '23 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 4', punteggio: '1 - 3', risultato: 'Sconfitta' },
-		// 	{ data: '24 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 6', punteggio: '4 - 2', risultato: 'Vittoria' },
-		// 	{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' },
-		// 	{ data: '25 Ottobre 2024', teamA: 'Giocatore 1', teamB: 'Giocatore 8', punteggio: '0 - 1', risultato: 'Sconfitta' }
-		// ];
-
 		async function prepareHistory() {
-		const history = await fetchMatchHistory(); // Recupera i dati
-        console.log("Match history = ", history);
-        
-        // Mappa i dati ricevuti nel formato richiesto
-        const partiteGiocate = history.map(partita => {
-            const punteggio = `${partita.player1_score} - ${partita.player2_score}`;
-            const risultato = partita.winner === partita.player1 ? 'Vittoria' : 'Sconfitta';
-            return {
-                data: new Date(partita.created_at).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }),
-                teamA: `Giocatore ${partita.player1}`, // Puoi cambiare con il nome se disponibile
-                teamB: `Giocatore ${partita.player2}`, // Puoi cambiare con il nome se disponibile
-                punteggio: punteggio,
-                risultato: risultato
-            };
-        });
+			const history = await fetchMatchHistory(); // Recupera i dati
+			console.log("Match history = ", history);
+		
+			// Usa Promise.all per gestire le operazioni asincrone all'interno della mappatura
+			const partiteGiocate = await Promise.all(history.map(async partita => {
+				const nome1 = await fetchNicknameByPlayerId(partita.player1);
+				const nome2 = await fetchNicknameByPlayerId(partita.player2);
+		
+				const punteggio = `${partita.player1_score} - ${partita.player2_score}`;
+				const risultato = partita.winner === partita.player1 ? 'Vittoria' : 'Sconfitta';
+		
+				return {
+					data: new Date(partita.created_at).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }),
+					teamA: nome1,
+					teamB: nome2,
+					punteggio: punteggio,
+					risultato: risultato
+				};
+			}));
 
         console.log("Partite giocate mappate = ", partiteGiocate);
 
