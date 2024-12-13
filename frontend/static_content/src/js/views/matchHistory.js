@@ -287,7 +287,7 @@ export default function matchHistory() {
 		prepareHistory();
 		async function prepareHistory() {
 			const history = await fetchMatchHistory(); // Recupera i dati
-			console.log("Match history = ", history);
+			//console.log("Match history = ", history);
 		
 			// Usa Promise.all per gestire le operazioni asincrone all'interno della mappatura
 			const partiteGiocate = await Promise.all(history.map(async partita => {
@@ -306,7 +306,7 @@ export default function matchHistory() {
 				};
 			}));
 
-        console.log("Partite giocate mappate = ", partiteGiocate);
+        //console.log("Partite giocate mappate = ", partiteGiocate);
 
         // Pulisce il contenitore prima di aggiungere nuove card
         const container = document.querySelector('.card-container');

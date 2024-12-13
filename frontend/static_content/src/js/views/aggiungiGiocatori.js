@@ -342,7 +342,7 @@ export default function aggiungiGiocatori() {
                     point_to_win: 5
                 };
 
-                console.log(data)
+                //console.log(data)
 
                 // Send the data to the API
                 const response = await apiFetch(apiUrl, {
