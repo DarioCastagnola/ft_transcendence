@@ -70,6 +70,18 @@ export async function fetchUserProfileById(user_id) {
   }
 }
 
+export async function fetchMatchHistoryById(id) {
+  const apiUrl =  `https://localhost:4242/api/game/matches/history/${id}`;
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    console.error("Failed to fetch match history", response.status);
+  }
+}
+
 export async function fetchMatchHistory() {
   const apiUrl =  'https://localhost:4242/api/game/matches/history/';
   const response = await apiFetch(apiUrl);
@@ -149,8 +161,8 @@ export async function getSelfUser() {
   return your_info;
 }
 
-export async function getStats(id) {
-  const apiUrl = `https://localhost:4242/api/game/stats/${id}/`;
+export async function getStats(user_id) {
+  const apiUrl = `https://localhost:4242/api/game/stat/${user_id}/`;
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -172,4 +184,41 @@ export async function fetchSelfPlayerID() {
   } else {
     console.error("Failed to fetch game stats", response.status);
   }
+}
+
+export async function getUsernameById(userId) {
+  try {
+      const apiUrl = 'https://localhost:4242/api/auth/users/'; // Sostituisci con l'URL reale
+      const response = await apiFetch(apiUrl);
+
+      if (!response.ok) {
+          throw new Error('Errore durante la chiamata API');
+      }
+
+      const users = await response.json(); // Ottieni i dati come array di oggetti
+      const user = users.find(user => user.id === userId);
+
+      return user ? user.username : null; // Restituisce lo username o null se non trovato
+  } catch (error) {
+      console.error('Errore:', error);
+      return null; // Restituisci null in caso di errore
+  }
+}
+
+export async function fetchPlayerIdByForce(desiredId) {
+  let player_id = 0;
+  let user_id;
+  while (user_id != desiredId) {
+    const apiUrl =  `https://localhost:4242/api/game/players/${player_id}/`;
+    player_id++;
+    const response = await apiFetch(apiUrl); 
+    
+    if (response.ok) {
+      const data = await response.json();
+      user_id = data.user_id;
+  } else {
+    console.error("Failed to fetch nickname", response.status);
+  }
+}
+return user_id;
 }

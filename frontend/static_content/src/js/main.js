@@ -16,6 +16,7 @@ import preTorneoCorso from "./views/preTorneoCorso.js";
 import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
 import userList from "./views/userList.js";
 import extUserInfo from "./views/extUserInfo.js";
+import extMatchHistory from "./views/extMatchHistory.js";
 import { apiFetch, updateLastSeen } from "./service/apiService.js";
 
 
@@ -36,7 +37,8 @@ const routes = {
     "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"},
     "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"},
     "/userList": { title: "userList", render: userList, css: "./src/css/userList.css"},
-    "/extUserInfo": { title: "ExtUserInfo", render: extUserInfo, css: "./src/css/userInfo.css" },
+    "/extUserInfo": { title: "ExtUserInfo", render: extUserInfo, css: "./src/css/extUserInfo.css" },
+    "/extMatchHistory": { title: "ExtMatchHistory", render: extMatchHistory, css: "./src/css/matchHistory.css" },
 };
 
 // Call the function every 5 minutes (300,000 milliseconds)

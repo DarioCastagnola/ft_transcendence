@@ -1,0 +1,483 @@
+/*NAVBAR-----------------------------------------------------*/
+
+.navbar {
+    background-color: #333 !important; /* Colore di sfondo della navbar */
+}
+
+/* Stile per i link della navbar */
+.navbar-nav .nav-link {
+    color: #ffffff; /* Colore del testo */
+    padding: 10px 15px; /* Spazio attorno ai link */
+}
+
+/* Effetto hover per i link */
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+/* Stile per il dropdown */
+.navbar-nav .dropdown-menu {
+    background-color: #343a40; /* Colore di sfondo per il menu a discesa */
+}
+
+.navbar-nav .dropdown-item {
+    color: #ffffff; /* Colore del testo per gli elementi del dropdown */
+}
+
+/* Effetto hover per gli elementi del dropdown */
+.navbar-nav .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Sfumatura al passaggio del mouse */
+}
+
+.navbar-brand {
+    font-size: 2.5rem; /* Dimensione del font */
+    font-family: 'Audiowide', cursive; /* Un font ispirato ai giochi retro (inserisci il tuo font preferito) */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Ombra del testo per un effetto tridimensionale */
+    color: rgb(255, 0, 0); /* Colore del testo */
+    transition: transform 0.3s; /* Transizione per un effetto al passaggio del mouse */
+}
+
+.navbar-brand:hover {
+    transform: scale(1.1); /* Ingrandisce il testo al passaggio del mouse */
+}
+
+/* -----------------------------------------------------*/
+
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Quicksand', sans-serif;
+}
+
+body 
+{
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: #000;
+}
+
+section 
+{
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+
+
+
+/* Colore sfumatura */
+section::before 
+{
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(#000000,rgb(217, 255, 0),#000000);
+	animation: animate 5s linear infinite;
+}
+
+
+
+
+/* Animazione sfondo sfumatura */
+@keyframes animate 
+{
+	0%
+	{
+		transform: translateY(-100%);
+	}
+	100%
+	{
+		transform: translateY(100%);
+	}
+}
+
+section span 
+{
+	position: relative;
+	display: block;
+	width: calc(6.25vw - 2px);
+	height: calc(6.25vw - 2px);
+	background: #181818;
+	z-index: 2;
+	transition: 1.5s;
+}
+
+section span:hover 
+{
+	background: rgb(217, 255, 0);
+	transition: 0s;
+}
+
+section .signin
+{
+	position: absolute;
+	width: 800px;
+	height: 800px;
+  	background: #222;  
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px;
+	border-radius: 4px;
+	box-shadow: 0 15px 35px rgba(0,0,0,9);
+}
+
+section .signin .content 
+{
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 40px;
+}
+
+
+
+
+/* Scritta (Signup) */
+section .signin .content h2 
+{
+	font-size: 2em;
+	color: rgb(217, 255, 0);
+	text-transform: uppercase;
+}
+
+section .signin .content .form 
+{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+section .signin .content .form .inputBox
+{
+	position: relative;
+	width: 100%;
+}
+
+section .signin .content .form .inputBox input 
+{
+	position: relative;
+	width: 100%;
+	background: rgb(217, 255, 0);
+	border: none;
+	outline: none;
+	padding: 25px 10px 7.5px;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 500;
+	font-size: 1em;
+}
+
+#user-username, #user-email {
+	color:rgb(217, 255, 0)
+}
+
+section .signin .content .form .inputBox i 
+{
+	position: absolute;
+	left: 0;
+	padding: 15px 10px;
+	font-style: normal;
+	color: #aaa;
+	transition: 0.5s;
+	pointer-events: none;
+}
+
+.signin .content .form .inputBox input:focus ~ i,
+.signin .content .form .inputBox input:valid ~ i
+{
+	transform: translateY(-7.5px);
+	font-size: 0.8em;
+	color: #fff;
+}
+
+.signin .content .form .links 
+{
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.signin .content .form .links a 
+{
+	color: #fff;
+	text-decoration: none;
+}
+
+.signin .content .form .links a:nth-child(2)
+{
+	color: rgb(217, 255, 0);
+	font-weight: 600;
+}
+
+
+
+
+/* Subscribe for input*/
+.signin .content .form .inputBox input[type="submit"]
+{
+	padding: 10px;
+	background: rgb(217, 255, 0);
+	color: #000;
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+
+input[type="submit"]:active
+{
+	opacity: 0.6;
+}
+
+
+
+
+/* Subscribe for button*/
+.signin .content .form .inputBox button[type="submit"]
+{
+	padding: 10px;
+	background: rgb(217, 255, 0);
+	color: #000;
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+
+button[type="submit"]:active
+{
+	opacity: 0.6;
+}
+
+
+
+
+/* adattare */
+@media (max-width: 900px)
+{
+	section span 
+	{
+		width: calc(10vw - 2px);
+		height: calc(10vw - 2px);
+	}
+}
+
+@media (max-width: 600px)
+{
+	section span 
+	{
+		width: calc(20vw - 2px);
+		height: calc(20vw - 2px);
+	}
+}
+
+
+
+
+
+/* EDIT IMMAGINE --------------------------------------------*/
+
+.profile-picture {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto; /* Centra l'immagine orizzontalmente */
+    text-align: center; /* Centra il contenuto all'interno */
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.profile-picture img:hover {
+    transform: scale(1.05); /* Aggiunge un effetto di ingrandimento quando si passa sopra l'immagine */
+}
+
+.profile-picture input[type="file"] {
+    position: absolute; /* Posiziona il pulsante sopra l'immagine */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Nasconde l'input ma lo rende cliccabile */
+}
+
+/*-------------------------------------------------------------*/
+
+
+
+
+
+/* BUTTON 2FA/LOGOUT ------------------------------------------*/
+
+.button {
+	height: 50px;
+	margin: 5px;
+	width: 120px;
+	background: #333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	font-family: Consolas, Courier New, monospace;
+	border: solid rgb(217, 255, 0) 1px;
+	font-size: 16px;
+	color: rgb(161, 161, 161);
+	transition: 500ms;
+	border-radius: 5px;
+}
+
+.button:hover {
+	box-shadow: 1px 1px 13px #ffcc00, -1px -1px 13px #ffeb3b;
+	color: #d6d6d6;
+}
+
+.button:active {
+	box-shadow: 1px 1px 13px #ffcc00, -1px -1px 33px #ffeb3b;
+	color: #d6d6d6;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column; /* Disposizione verticale dei bottoni */
+    gap: 5px;
+}
+
+
+.button-qr-container {
+    display: flex;
+    align-items: center; /* Centra verticalmente QR code e bottoni */
+    gap: 15px; /* Distanza tra i bottoni e il QR code */
+}
+
+/*-----------------------------------------------------------------------*/
+
+
+
+
+
+/* BUTTON MATCH HISTORY ------------------------------------------------ */
+
+.button2 {
+	padding: 10px 40px;
+	font-size: 18px;
+	background-color: #333;
+	color: rgb(217, 255, 0);
+	text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
+	display: block; /* Cambiato da inline-flex a block */
+	margin: 20px auto; /* Margin per centrare e distanziare */
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	border: 0;
+	z-index: 1;
+	user-select: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	white-space: unset;
+	text-decoration: none;
+	font-weight: 900;
+	transition: all 0.7s cubic-bezier(0, .8, .26, .99);
+}
+
+.button2:before {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	content: '';
+	transition: .7s cubic-bezier(0, .8, .26, .99);
+	z-index: -1;
+	background-color: #333!important;
+	box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset, -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+}
+
+.button2:after {
+	position: absolute;
+	pointer-events: none;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	content: '';
+	box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+	transition: .7s cubic-bezier(0, .8, .26, .99);
+}
+
+.button2:hover:before {
+	box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset, -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+}
+
+.button2:hover:after {
+	box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+}
+
+.button2:active {
+	transform: translateY(4px);
+}
+
+.button2:active:after {
+	box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
+}
+  
+/*------------------------------------------------------------------------*/
+
+
+
+  
+/* GRAFICO --------------------------------------------------------------*/
+
+/* .chart-container {
+    width: 250px; 
+    height: 250px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.chart-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+} */
+
+.chart-container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/*--------------------------------------------------------------------*/
+
+

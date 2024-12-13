@@ -1,3 +1,4 @@
+import { router } from "../main.js";
 import { apiFetch, fetchUsers, getSelfUser } from "../service/apiService.js";
 
 export default function userList() {
@@ -294,6 +295,30 @@ export default function userList() {
 			}
 		}
 
+		async function removeFriend(friend_id) {
+			try {
+				const apiUrl = `https://localhost:4242/api/core/remove-friend/`; // Replace with your API endpoint
+				const payload = {
+					"friend_id": friend_id,
+				};
+				const response = await apiFetch(apiUrl, {
+					method: 'POST',
+					body: JSON.stringify(payload), // Assuming the API expects a JSON body with `user_id`
+				});
+		
+				if (!response.ok) {
+					throw new Error(`Failed to remove friend with ID ${user_id}`);
+				}
+		
+				const data = await response.json();
+				console.log(`Friend removed successfully: ${data}`);
+				return true; // Indicate success
+			} catch (error) {
+				console.error('Error removing friend:', error);
+				return false; // Indicate failure
+			}
+		}
+
 		async function addFriend(friend_id) {
 			try {
 				const apiUrl = `https://localhost:4242/api/core/add-friend/`; // Replace with your API endpoint
@@ -362,27 +387,42 @@ export default function userList() {
 				container.style.overflowY = 'auto';
 			}
 	
-			// Attach click events to cards
 			container.querySelectorAll('.inner-card').forEach(card => {
 				card.addEventListener('click', async function () {
 					const userId = this.getAttribute('data-user-id');
-					const isBlue = this.classList.toggle('clicked');
+					const isFriend = friends.includes(Number(userId)); // Check if the user is a friend
 					const friendLabel = this.nextElementSibling;
 	
-					if (isBlue) {
-						const success = await addFriend(Number(userId)); // Make the API call
+					if (isFriend) {
+						const success = await removeFriend(Number(userId)); // Unfriend the user
+						if (success) {
+							this.style.backgroundColor = ''; // Reset color
+							friendLabel.style.display = 'none';
+							friends.splice(friends.indexOf(Number(userId)), 1); // Update the local friends array
+						}
+					} else {
+						const success = await addFriend(Number(userId)); // Add the user as a friend
 						if (success) {
 							this.style.backgroundColor = 'blue';
 							friendLabel.style.display = 'inline';
-						} else {
-							this.classList.remove('clicked'); // Revert UI changes if the API call fails
+							friends.push(Number(userId)); // Update the local friends array
 						}
-					} else {
-						this.style.backgroundColor = ''; // Reset color
-						friendLabel.style.display = 'none';
 					}
 				});
 			});
+			
+			// Attach click events to usernames
+			container.querySelectorAll('.team-name-info').forEach(nameElement => {
+				nameElement.addEventListener('click', function () {
+					const userId = this.parentElement.querySelector('.inner-card').getAttribute('data-user-id');
+					// Save the clicked user's ID in session storage
+					sessionStorage.setItem('clickedUserId', userId);
+					history.pushState({}, '', '/extUserInfo');
+					router();
+					console.log(`User ID ${userId} saved to session storage`);
+				});
+			});
+
 		} catch (error) {
 			console.error('Error fetching users:', error);
 		}
