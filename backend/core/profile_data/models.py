@@ -16,10 +16,22 @@ class UserProfile(models.Model):
         return f'User {self.user_id} avatar'
 
     def save(self, *args, **kwargs):
+        # Controlla se l'oggetto esiste già nel database
         if self.pk:
-            old_avatar = UserProfile.objects.filter(pk=self.pk).first()
-            if old_avatar and old_avatar.avatar and self.avatar != old_avatar.avatar:
-                old_avatar.avatar.delete(save=False)
+            try:
+                # Recupera l'istanza esistente
+                old_profile = UserProfile.objects.filter(pk=self.pk).first()
+                
+                # Verifica se c'è un avatar precedente e se è diverso da quello attuale
+                if (old_profile and 
+                    old_profile.avatar and 
+                    self.avatar and 
+                    self.avatar != old_profile.avatar):
+                    # Cancella il vecchio avatar
+                    old_profile.avatar.delete(save=False)
+            except Exception:
+                # Ignora qualsiasi errore durante il processo
+                pass
+        
+        # Salva l'oggetto
         super().save(*args, **kwargs)
-
-    
