@@ -452,7 +452,7 @@ button[type="submit"]:active
   
 /* GRAFICO --------------------------------------------------------------*/
 
-.chart-container {
+/* .chart-container {
     width: 250px; 
     height: 250px;
     margin: 0 auto;
@@ -467,6 +467,13 @@ button[type="submit"]:active
     text-align: center;
     font-size: 16px;
     color: #333;
+} */
+
+.chart-container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
 }
 
 /*--------------------------------------------------------------------*/

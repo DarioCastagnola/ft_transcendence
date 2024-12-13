@@ -324,6 +324,7 @@ export default function userinfo() {
 				<a href="/matchHistory" data-link class="button2">MATCH HISTORY</a>
 			</div>
 
+
 			</div>
 			</section>
 
@@ -477,40 +478,92 @@ export default function userinfo() {
     });
 
 
+	// const vittorie = 65; // percentuale vittoria
+	// const sconfitte = 35; // percentuale sconfitta
+
+	// const ctx = document.getElementById('myChart').getContext('2d');
+	// const myChart = new Chart(ctx, {
+	// 	type: 'doughnut',
+	// 	data: {
+	// 		labels: [`${vittorie}% Vittorie`, `${sconfitte}% Sconfitte`],
+	// 		datasets: [{
+	// 			data: [vittorie, sconfitte],
+	// 			backgroundColor: [
+	// 				'rgba(75, 192, 192, 0.6)', // Vittorie - blu
+	// 				'rgba(255, 99, 132, 0.6)' // Sconfitte - rosso
+	// 			],
+	// 			borderColor: [
+	// 				'rgba(75, 192, 192, 1)',
+	// 				'rgba(255, 99, 132, 1)'
+	// 			],
+	// 			borderWidth: 3
+	// 		}]
+	// 	},
+	// 	options: {
+	// 		responsive: true,
+	// 		maintainAspectRatio: false,
+	// 		plugins: {
+	// 			legend: {
+	// 				position: 'bottom',
+	// 			}
+	// 		},
+	// 		cutout: '60%'
+	// 	}
+	// });
+
+	
 	//GRAFICO
 
+	// Percentuali vittorie e sconfitte
 	const vittorie = 65; // percentuale vittoria
 	const sconfitte = 35; // percentuale sconfitta
 
-	const ctx = document.getElementById('myChart').getContext('2d');
-	const myChart = new Chart(ctx, {
-		type: 'doughnut',
-		data: {
-			labels: [`${vittorie}% Vittorie`, `${sconfitte}% Sconfitte`],
-			datasets: [{
-				data: [vittorie, sconfitte],
-				backgroundColor: [
-					'rgba(75, 192, 192, 0.6)', // Vittorie - blu
-					'rgba(255, 99, 132, 0.6)' // Sconfitte - rosso
-				],
-				borderColor: [
-					'rgba(75, 192, 192, 1)',
-					'rgba(255, 99, 132, 1)'
-				],
-				borderWidth: 3
-			}]
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				legend: {
-					position: 'bottom',
-				}
-			},
-			cutout: '60%'
-		}
-	});
+	// Configurazione del Canvas
+	const canvas = document.getElementById('myChart');
+	const ctx = canvas.getContext('2d');
+
+	// Calcolo delle dimensioni del cerchio
+	const width = canvas.width;
+	const height = canvas.height;
+	const centerX = width / 2;
+	const centerY = height / 2;
+	const radius = Math.min(width, height) / 2 - 10; // lascio un margine
+
+	// Funzione per disegnare una fetta del grafico
+	function drawSlice(context, x, y, radius, startAngle, endAngle, color) {
+		context.beginPath();
+		context.moveTo(x, y);
+		context.arc(x, y, radius, startAngle, endAngle);
+		context.closePath();
+		context.fillStyle = color;
+		context.fill();
+	}
+
+	// Disegna la fetta delle vittorie
+	const total = 100; // Percentuale totale
+	const startAngle = 0;
+	const vittorieAngle = (vittorie / total) * 2 * Math.PI;
+	drawSlice(ctx, centerX, centerY, radius, startAngle, vittorieAngle, 'rgba(75, 192, 192, 0.6)'); // blu
+
+	// Disegna la fetta delle sconfitte
+	const sconfitteAngle = (sconfitte / total) * 2 * Math.PI;
+	drawSlice(ctx, centerX, centerY, radius, vittorieAngle, vittorieAngle + sconfitteAngle, 'rgba(255, 99, 132, 0.6)'); // rosso
+
+	// Disegna il cerchio bianco al centro per creare l'effetto doughnut
+	ctx.beginPath();
+	ctx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI); // Il 60% del raggio
+	ctx.fillStyle = 'white';
+	ctx.fill();
+
+	// Disegna il testo al centro
+	ctx.font = '16px Arial';
+	ctx.fillStyle = '#333';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.fillText(`${vittorie}% Vittorie`, centerX, centerY - 10);
+	ctx.fillText(`${sconfitte}% Sconfitte`, centerX, centerY + 15);
+
+
   }, 0);
 
   return html;
