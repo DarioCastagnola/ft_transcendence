@@ -335,11 +335,23 @@ export default function userinfo() {
 	setTimeout(() => {
 
 
-		async function fetchStatsChart() {
-			let user_id = await fetchSelfPlayerID();
-			console.log(user_id);
-			const stats_I_need = await getStats(user_id);
-			console.log(stats_I_need);
+		async function fetchStatsChart(option) {
+			let user_id = await fetchUserInfo();
+			console.log(user_id.id);
+			// console.log("player_id =", user_id);
+			const games = await getStats(Number(user_id.id));
+			// console.log(games);
+			// Calculate total matches
+			const totalMatches = games.wins + games.losses + games.draws;
+
+			// Calculate percentages
+			const winPercentage = ((games.wins / totalMatches) * 100).toFixed(1);
+			const lossPercentage = ((games.losses / totalMatches) * 100).toFixed(1);
+
+			if (option === "vittorie")
+				return winPercentage;
+			else
+				return lossPercentage;
 		}
 
 		fetchStatsChart();
@@ -455,6 +467,10 @@ export default function userinfo() {
     fetchUserInfo().then((result) => {
 		usernameElement.value = result.username;
 		emailElement.value = result.email;
+		 // Check if the email contains "student"
+		 if (result.email.toLowerCase().includes("student")) {
+			enable2faButton.style.display = "none"; // Hide the 2FA button
+		}
 	});
 
     // Enable 2FA button click handler
@@ -488,10 +504,11 @@ export default function userinfo() {
 
 	
 	//GRAFICO
-
+	async function createChart() {
+		
 	// Percentuali vittorie e sconfitte
-	const vittorie = 65; // percentuale vittoria
-	const sconfitte = 35; // percentuale sconfitta
+	const vittorie = await fetchStatsChart("vittorie"); // percentuale vittoria
+	const sconfitte = await fetchStatsChart(); // percentuale sconfitta
 
 	// Configurazione del Canvas
 	const canvas = document.getElementById('myChart');
@@ -535,15 +552,16 @@ export default function userinfo() {
 	ctx.fillStyle = 'rgb(217, 255, 0)';
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.fillText(`${vittorie}%`, centerX - 25, centerY - 10);
+	ctx.fillText(`${vittorie}%`, centerX - 30, centerY - 10);
 	ctx.fillStyle = 'rgb(53, 31, 255)';
 	ctx.fillText(` Vittorie`, centerX + 20, centerY - 10);
 	ctx.fillStyle = 'rgb(217, 255, 0)';
-	ctx.fillText(`${sconfitte}%`, centerX - 25, centerY + 15);
+	ctx.fillText(`${sconfitte}%`, centerX - 30, centerY + 15);
 	ctx.fillStyle = 'rgb(255, 19, 70)';
 	ctx.fillText(` Sconfitte`, centerX + 28, centerY + 15);
 
-
+	}
+	createChart();
   }, 0);
 
   return html;

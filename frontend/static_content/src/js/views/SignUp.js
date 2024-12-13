@@ -271,11 +271,7 @@ export default function signUp() {
 			<h2>Sign up</h2>
 			<div id="signupForm" class="form">
 
-				<!-- IMMAGINE -->
-				<div class="profile-picture">
-					<img id="profile-img" src="https://via.placeholder.com/100" alt="Profile Image">
-					<input type="file" id="profile-image" accept="image/*">
-				</div>
+				
 
 				<div class="inputBox">
 					<input type="text" id="username" required>
@@ -318,23 +314,7 @@ export default function signUp() {
 
 setTimeout(() => {
 
-	// UPLOAD IMMAGINE ----------------------------------------------
 
-	document.getElementById("profile-image").addEventListener("change", function() {
-        var reader = new FileReader();
-
-        reader.onload = function() {
-            var output = document.getElementById('profile-img');
-            output.src = reader.result; // Cambia l'immagine con quella selezionata
-        };
-
-        var file = this.files[0]; // Ottieni il file dal <input>
-        if (file) {
-            reader.readAsDataURL(file); // Usa il file selezionato
-        } else {
-            console.log("Nessun file selezionato.");
-        }
-    });
 
 	//-----------------------------------------------------------------
 
