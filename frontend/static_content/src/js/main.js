@@ -15,6 +15,7 @@ import pong3DMenu from "./views/pong3DMenu.js";
 import preTorneoCorso from "./views/preTorneoCorso.js";
 import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
 import userList from "./views/userList.js";
+import extUserInfo from "./views/extUserInfo.js";
 import { apiFetch, updateLastSeen } from "./service/apiService.js";
 
 
@@ -34,7 +35,8 @@ const routes = {
     "/pong3DMenu": { title: "pong3DMenu", render: pong3DMenu, css: "./src/css/pong3DMenu.css"},
     "/preTorneoCorso": { title: "preTorneoCorso", render: preTorneoCorso, css: "./src/css/preTorneoCorso.css"},
     "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"},
-    "/userList": { title: "userList", render: userList, css: "./src/css/userList.css"}
+    "/userList": { title: "userList", render: userList, css: "./src/css/userList.css"},
+    "/extUserInfo": { title: "ExtUserInfo", render: extUserInfo, css: "./src/css/userInfo.css" },
 };
 
 // Call the function every 5 minutes (300,000 milliseconds)
