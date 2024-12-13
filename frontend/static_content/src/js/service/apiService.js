@@ -148,3 +148,28 @@ export async function getSelfUser() {
   let your_info = await fetchUserProfileById(user_id);
   return your_info;
 }
+
+export async function getStats(id) {
+  const apiUrl = `https://localhost:4242/api/game/stats/${id}/`;
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  } else {
+    console.error("Failed to fetch game stats", response.status);
+  }
+}
+
+export async function fetchSelfPlayerID() {
+  const apiUrl = `https://localhost:4242/api/game/matches/history/`;
+  const response = await apiFetch(apiUrl);
+
+  if (response.ok) {
+    let data = await response.json();
+    data = data[0].player1;
+    return data;
+  } else {
+    console.error("Failed to fetch game stats", response.status);
+  }
+}

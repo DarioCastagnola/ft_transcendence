@@ -1,8 +1,8 @@
 import { router } from "../main.js";
 import { apiFetch } from "../service/apiService.js";
-import { fetchUserInfo, getStats, fetchSelfPlayerID } from "../service/apiService.js";
+import { fetchUserInfo } from "../service/apiService.js";
 
-export default function userinfo() {
+export default function extUserInfo() {
   const html = `
   <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
    <div class="container">
@@ -334,15 +334,6 @@ export default function userinfo() {
 
 	setTimeout(() => {
 
-
-		async function fetchStatsChart() {
-			let user_id = await fetchSelfPlayerID();
-			console.log(user_id);
-			const stats_I_need = await getStats(user_id);
-			console.log(stats_I_need);
-		}
-
-		fetchStatsChart();
 		
 		// UPLOAD IMMAGINE ----------------------------------------------
 		
