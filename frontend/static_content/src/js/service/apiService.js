@@ -50,7 +50,7 @@ export async function getTournamentId() {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data[0].id);
+   // console.log(data[0].id);
     return data[0].id;
   } else {
     return -1;
@@ -102,6 +102,17 @@ export async function fetchUsernamebyId(user_id) {
   }
 }
 
+export async function fetchUsers() {
+  const apiUrl = 'https://localhost:4242/api/auth/users/';
+  const response = await apiFetch(apiUrl);
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      console.error("Failed to fetch nickname", response.status);
+    }
+}
+
 export async function fetchNicknameByPlayerId(player_id) {
   const apiUrl =  `https://localhost:4242/api/game/players/${player_id}/`;
   const response = await apiFetch(apiUrl);
@@ -111,5 +122,22 @@ export async function fetchNicknameByPlayerId(player_id) {
     return data.nickname;
   } else {
     console.error("Failed to fetch nickname", response.status);
+  }
+}
+
+export async function updateLastSeen() {
+  //console.log("I work!");
+  try {
+    const apiUrl = "https://localhost:4242/api/core/update-last-seen/";
+      const response = await apiFetch(apiUrl, {
+          method: 'POST',
+          },);
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      console.log('Last seen updated successfully');
+  } catch (error) {
+      console.error('Error updating last seen:', error);
   }
 }

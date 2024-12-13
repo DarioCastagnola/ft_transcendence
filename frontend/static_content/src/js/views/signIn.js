@@ -334,7 +334,7 @@ export default function signIn() {
       const result = await response.json();
       if (response.ok) {
         // alert('Login successful!');
-        console.log('Login result:', result);
+        //console.log('Login result:', result);
         // Redirect to another page or handle success
         if (result.message === '2FA abilitato, inserire OTP') {
           localStorage.setItem("username", username)

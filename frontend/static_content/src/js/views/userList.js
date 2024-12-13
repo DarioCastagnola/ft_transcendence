@@ -1,3 +1,4 @@
+import { apiFetch, fetchUsers } from "../service/apiService.js";
 
 export default function userList() {
     const html = `
@@ -275,42 +276,60 @@ export default function userList() {
 
 
 	setTimeout(() => {
-		const utenti = [
-			{ nome: 'Mario Rossi', email: 'mario.rossi@example.com', stato: true },
-			{ nome: 'Luigi Bianchi', email: 'luigi.bianchi@example.com', stato: false },
-			{ nome: 'Giulia Verdi', email: 'giulia.verdi@example.com', stato: true },
-		];
-	
-		const container = document.querySelector('.card-container');
-		console.log(container);
-	
-		utenti.forEach((utente, index) => {
-			const cardHTML = `
-				<div class="cardMatch">
-					<div data-status="inprogress" class="teams">
-						<div class="team-info team-home" style="background-color: ${utente.stato ? 'green' : 'red'};"></div>
-						<p class="team-name-info">${utente.nome}</p>
-						<div class="cardMatch inner-card"></div>
-						<p class="friend-label" style="display: none;">amico</p>
-					</div>
-				</div>
-			`;
-	
-			// Aggiungi la card al contenitore
-			container.innerHTML += cardHTML;
-	
-			// Abilita lo scroll se ci sono più di 4 card
-			if (index >= 5) {
-				container.style.overflowY = 'auto';
+
+		getUsers();
+
+		async function checkOnline(user_id) {
+			try {
+				const apiUrl = `https://localhost:4242/api/core/is-online/${user_id}/`
+				const response = await apiFetch(apiUrl);
+		
+				if (!response.ok) {
+					throw new Error(`Failed to fetch online status for user ${user_id}`);
+				}
+		
+				const data = await response.json();
+				return data.is_online;
+			} catch (error) {
+				console.error('Error checking online status:', error);
+				return false; // Default to offline in case of error
 			}
-		});
-	
+		}
+
+		async function getUsers() {
+			const users = await fetchUsers();
+
+				const container = document.querySelector('.card-container');
+				//console.log(container);
+				
+				for (const [index, user] of users.entries()) {
+					const is_online = await checkOnline(user.id);
+					const cardHTML = `
+					<div class="cardMatch">
+						<div data-status="inprogress" class="teams">
+							<div class="team-info team-home" style="background-color: ${is_online ? 'green' : 'red'};"></div>
+							<p class="team-name-info">${user.username}</p>
+							<div class="cardMatch inner-card"></div>
+							<p class="friend-label" style="display: none;">amico</p>
+						</div>
+					</div>
+					`;
+			
+					// Aggiungi la card al contenitore
+					container.innerHTML += cardHTML;
+					
+					// Abilita lo scroll se ci sono più di 4 card
+					if (index >= 5) {
+						container.style.overflowY = 'auto';
+					}
+				}
+		
 		// Funzione per alternare lo stato di colore e testo
 		container.querySelectorAll('.inner-card').forEach((card) => {
 			card.addEventListener('click', function () {
 				const isBlue = this.classList.toggle('clicked');
 				const friendLabel = this.nextElementSibling; // Trova il prossimo elemento, ovvero <p class="friend-label">
-	
+				
 				if (isBlue) {
 					this.style.backgroundColor = 'blue';
 					friendLabel.style.display = 'inline';
@@ -320,10 +339,10 @@ export default function userList() {
 				}
 			});
 		});
-	
+	}
 	}, 0);
 	
-
+	
 	return html;
 }
     

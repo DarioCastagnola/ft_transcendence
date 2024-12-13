@@ -355,7 +355,7 @@ export default function userinfo() {
 
 	async function uploadImage(file) {
 		const apiUrl = "https://localhost:4242/api/core/user-profile/";
-		console.log(file);
+		//console.log(file);
 		try {
 			let userInfo = await fetchUserInfo();
 			let user_id = userInfo.id;
@@ -394,7 +394,7 @@ export default function userinfo() {
 			
 			// Parse della risposta JSON
 			const data = await response.json();
-			console.log("Dati API:", data);
+			//console.log("Dati API:", data);
 			const fullUrl = "https://localhost:4242" + data.avatar;
 	
 			// Aggiornare l'immagine nel DOM

@@ -15,7 +15,7 @@ import pong3DMenu from "./views/pong3DMenu.js";
 import preTorneoCorso from "./views/preTorneoCorso.js";
 import aggiungiGiocatori from "./views/aggiungiGiocatori.js";
 import userList from "./views/userList.js";
-import { apiFetch } from "./service/apiService.js";
+import { apiFetch, updateLastSeen } from "./service/apiService.js";
 
 
 const routes = {
@@ -36,6 +36,12 @@ const routes = {
     "/aggiungiGiocatori": { title: "aggiungiGiocatori", render: aggiungiGiocatori, css: "./src/css/aggiungiGiocatori.css"},
     "/userList": { title: "userList", render: userList, css: "./src/css/userList.css"}
 };
+
+// Call the function every 5 minutes (300,000 milliseconds)
+setInterval(updateLastSeen, 75000);
+
+// Optionally, call it immediately the first time
+updateLastSeen();
 
 const protected_routes = [
     "/home",
