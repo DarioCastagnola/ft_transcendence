@@ -63,7 +63,7 @@ class MatchCreateView(CreateAPIView):
                 raise ValidationError({"error": "User data could not be retrieved"})
             
         if not hasattr(player, 'stat'):
-            Stat.objects.create(player=player)
+            Stat.objects.create(player=player, user_id=user_id)
 
         player2 = Player.objects.filter(nickname="Guest").first()
         if not player2:

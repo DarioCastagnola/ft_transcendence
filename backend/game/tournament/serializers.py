@@ -24,11 +24,17 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 class StatSerializer(serializers.ModelSerializer):
     player = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all())
-
+    
     class Meta:
         model = Stat
-        fields = ('id', 'player', 'wins', 'losses', 'draws')
-        extra_kwargs = {'player': {'required': True}, 'wins': {'required': False}, 'losses': {'required': False}, 'draws': {'required': False}}
+        fields = ('id', 'player', 'wins', 'losses', 'draws', 'user_id')
+        extra_kwargs = {
+            'player': {'required': True},
+            'wins': {'required': False},
+            'losses': {'required': False},
+            'draws': {'required': False},
+            'user_id': {'required': False} 
+        }
 
 class TournamentSerializer(serializers.ModelSerializer):
     players = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all(), required=False, many=True)  

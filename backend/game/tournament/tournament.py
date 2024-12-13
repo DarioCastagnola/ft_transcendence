@@ -85,7 +85,7 @@ class TournamentManager(ABC):
         
         player.save()
         if player.type == "USER" and not hasattr(player, 'stat'):
-            Stat.objects.create(player=player)
+            Stat.objects.create(player=player, user_id=player.user_id)
         
         if self.tournament.closed:
             raise ValueError("Tournament is closed.")
