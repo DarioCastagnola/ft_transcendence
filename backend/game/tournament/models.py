@@ -53,8 +53,8 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.type == "USER" and not hasattr(self, 'stat'):
-            stat_instance = Stat.objects.create(player=self)  
-            self.stat = stat_instance 
+            stat_instance = Stat.objects.create(player=self, user_id=self.user_id) 
+            self.stat = stat_instance
 
 
 class Stat(models.Model):
@@ -62,6 +62,7 @@ class Stat(models.Model):
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
+    user_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.wins} vittorie, {self.losses} sconfitte, {self.draws} pareggi"
