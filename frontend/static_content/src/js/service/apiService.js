@@ -141,3 +141,10 @@ export async function updateLastSeen() {
       console.error('Error updating last seen:', error);
   }
 }
+
+export async function getSelfUser() {
+  let userInfo = await fetchUserInfo();
+	let user_id = userInfo.id;
+  let your_info = await fetchUserProfileById(user_id);
+  return your_info;
+}

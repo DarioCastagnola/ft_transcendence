@@ -477,40 +477,6 @@ export default function userinfo() {
       router();
     });
 
-
-	// const vittorie = 65; // percentuale vittoria
-	// const sconfitte = 35; // percentuale sconfitta
-
-	// const ctx = document.getElementById('myChart').getContext('2d');
-	// const myChart = new Chart(ctx, {
-	// 	type: 'doughnut',
-	// 	data: {
-	// 		labels: [`${vittorie}% Vittorie`, `${sconfitte}% Sconfitte`],
-	// 		datasets: [{
-	// 			data: [vittorie, sconfitte],
-	// 			backgroundColor: [
-	// 				'rgba(75, 192, 192, 0.6)', // Vittorie - blu
-	// 				'rgba(255, 99, 132, 0.6)' // Sconfitte - rosso
-	// 			],
-	// 			borderColor: [
-	// 				'rgba(75, 192, 192, 1)',
-	// 				'rgba(255, 99, 132, 1)'
-	// 			],
-	// 			borderWidth: 3
-	// 		}]
-	// 	},
-	// 	options: {
-	// 		responsive: true,
-	// 		maintainAspectRatio: false,
-	// 		plugins: {
-	// 			legend: {
-	// 				position: 'bottom',
-	// 			}
-	// 		},
-	// 		cutout: '60%'
-	// 	}
-	// });
-
 	
 	//GRAFICO
 
@@ -543,25 +509,30 @@ export default function userinfo() {
 	const total = 100; // Percentuale totale
 	const startAngle = 0;
 	const vittorieAngle = (vittorie / total) * 2 * Math.PI;
-	drawSlice(ctx, centerX, centerY, radius, startAngle, vittorieAngle, 'rgba(75, 192, 192, 0.6)'); // blu
+	drawSlice(ctx, centerX, centerY, radius, startAngle, vittorieAngle, 'rgb(53, 31, 255)'); // blu
 
 	// Disegna la fetta delle sconfitte
 	const sconfitteAngle = (sconfitte / total) * 2 * Math.PI;
-	drawSlice(ctx, centerX, centerY, radius, vittorieAngle, vittorieAngle + sconfitteAngle, 'rgba(255, 99, 132, 0.6)'); // rosso
+	drawSlice(ctx, centerX, centerY, radius, vittorieAngle, vittorieAngle + sconfitteAngle, 'rgba(255, 19, 70, 0.6)'); // rosso
 
 	// Disegna il cerchio bianco al centro per creare l'effetto doughnut
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI); // Il 60% del raggio
-	ctx.fillStyle = 'white';
+	ctx.fillStyle = '#222';
 	ctx.fill();
 
 	// Disegna il testo al centro
 	ctx.font = '16px Arial';
-	ctx.fillStyle = '#333';
+	ctx.fillStyle = 'rgb(217, 255, 0)';
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
-	ctx.fillText(`${vittorie}% Vittorie`, centerX, centerY - 10);
-	ctx.fillText(`${sconfitte}% Sconfitte`, centerX, centerY + 15);
+	ctx.fillText(`${vittorie}%`, centerX - 25, centerY - 10);
+	ctx.fillStyle = 'rgb(53, 31, 255)';
+	ctx.fillText(` Vittorie`, centerX + 20, centerY - 10);
+	ctx.fillStyle = 'rgb(217, 255, 0)';
+	ctx.fillText(`${sconfitte}%`, centerX - 25, centerY + 15);
+	ctx.fillStyle = 'rgb(255, 19, 70)';
+	ctx.fillText(` Sconfitte`, centerX + 28, centerY + 15);
 
 
   }, 0);
