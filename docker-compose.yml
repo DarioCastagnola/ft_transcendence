@@ -22,7 +22,7 @@ services:
       volumes:
         - ./backend/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
         - ./backend/nginx/ssl:/etc/nginx/ssl:ro
-        - media:/media
+        - media:/core/media
       networks:
         - internal_network
         - external
