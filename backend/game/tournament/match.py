@@ -117,3 +117,15 @@ class MatchHistoryView(ListAPIView):
 
         matches = Match.objects.filter(player1=player) | Match.objects.filter(player2=player)
         return matches.order_by('-updated_at')
+    
+class MatchHistoryPlayerView(ListAPIView):
+    serializer_class = MatchSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        player_id = self.kwargs.get('pk')
+        player = Player.objects.filter(id=player_id).first()
+        if not player:
+            return Match.objects.none()
+
+        matches = Match.objects.filter(player1=player) | Match.objects.filter(player2=player)
+        return matches.order_by('-updated_at')
