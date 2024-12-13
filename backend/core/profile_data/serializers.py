@@ -32,7 +32,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if avatar:
             # Cancella il vecchio avatar se esiste
             if instance.avatar:
-                instance.avatar.delete(save=False)
+                try:
+                    instance.avatar.delete(save=False)
+                except Exception:
+                    pass
             instance.avatar = avatar
         
         instance.save()
