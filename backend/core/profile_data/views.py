@@ -12,18 +12,22 @@ class UserProfileUpdate(APIView):
 
     def post(self, request):
         user_id = get_user_id(request)
-
-        if user_id is None:
-            return Response({'error': 'User ID not found'}, status=status.HTTP_400_BAD_REQUEST)
-
+        if not user_id:
+            raise ValidationError({"error": "User not found"})
+        
         try:
             profile = UserProfile.objects.get(user_id=user_id)
             serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         except UserProfile.DoesNotExist:
-            serializer = UserProfileSerializer(data=request.data, user_id=user_id)
+            serializer = UserProfileSerializer(data=request.data)
+        
+        # Imposta il contesto con user_id
+        serializer.context['user_id'] = user_id
+        serializer.context['request'] = request
 
         if serializer.is_valid():
-            serializer.save() 
+            # Passa esplicitamente i file durante il salvataggio
+            serializer.save(avatar=request.FILES.get('avatar'))
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
