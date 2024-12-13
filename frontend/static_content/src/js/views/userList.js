@@ -1,4 +1,4 @@
-import { apiFetch, fetchUsers } from "../service/apiService.js";
+import { apiFetch, fetchUsers, getSelfUser } from "../service/apiService.js";
 
 export default function userList() {
     const html = `
@@ -277,7 +277,13 @@ export default function userList() {
 
 	setTimeout(() => {
 
+		getFriends();
 		getUsers();
+
+		async function getFriends() {
+			let own_info = await getSelfUser();
+			console.log(own_info);
+		}
 
 		async function checkOnline(user_id) {
 			try {
