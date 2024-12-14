@@ -436,6 +436,7 @@ export default function userinfo() {
     const enable2faButton = document.getElementById("enable2faButton");
     const logoutButton = document.getElementById("logoutButton");
     const qrCodeContainer = document.getElementById("qrCodeContainer");
+	const saveButton = document.getElementById("save-update");
 
 	document.getElementById("save-update").addEventListener("click", async (event) => {
         event.preventDefault(); // Prevent default behavior
@@ -468,8 +469,9 @@ export default function userinfo() {
 		usernameElement.value = result.username;
 		emailElement.value = result.email;
 		 // Check if the email contains "student"
-		 if (result.email.toLowerCase().includes("student")) {
-			enable2faButton.style.display = "none"; // Hide the 2FA button
+		 if (result.email.toLowerCase().includes("@student.42roma.it")) {
+			enable2faButton.style.display = "none";
+			saveButton.style.display = "none";
 		}
 	});
 
