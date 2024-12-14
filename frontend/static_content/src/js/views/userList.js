@@ -280,7 +280,7 @@ export default function userList() {
 
 		async function checkOnline(user_id) {
 			try {
-				const apiUrl = `https://localhost:4242/api/core/is-online/${user_id}/`
+				const apiUrl = `https://localhost:4444/api/core/is-online/${user_id}/`
 				const response = await apiFetch(apiUrl);
 		
 				if (!response.ok) {
@@ -297,7 +297,7 @@ export default function userList() {
 
 		async function removeFriend(friend_id) {
 			try {
-				const apiUrl = `https://localhost:4242/api/core/remove-friend/`; // Replace with your API endpoint
+				const apiUrl = `https://localhost:4444/api/core/remove-friend/`; // Replace with your API endpoint
 				const payload = {
 					"friend_id": friend_id,
 				};
@@ -321,7 +321,7 @@ export default function userList() {
 
 		async function addFriend(friend_id) {
 			try {
-				const apiUrl = `https://localhost:4242/api/core/add-friend/`; // Replace with your API endpoint
+				const apiUrl = `https://localhost:4444/api/core/add-friend/`; // Replace with your API endpoint
 				const payload = {
 					"friend_id": friend_id,
 				};

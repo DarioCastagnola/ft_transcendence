@@ -326,7 +326,7 @@ export default function aggiungiGiocatori() {
                   const playerNames = Array.from(playerInputs).map(input => input.value);
                   localStorage.setItem("MatchesLeftToPlay", calculateMatches(playerNames.length + 1));
 
-                const apiUrl = "https://localhost:4242/api/game/tournaments/";
+                const apiUrl = "https://localhost:4444/api/game/tournaments/";
 
                 // Ensure all fields are filled
                 if (playerNames.some(name => !name)) {
@@ -356,7 +356,7 @@ export default function aggiungiGiocatori() {
 
                     for (const username of playerNames) {
                         const data = { nickname: username, type: "GUEST" };
-                        const apiUrl = "https://localhost:4242/api/game/tournaments/add-player/";
+                        const apiUrl = "https://localhost:4444/api/game/tournaments/add-player/";
 
                         // Send the data to the API
                         const response = await apiFetch(apiUrl, {

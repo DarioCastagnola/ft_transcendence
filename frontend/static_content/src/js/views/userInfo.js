@@ -376,7 +376,7 @@ export default function userinfo() {
     });
 
 	async function uploadImage(file) {
-		const apiUrl = "https://localhost:4242/api/core/user-profile/";
+		const apiUrl = "https://localhost:4444/api/core/user-profile/";
 		//console.log(file);
 		try {
 			let userInfo = await fetchUserInfo();
@@ -406,7 +406,7 @@ export default function userinfo() {
 			// Ottenere l'ID dell'utente
 			let userInfo = await fetchUserInfo();
 			let user_id = userInfo.id;
-			const apiUrl = `https://localhost:4242/api/core/user-profile/${user_id}/`; // URL del backend
+			const apiUrl = `https://localhost:4444/api/core/user-profile/${user_id}/`; // URL del backend
 		
 			// Chiamata all'API per ottenere il profilo utente
 			const response = await apiFetch(apiUrl);
@@ -417,7 +417,7 @@ export default function userinfo() {
 			// Parse della risposta JSON
 			const data = await response.json();
 			//console.log("Dati API:", data);
-			const fullUrl = "https://localhost:4242" + data.avatar;
+			const fullUrl = "https://localhost:4444" + data.avatar;
 	
 			// Aggiornare l'immagine nel DOM
 			document.getElementById("profile-img").src = fullUrl;
@@ -443,7 +443,7 @@ export default function userinfo() {
     });
 	
 	async function submitForm() {
-		const apiUrl = `https://localhost:4242/api/auth/update-user/`;
+		const apiUrl = `https://localhost:4444/api/auth/update-user/`;
 	
 				const data = {
 					username: document.getElementById("user-username").value,
@@ -477,7 +477,7 @@ export default function userinfo() {
     enable2faButton.addEventListener('click', () => {
 
       async function enable2FAFetch() {
-        const enable2faUrl = 'https://localhost:4242/api/auth/enable-2fa/';
+        const enable2faUrl = 'https://localhost:4444/api/auth/enable-2fa/';
         const response = await apiFetch(enable2faUrl, {"method": "POST"});
 
         if (response.ok) {
@@ -496,7 +496,7 @@ export default function userinfo() {
     logoutButton.addEventListener('click', async function (event) {
       event.preventDefault();
 
-      const apiUrl = 'https://localhost:4242/api/auth/logout/';
+      const apiUrl = 'https://localhost:4444/api/auth/logout/';
       await apiFetch(apiUrl, {method: "POST"});
       window.history.pushState({}, '', '/signIn');
       router();
@@ -535,7 +535,7 @@ export default function userinfo() {
 	const total = 100; // Percentuale totale
 	const startAngle = 0;
 	const vittorieAngle = (vittorie / total) * 2 * Math.PI;
-	drawSlice(ctx, centerX, centerY, radius, startAngle, vittorieAngle, 'rgb(53, 31, 255)'); // blu
+	drawSlice(ctx, centerX, centerY, radius, startAngle, vittorieAngle, 'rgb(51, 194, 255)'); // blu
 
 	// Disegna la fetta delle sconfitte
 	const sconfitteAngle = (sconfitte / total) * 2 * Math.PI;
@@ -553,7 +553,7 @@ export default function userinfo() {
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'middle';
 	ctx.fillText(`${vittorie}%`, centerX - 30, centerY - 10);
-	ctx.fillStyle = 'rgb(53, 31, 255)';
+	ctx.fillStyle = 'rgb(51, 194, 255)';
 	ctx.fillText(` Vittorie`, centerX + 20, centerY - 10);
 	ctx.fillStyle = 'rgb(217, 255, 0)';
 	ctx.fillText(`${sconfitte}%`, centerX - 30, centerY + 15);

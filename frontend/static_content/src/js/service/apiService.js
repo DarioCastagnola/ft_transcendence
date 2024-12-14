@@ -33,7 +33,7 @@ export async function apiFetch(url, options = {}) {
 }
 
 export async function fetchUserInfo() {
-  const apiUrl = 'https://localhost:4242/api/auth/user-info/';
+  const apiUrl = 'https://localhost:4444/api/auth/user-info/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -45,7 +45,7 @@ export async function fetchUserInfo() {
 }
 
 export async function getTournamentId() {
-  const apiUrl = 'https://localhost:4242/api/game/tournaments/open/';
+  const apiUrl = 'https://localhost:4444/api/game/tournaments/open/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -59,7 +59,7 @@ export async function getTournamentId() {
 }
 
 export async function fetchUserProfileById(user_id) {
-  const apiUrl =  `https://localhost:4242/api/core/user-profile/${user_id}/`
+  const apiUrl =  `https://localhost:4444/api/core/user-profile/${user_id}/`
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -71,7 +71,7 @@ export async function fetchUserProfileById(user_id) {
 }
 
 export async function fetchMatchHistoryById(id) {
-  const apiUrl =  `https://localhost:4242/api/game/matches/history/${id}`;
+  const apiUrl =  `https://localhost:4444/api/game/matches/history/${id}`;
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -83,7 +83,7 @@ export async function fetchMatchHistoryById(id) {
 }
 
 export async function fetchMatchHistory() {
-  const apiUrl =  'https://localhost:4242/api/game/matches/history/';
+  const apiUrl =  'https://localhost:4444/api/game/matches/history/';
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -96,7 +96,7 @@ export async function fetchMatchHistory() {
 
 
 export async function fetchUsernamebyId(user_id) {
-  const apiUrl = 'https://localhost:4242/api/auth/users/';
+  const apiUrl = 'https://localhost:4444/api/auth/users/';
   const response = await apiFetch(apiUrl);
   if (response.ok) {
     const data = await response.json();
@@ -115,7 +115,7 @@ export async function fetchUsernamebyId(user_id) {
 }
 
 export async function fetchUsers() {
-  const apiUrl = 'https://localhost:4242/api/auth/users/';
+  const apiUrl = 'https://localhost:4444/api/auth/users/';
   const response = await apiFetch(apiUrl);
     if (response.ok) {
       const data = await response.json();
@@ -126,7 +126,7 @@ export async function fetchUsers() {
 }
 
 export async function fetchNicknameByPlayerId(player_id) {
-  const apiUrl =  `https://localhost:4242/api/game/players/${player_id}/`;
+  const apiUrl =  `https://localhost:4444/api/game/players/${player_id}/`;
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -140,7 +140,7 @@ export async function fetchNicknameByPlayerId(player_id) {
 export async function updateLastSeen() {
   //console.log("I work!");
   try {
-    const apiUrl = "https://localhost:4242/api/core/update-last-seen/";
+    const apiUrl = "https://localhost:4444/api/core/update-last-seen/";
       const response = await apiFetch(apiUrl, {
           method: 'POST',
           },);
@@ -162,7 +162,7 @@ export async function getSelfUser() {
 }
 
 export async function getStats(user_id) {
-  const apiUrl = `https://localhost:4242/api/game/stat/${user_id}/`;
+  const apiUrl = `https://localhost:4444/api/game/stat/${user_id}/`;
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -174,7 +174,7 @@ export async function getStats(user_id) {
 }
 
 export async function fetchSelfPlayerID() {
-  const apiUrl = `https://localhost:4242/api/game/matches/history/`;
+  const apiUrl = `https://localhost:4444/api/game/matches/history/`;
   const response = await apiFetch(apiUrl);
 
   if (response.ok) {
@@ -188,7 +188,7 @@ export async function fetchSelfPlayerID() {
 
 export async function getUsernameById(userId) {
   try {
-      const apiUrl = 'https://localhost:4242/api/auth/users/'; // Sostituisci con l'URL reale
+      const apiUrl = 'https://localhost:4444/api/auth/users/'; // Sostituisci con l'URL reale
       const response = await apiFetch(apiUrl);
 
       if (!response.ok) {
@@ -209,7 +209,7 @@ export async function fetchPlayerIdByForce(desiredId) {
   let player_id = 0;
   let user_id;
   while (user_id != desiredId) {
-    const apiUrl =  `https://localhost:4242/api/game/players/${player_id}/`;
+    const apiUrl =  `https://localhost:4444/api/game/players/${player_id}/`;
     player_id++;
     const response = await apiFetch(apiUrl); 
     

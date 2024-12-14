@@ -79,7 +79,7 @@ async function handleOAuthCallback() {
     const authCode = urlParams.get('code');
 
     if (authCode) {
-      const apiUrl = `https://localhost:4242/api/auth/oauth/callback/?code=${authCode}`
+      const apiUrl = `https://localhost:4444/api/auth/oauth/callback/?code=${authCode}`
       const response = await apiFetch(apiUrl)
 
       // Handle the API response

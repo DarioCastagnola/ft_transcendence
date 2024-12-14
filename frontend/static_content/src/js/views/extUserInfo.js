@@ -333,12 +333,12 @@ export default function userinfo() {
 			// emailElement.innerText = userInfo.email;
 
 			// Fetch and update profile image
-			const apiUrl = `https://localhost:4242/api/core/user-profile/${Number(sessionStorage.getItem("clickedUserId"))}/`;
+			const apiUrl = `https://localhost:4444/api/core/user-profile/${Number(sessionStorage.getItem("clickedUserId"))}/`;
 			const response = await apiFetch(apiUrl);
 
 			if (response.ok) {
 				const data = await response.json();
-				profileImageElement.src = `https://localhost:4242${data.avatar}`;
+				profileImageElement.src = `https://localhost:4444${data.avatar}`;
 			} else {
 				console.error("Failed to fetch profile image");
 			}

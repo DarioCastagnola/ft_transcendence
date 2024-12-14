@@ -355,7 +355,7 @@ setTimeout(() => {
     // Create the data object to send
     const formData = { username, email, password };
 
-	const response = await apiFetch('https://localhost:4242/api/auth/register/', {
+	const response = await apiFetch('https://localhost:4444/api/auth/register/', {
   	  method: 'POST',
       body: formData
     });

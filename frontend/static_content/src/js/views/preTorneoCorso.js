@@ -320,7 +320,7 @@ setTimeout(() => {
     const tournamentId = await getTournamentId();
     console.log(tournamentId)
     if (tournamentId != -1) {
-      const apiUrl = `https://localhost:4242/api/game/tournaments/${tournamentId}/`;
+      const apiUrl = `https://localhost:4444/api/game/tournaments/${tournamentId}/`;
       const response = await apiFetch(apiUrl, {
         "method": "DELETE"
       });

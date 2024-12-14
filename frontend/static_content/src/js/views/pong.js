@@ -399,7 +399,7 @@ setTimeout(() => {
         
 		async function MatchResult(P1SCORE, P2SCORE, WINNERID) {
 			if (localStorage.getItem("isTournament") === "false") {
-				const apiUrl = `https://localhost:4242/api/game/matches/`;
+				const apiUrl = `https://localhost:4444/api/game/matches/`;
 	
 				// Define the data you want to send in the POST request
 				const data = {
@@ -419,7 +419,7 @@ setTimeout(() => {
 				}
 			}
 			else {
-				const apiUrl = `https://localhost:4242/api/game/tournaments/set-match-winner/`;
+				const apiUrl = `https://localhost:4444/api/game/tournaments/set-match-winner/`;
 	
 				// Define the data you want to send in the POST request
 				const data = {
@@ -446,7 +446,7 @@ setTimeout(() => {
 		}
 
         async function getPlayersId() {
-            const apiUrl = `https://localhost:4242/api/game/tournaments/next-match/`;
+            const apiUrl = `https://localhost:4444/api/game/tournaments/next-match/`;
             const response = await apiFetch(apiUrl);
 
             if (response.ok) {
@@ -463,7 +463,7 @@ setTimeout(() => {
         }
 
         async function fetchPlayerInfo(id) {
-            const apiUrl = `https://localhost:4242/api/game/players/${id}/`;
+            const apiUrl = `https://localhost:4444/api/game/players/${id}/`;
             const response = await apiFetch(apiUrl);
 
             if (response.ok) {
