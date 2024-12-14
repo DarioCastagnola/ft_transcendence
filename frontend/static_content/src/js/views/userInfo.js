@@ -472,6 +472,12 @@ export default function userinfo() {
 		 if (result.email.toLowerCase().includes("@student.42roma.it")) {
 			enable2faButton.style.display = "none";
 			saveButton.style.display = "none";
+			usernameElement.setAttribute("readonly", true);
+        	emailElement.setAttribute("readonly", true);
+
+        // Optionally, add a class to visually indicate they're not editable
+			usernameElement.classList.add("readonly");
+			emailElement.classList.add("readonly");
 		}
 	});
 
